@@ -89,6 +89,13 @@ const { DB } = require("./config");
         FOREIGN KEY    (product_id) REFERENCES products(id), 
         FOREIGN KEY    (att_options_id) REFERENCES attributes_options(id) 
     );`,
+    `CREATE TABLE IF NOT EXISTS images(
+        id              SERIAL PRIMARY KEY,
+        product_id      INTEGER,
+        title           varchar,
+        full_url        text,
+        FOREIGN KEY    (product_id) REFERENCES products(id)
+    );`,
     `CREATE TABLE IF NOT EXISTS cart_item (
         id              SERIAL PRIMARY KEY,
         quantity        INTEGER,
@@ -116,12 +123,10 @@ const { DB } = require("./config");
         FOREIGN KEY    (product_id) REFERENCES products(id),
         FOREIGN KEY    (order_id) REFERENCES order_details(id)
     );`,
-    `CREATE TABLE IF NOT EXISTS shopping_session (
+    `CREATE TABLE IF NOT EXISTS session (
         sid           VARCHAR(255) PRIMARY KEY,
-        customer_id    INTEGER NOT NULL,
         sess          JSON,
-        expire        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY    (customer_id) REFERENCES customers(id) 
+        expire        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );`,
   ];
 
