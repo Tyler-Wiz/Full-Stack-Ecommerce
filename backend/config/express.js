@@ -1,9 +1,10 @@
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const passport = require("passport");
-// const sessionStore = require("../src/middleware/storeCookies");
+const sessionStore = require("./storeCookies");
 const cors = require("cors");
 const { SESSION_KEY } = require("./config");
+require("../src/strategies/admin/local");
 
 module.exports = (app) => {
   app.use(
@@ -28,7 +29,7 @@ module.exports = (app) => {
         sameSite: "lax",
         expires: 7 * 24 * 3600 * 1000,
       },
-      // store: sessionStore,
+      store: sessionStore,
     })
   );
 

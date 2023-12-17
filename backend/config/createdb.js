@@ -8,12 +8,19 @@ const { DB } = require("./config");
         username       varchar(255) NOT NULL,
         password       varchar(255) NOT NULL,
         email          varchar(255) NOT NULL,
-        first_name     varchar(255) NOT NULL,
-        last_name      varchar(255) NOT NULL,
-        isAdmin        boolean NOT NULL,
+        first_name     varchar(255),
+        last_name      varchar(255),
+        isadmin        boolean NOT NULL,
         last_login     DATE NOT NULL DEFAULT CURRENT_DATE,
         created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
         modified_at    DATE NOT NULL DEFAULT CURRENT_DATE
+    );`,
+    `CREATE TABLE IF NOT EXISTS admin_token (
+        id             SERIAL PRIMARY KEY,
+        admin_id       INTEGER,
+        token_value    VARCHAR(255) NOT NULL,
+        expire         TIMESTAMP NOT NULL,
+        FOREIGN KEY    (admin_id) REFERENCES admin_user(id) 
     );`,
     `CREATE TABLE IF NOT EXISTS customers (
         id             SERIAL PRIMARY KEY,
