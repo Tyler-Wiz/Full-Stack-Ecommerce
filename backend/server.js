@@ -14,7 +14,9 @@ const PORT = 4002 || process.env.PORT;
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
-
+app.get("/", (req, res) => {
+  res.send("Welcome to the api");
+});
 // Error Handler -----------
 // app.use((error, req, res, next) => {
 //   res.status(error.status).json({

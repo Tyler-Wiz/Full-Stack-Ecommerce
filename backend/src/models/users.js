@@ -1,10 +1,11 @@
 const db = require("../../config/index");
 
-class AdminModel {
-  static async create(username, password, email, isAdmin) {
+class UserModel {
+  static async create(username, password, email, is_admin) {
     try {
-      const statement = `INSERT INTO admin_user (username, password,email, isAdmin) VALUES($1, $2, $3, $4) RETURNING*`;
-      const values = [username, password, email, isAdmin];
+      const statement = `INSERT INTO users (username, password,email, is_admin)
+                         VALUES ($1, $2, $3, $4) RETURNING*`;
+      const values = [username, password, email, is_admin];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
         return result.rows[0];
@@ -16,7 +17,7 @@ class AdminModel {
   }
   static async readByUsername(username) {
     try {
-      const statement = `SELECT * FROM admin_user WHERE username = $1`;
+      const statement = `SELECT * FROM users WHERE username = $1`;
       const values = [username];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
@@ -30,7 +31,7 @@ class AdminModel {
   }
   static async readById(id) {
     try {
-      const statement = `SELECT * FROM admin_user WHERE id = $1`;
+      const statement = `SELECT * FROM users WHERE id = $1`;
       const values = [id];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
@@ -44,7 +45,7 @@ class AdminModel {
   }
   static async update(data) {
     try {
-      const statement = `UPDATE admin_user SET first_name = $1, last_name = $2 
+      const statement = `UPDATE users SET first_name = $1, last_name = $2 
                            WHERE id = $3`;
       const values = [data.id, data.first_name, data.last_name];
       await db.query(statement, values);
@@ -54,7 +55,7 @@ class AdminModel {
   }
   static async updatePassword(id, password) {
     try {
-      const statement = `UPDATE admin_user SET password = $2 WHERE id = $1`;
+      const statement = `UPDATE users SET password = $2 WHERE id = $1`;
       const values = [id, password];
       await db.query(statement, values);
     } catch (error) {
@@ -63,7 +64,8 @@ class AdminModel {
   }
   static async updateLastLogin(id) {
     try {
-      const statement = `UPDATE admin_user SET last_login = CURRENT_DATE WHERE id = $1`;
+      const statement = `UPDATE users SET last_login = CURRENT_DATE 
+                         WHERE id = $1`;
       const values = [id];
       await db.query(statement, values);
     } catch (error) {
@@ -72,19 +74,19 @@ class AdminModel {
   }
   static async delete(id) {
     try {
-      const statement = `DELETE FROM admin_user WHERE id = $1`;
+      const statement = `DELETE FROM users WHERE id = $1`;
       const values = [id];
       await db.query(statement, values);
     } catch (error) {
       throw new Error(error);
     }
   }
-  static async createToken(admin_id, token_value) {
+  static async createToken(user_id, token_value) {
     const expirationTimestamp = new Date(Date.now() + 60 * 60 * 1000); // Token expires in 1 hour
     try {
-      const statement = `INSERT INTO admin_token (admin_id, token_value, expire) 
-                            VALUES($1, $2, $3) RETURNING*`;
-      const values = [admin_id, token_value, expirationTimestamp];
+      const statement = `INSERT INTO user_token (user_id, token_value, expire) 
+                         VALUES($1, $2, $3) RETURNING*`;
+      const values = [user_id, token_value, expirationTimestamp];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
         return result.rows[0];
@@ -97,7 +99,7 @@ class AdminModel {
   static async readToken(token_value) {
     try {
       const now = new Date();
-      const statement = `SELECT * FROM admin_token WHERE token_value = $1 AND expire > $2`;
+      const statement = `SELECT * FROM user_token WHERE token_value = $1 AND expire > $2`;
       const values = [token_value, now];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
@@ -108,11 +110,11 @@ class AdminModel {
       throw new Error(error);
     }
   }
-  static async deleteToken(admin_id) {
+  static async deleteToken(id) {
     try {
       const now = new Date();
-      const statement = `DELETE FROM admin_token WHERE admin_id = $1 AND expire < $2`;
-      const values = [admin_id, now];
+      const statement = `DELETE FROM user_token WHERE id = $1 AND expire < $2`;
+      const values = [id, now];
       await db.query(statement, values);
     } catch (error) {
       throw new Error(error);
@@ -120,4 +122,4 @@ class AdminModel {
   }
 }
 
-module.exports = AdminModel;
+module.exports = UserModel;

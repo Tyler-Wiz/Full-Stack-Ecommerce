@@ -18,9 +18,7 @@ const userRegisterRules = () => {
       .withMessage("Password cannot be empty")
       .isLength({ min: 8 })
       .withMessage("Your password must be at least 8 characters"),
-    body("isAdmin")
-      .notEmpty()
-      .withMessage("isAdmin cannot be empty")
+    body("is_admin")
       .isInt({ min: 0, max: 1 })
       .withMessage("isAdmin must to be a number between 0 and 1"),
   ];

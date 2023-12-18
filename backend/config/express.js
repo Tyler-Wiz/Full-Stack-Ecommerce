@@ -4,7 +4,8 @@ const passport = require("passport");
 const sessionStore = require("./storeCookies");
 const cors = require("cors");
 const { SESSION_KEY } = require("./config");
-require("../src/strategies/admin/local");
+require("../src/strategies/local");
+require("../src/strategies/facebook");
 
 module.exports = (app) => {
   app.use(

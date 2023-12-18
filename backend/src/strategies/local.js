@@ -1,7 +1,8 @@
 const passport = require("passport");
 const localStrategy = require("passport-local");
-const AdminModel = require("../../models/admin");
-const { comparePasswords } = require("../../utils/bcrypt");
+const UserModel = require("../models/users");
+const OAuthClass = require("../models/OAuth");
+const { comparePasswords } = require("../utils/bcrypt");
 
 // Set method to serialize data to store in cookie
 passport.serializeUser((user, done) => {
@@ -11,7 +12,10 @@ passport.serializeUser((user, done) => {
 // Set method to deserialize data stored in cookie and attach to req.user
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await AdminModel.readById(id);
+    let user = await UserModel.readById(id);
+    if (!user) {
+      user = await OAuthClass.readFacebookUserById(id);
+    }
     if (!user) throw new Error("User not found");
     done(null, user);
   } catch (error) {
@@ -20,16 +24,16 @@ passport.deserializeUser(async (id, done) => {
 });
 
 passport.use(
-  "admin-local",
+  "local",
   new localStrategy(async (username, password, done) => {
     try {
-      const user = await AdminModel.readByUsername(username);
+      const user = await UserModel.readByUsername(username);
       if (!user) return done(null, false);
       const isValid = await comparePasswords(password, user.password);
       if (isValid) {
         return done(null, user);
       } else {
-        done(ull, false);
+        done(null, false);
       }
     } catch (error) {
       return done(error, null);
