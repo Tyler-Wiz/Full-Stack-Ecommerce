@@ -1,4 +1,4 @@
-const { body, validationResult } = require("express-validator");
+const { body } = require("express-validator");
 
 const userRegisterRules = () => {
   return [
@@ -19,7 +19,9 @@ const userRegisterRules = () => {
       .isLength({ min: 8 })
       .withMessage("Your password must be at least 8 characters"),
     body("is_admin")
-      .isInt({ min: 0, max: 1 })
+      .optional({ checkFalsy: false, nullable: true })
+      .isLength({ min: 10 })
+      .withMessage("Please enter minimum 10 characters")
       .withMessage("isAdmin must to be a number between 0 and 1"),
   ];
 };

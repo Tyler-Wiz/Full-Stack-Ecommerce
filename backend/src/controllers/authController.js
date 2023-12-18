@@ -128,12 +128,3 @@ exports.reset = async (req, res, next) => {
     next(error);
   }
 };
-
-exports.deleteUser = async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    await UserModel.delete(id);
-  } catch (error) {
-    next(error);
-  }
-};

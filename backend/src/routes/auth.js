@@ -1,4 +1,5 @@
 const express = require("express");
+const router = express.Router();
 const {
   register,
   login,
@@ -11,8 +12,6 @@ const validate = require("../validators/validate");
 const { userRegisterRules } = require("../validators/authValidator");
 const { loginResetRules } = require("../validators/loginValidator");
 
-const router = express.Router();
-
 router.post("/register", userRegisterRules(), validate, register);
 router.post(
   "/login",
@@ -23,10 +22,9 @@ router.post(
 );
 router.post("/forgot", forgot);
 router.post("/reset/:token", loginResetRules(), validate, reset);
-router.delete("/:id", deleteUser);
 
 // Facebook Login
-router.get("/facebook", passport.authenticate("facebook"), (req, res) => {});
+router.get("/facebook", passport.authenticate("facebook"));
 router.get(
   "/facebook/redirect",
   passport.authenticate("facebook"),
@@ -36,8 +34,7 @@ router.get(
 );
 
 // Google Login
-
-router.get("/google", passport.authenticate("google"), (req, res) => {});
+router.get("/google", passport.authenticate("google"));
 router.get("/google/callback", passport.authenticate("google"), (req, res) => {
   res.status(200).send("OK");
 });

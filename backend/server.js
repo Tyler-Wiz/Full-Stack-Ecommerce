@@ -2,12 +2,14 @@ const express = require("express");
 const app = express();
 const expressConfig = require("./config/express");
 const authRoute = require("./src/routes/auth");
+const userRoute = require("./src/routes/users");
 
 // Apply express configurations
 expressConfig(app);
 
 // Routes
 app.use("/auth", authRoute);
+app.use("/api/user", userRoute);
 
 // Listen on port 4000
 const PORT = 4002 || process.env.PORT;
