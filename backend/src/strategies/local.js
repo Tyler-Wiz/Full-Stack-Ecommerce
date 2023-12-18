@@ -14,7 +14,7 @@ passport.deserializeUser(async (id, done) => {
   try {
     let user = await UserModel.readById(id);
     if (!user) {
-      user = await OAuthClass.readFacebookUserById(id);
+      user = await OAuthClass.readById(id);
     }
     if (!user) throw new Error("User not found");
     done(null, user);

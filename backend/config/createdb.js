@@ -108,10 +108,12 @@ const { DB } = require("./config");
        sess            JSON ,
        expire          TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );`,
-    `CREATE TABLE IF NOT EXISTS facebook_users (
-       id              BIGSERIAL,
-       name            VARCHAR(255) NOT NULL,
-      created_at       DATE NOT NULL DEFAULT CURRENT_DATE
+    `CREATE TABLE IF NOT EXISTS Oauth_users (
+      id              varchar,
+      name            VARCHAR(255) NOT NULL,
+      email           varchar(255),
+      provider        varchar(255),
+      created_at      DATE NOT NULL DEFAULT CURRENT_DATE
     );`,
   ];
 

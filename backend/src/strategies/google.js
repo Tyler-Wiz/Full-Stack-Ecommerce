@@ -1,4 +1,4 @@
-const FBStrategy = require("passport-facebook").Strategy;
+const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const passport = require("passport");
 const OAuthClass = require("../models/OAuth");
 const convertToInteger = require("../utils/convertToInteger");
@@ -15,14 +15,15 @@ passport.deserializeUser(async (id, done) => {
 });
 
 passport.use(
-  "facebook",
-  new FBStrategy(
+  "google",
+  new GoogleStrategy(
     {
-      clientID: process.env.FACEBOOK_APP_ID,
-      clientSecret: process.env.FACEBOOK_APP_SECRET,
-      callbackURL: "http://localhost:4002/auth/facebook/redirect",
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:4002/auth/google/callback",
+      scope: ["profile", "email"],
     },
-    async (accessToken, refreshToken, profile, done) => {
+    async (request, accessToken, refreshToken, profile, done) => {
       const id = convertToInteger(profile.id);
       try {
         const user = await OAuthClass.readById(id);
@@ -32,7 +33,7 @@ passport.use(
           const user = await OAuthClass.create(
             id,
             profile.displayName,
-            "",
+            profile.email,
             profile.provider
           );
           return done(null, user);

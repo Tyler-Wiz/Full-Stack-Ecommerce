@@ -1,11 +1,11 @@
 const db = require("../../config/index");
 
 class OAuthClass {
-  static async createFacebookUser(id, name) {
+  static async create(id, name, email, provider) {
     try {
-      const statement = `INSERT INTO facebook_users (id, name)
-                         VALUES ($1, $2) RETURNING*`;
-      const values = [id, name];
+      const statement = `INSERT INTO Oauth_users (id, name, email, provider)
+                         VALUES ($1, $2, $3, $4) RETURNING*`;
+      const values = [id, name, email, provider];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
         return result.rows[0];
@@ -15,9 +15,9 @@ class OAuthClass {
       throw new Error(error);
     }
   }
-  static async readFacebookUserById(id) {
+  static async readById(id) {
     try {
-      const statement = `SELECT * FROM facebook_users WHERE id = $1`;
+      const statement = `SELECT * FROM Oauth_users WHERE id = $1`;
       const values = [id];
       const result = await db.query(statement, values);
       if (result.rows?.length) {

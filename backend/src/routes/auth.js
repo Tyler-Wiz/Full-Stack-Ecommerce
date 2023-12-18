@@ -35,4 +35,11 @@ router.get(
   }
 );
 
+// Google Login
+
+router.get("/google", passport.authenticate("google"), (req, res) => {});
+router.get("/google/callback", passport.authenticate("google"), (req, res) => {
+  res.status(200).send("OK");
+});
+
 module.exports = router;
