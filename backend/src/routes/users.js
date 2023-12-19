@@ -8,7 +8,7 @@ const {
   updateUserInfo,
 } = require("../controllers/userController");
 const validate = require("../validators/validate");
-const { userInfoRules } = require("../validators/userInfo");
+const { userInfoRules } = require("../validators/user/userInfo");
 
 router.post("/:id", userInfoRules(), validate, createUserInfo);
 router.get("/", read);
