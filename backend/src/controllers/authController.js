@@ -4,6 +4,7 @@ const { passwordHash } = require("../utils/bcrypt");
 const genAuthToken = require("../utils/genAuthToken");
 const convertToInteger = require("../utils/convertToInteger");
 const nodemailer = require("nodemailer");
+const Mailgen = require("mailgen");
 const generateRandomToken = require("../utils/randomToken");
 
 const transporter = nodemailer.createTransport({
@@ -11,6 +12,14 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: process.env.NODEJS_GMAIL_APP_USER,
     pass: process.env.NODEJS_GMAIL_APP_PASSWORD,
+  },
+});
+
+let MailGenerator = new Mailgen({
+  theme: "default",
+  product: {
+    name: "PASSWORD RESET",
+    link: "https://mailgen.js/",
   },
 });
 
@@ -68,23 +77,40 @@ exports.forgot = async (req, res, next) => {
     const token = await UserModel.createToken(user.id, RandomToken);
 
     // Set up email to validate User with Token
-    const resetEmail = {
-      to: user.email,
-      from: "tylertooxclusive@gmail.com",
-      subject: "Node.js Password Reset",
-      text: `
-      You are receiving this because you (or someone else) have requested the reset of the password for your account.
-      Please click on the following link, or paste this into your browser to complete the process:
-      http://${req.headers.host}/auth/reset/${token.token_value}
-      If you did not request this, please ignore this email and your password will remain unchanged.
-    `,
+    let response = {
+      body: {
+        name: user.username,
+        intro: `
+        You are receiving this because you (or someone else) have
+        requested the reset of the password for your account.
+        If you did not request this, please ignore this email
+        and your password will remain unchanged.`,
+        action: {
+          instructions:
+            "Please click on the following link, or paste this into your browser to complete the process:",
+          button: {
+            color: "#22BC66",
+            text: "CLICK TO RESET PASSWORD",
+            link: `http://${req.headers.host}/auth/reset/${token.token_value}`,
+          },
+        },
+      },
+    };
+    let mail = MailGenerator.generate(response);
+    // Email content
+    let message = {
+      from: "tylertooxclusive@gmail.com", // sender address
+      to: user.email, // list of receivers
+      subject: "Thank you for Coming on Board", // Subject line
+      attachDataUrls: true,
+      html: mail, // html body
     };
 
     // Send email to admin user
-    const mail = await transporter.sendMail(resetEmail);
+    const mailResponse = await transporter.sendMail(message);
 
     // if email was sent successfully send response to UI
-    if (mail.accepted) {
+    if (mailResponse.accepted) {
       res.send(
         `An e-mail has been sent to ${user.email} with further instructions.`
       );
@@ -114,15 +140,26 @@ exports.reset = async (req, res, next) => {
     await UserModel.updatePassword(user.id, hashedPassword);
 
     // Send a mail on password reset
-    const resetEmail = {
-      to: user.email,
-      from: "tylertooxclusive@gmail.com",
-      subject: "Your password has been changed",
-      text: `
-        This is a confirmation that the password for your account "${user.email}" has just been changed.
-      `,
+    let response = {
+      body: {
+        name: user.username,
+        intro: `
+         This is a confirmation that the password for your account
+         "${user.email}" has just been changed.`,
+      },
     };
-    await transporter.sendMail(resetEmail);
+    let mail = MailGenerator.generate(response);
+    // Email content
+    let message = {
+      from: "tylertooxclusive@gmail.com",
+      to: user.email,
+      subject: "Password has been updated and read to use",
+      attachDataUrls: true,
+      html: mail,
+    };
+
+    // Send email to user
+    await transporter.sendMail(message);
     res.status(201).send("Password has been updated");
   } catch (error) {
     next(error);
