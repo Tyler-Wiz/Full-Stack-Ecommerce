@@ -5,6 +5,7 @@ const authRoute = require("./src/routes/auth");
 const userRoute = require("./src/routes/users");
 const categoryRoute = require("./src/routes/category");
 const brandRoute = require("./src/routes/brand");
+const discountRouter = require("./src/routes/discount");
 
 // Apply express configurations
 expressConfig(app);
@@ -14,6 +15,7 @@ app.use("/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/category", categoryRoute);
 app.use("/api/brand", brandRoute);
+app.use("/api/discount", discountRouter);
 
 // Listen on port 4000
 const PORT = 4002 || process.env.PORT;
