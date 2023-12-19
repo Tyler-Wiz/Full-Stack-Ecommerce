@@ -1,4 +1,4 @@
-const db = require("../../config/index");
+const db = require("../../../config/index");
 
 class ProductCategoryModel {
   // Create

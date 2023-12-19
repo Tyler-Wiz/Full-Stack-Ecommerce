@@ -9,8 +9,8 @@ const {
 } = require("../controllers/authController");
 const passport = require("passport");
 const validate = require("../validators/validate");
-const { userRegisterRules } = require("../validators/auth");
-const { loginResetRules } = require("../validators/login");
+const { userRegisterRules } = require("../validators/auth/auth");
+const { loginResetRules } = require("../validators/auth/login");
 
 router.post("/register", userRegisterRules(), validate, register);
 router.post(

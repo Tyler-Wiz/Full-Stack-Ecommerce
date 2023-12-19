@@ -1,4 +1,4 @@
-const { ProductCategoryModel } = require("../models/category");
+const { ProductCategoryModel } = require("../../models/product/category");
 const CreateError = require("http-errors");
 
 // Category

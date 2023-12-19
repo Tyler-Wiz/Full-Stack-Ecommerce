@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const validate = require("../validators/validate");
-const { categoryRules } = require("../validators/category");
+const validateFields = require("../validators/ValidateFields");
+const {
+  categoryRules,
+  categoryFields,
+} = require("../validators/product/shared");
 const {
   createCat,
   getAllCat,
@@ -9,15 +12,21 @@ const {
   findCategory,
   updateCat,
   deleteCat,
-} = require("../controllers/categoryController");
+} = require("../controllers/product/categoryController");
 
 // Unprotected category routes
-router.get("/category", getAllCat);
-router.get("/category/:id", findCategory, getSingleCat);
+router.get("/", getAllCat);
+router.get("/:id", findCategory, getSingleCat);
 
 // Protected category routes
-router.post("/category", categoryRules(), validate, createCat);
-router.put("/category/:id", findCategory, categoryRules(), validate, updateCat);
-router.delete("/category/:id", deleteCat);
+router.post("/", categoryRules(), validateFields(categoryFields), createCat);
+router.put(
+  "/:id",
+  findCategory,
+  categoryRules(),
+  validateFields(categoryFields),
+  updateCat
+);
+router.delete("/:id", deleteCat);
 
 module.exports = router;
