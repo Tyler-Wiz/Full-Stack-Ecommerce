@@ -25,7 +25,7 @@ class DiscountModel {
   // READ
   static async readAll() {
     try {
-      const statement = `SELECT name, description, discount_percent, active
+      const statement = `SELECT id, name, description, discount_percent, active
                          FROM discounts`;
       const values = [];
       const result = await db.query(statement, values);

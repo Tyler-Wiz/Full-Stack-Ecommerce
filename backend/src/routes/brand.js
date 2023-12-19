@@ -11,14 +11,12 @@ const router = express.Router();
 const { brandRules, brandFields } = require("../validators/product/shared");
 const validateFields = require("../validators/ValidateFields");
 
-// POST
-router.post("/", brandRules(), validateFields(brandFields), createBrand);
-
-// GET
+// OPEN
 router.get("/", getAll);
 router.get("/:id", findBrand, getSingleBrand);
 
-// UPDATE
+// PROTECTED
+router.post("/", brandRules(), validateFields(brandFields), createBrand);
 router.put(
   "/:id",
   brandRules(),
@@ -26,8 +24,6 @@ router.put(
   findBrand,
   updateBrand
 );
-
-// DELETE
 router.delete("/:id", findBrand, deleteBrand);
 
 module.exports = router;

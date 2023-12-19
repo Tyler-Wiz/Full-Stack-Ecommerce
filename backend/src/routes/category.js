@@ -14,11 +14,11 @@ const {
   deleteCat,
 } = require("../controllers/product/categoryController");
 
-// Unprotected category routes
+// OPEN
 router.get("/", getAllCat);
 router.get("/:id", findCategory, getSingleCat);
 
-// Protected category routes
+// PROTECTED
 router.post("/", categoryRules(), validateFields(categoryFields), createCat);
 router.put(
   "/:id",

@@ -10,9 +10,13 @@ const {
 const validate = require("../validators/validate");
 const { userInfoRules } = require("../validators/user/userInfo");
 
-router.post("/:id", userInfoRules(), validate, createUserInfo);
+// OPEN
 router.get("/", read);
 router.get("/:id", readInfo);
+
+// PROTECTED
+router.post("/:id", userInfoRules(), validate, createUserInfo);
 router.delete("/:id", deleteUser);
 router.put("/:id", userInfoRules(), validate, updateUserInfo);
+
 module.exports = router;

@@ -16,16 +16,17 @@ const {
   updateDiscountFields,
 } = require("../validators/product/shared");
 
+// OPEN
+router.get("", getAllDiscount);
+router.get("/:id", findDiscount, getSingleDiscount);
+
+// PROTECTED
 router.post(
   "",
   discountRules(),
   validateFields(discountFields),
   createDiscount
 );
-
-router.get("", getAllDiscount);
-router.get("/:id", findDiscount, getSingleDiscount);
-
 router.put(
   "/:id",
   updateDiscountRules(),
