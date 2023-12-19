@@ -36,8 +36,13 @@ const { DB } = require("./config");
         name           varchar(255) NOT NULL,
         description    TEXT,
         created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
-        modified_at    DATE NOT NULL DEFAULT CURRENT_DATE,
-        deleted_at     DATE NOT NULL DEFAULT CURRENT_DATE
+        modified_at    DATE NOT NULL DEFAULT CURRENT_DATE
+    );`,
+    `CREATE TABLE IF NOT EXISTS brands (
+        id             SERIAL PRIMARY KEY,
+        name           varchar(255) NOT NULL,
+        created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
+        modified_at    DATE NOT NULL DEFAULT CURRENT_DATE
     );`,
     `CREATE TABLE IF NOT EXISTS discounts (
         id             SERIAL PRIMARY KEY,
@@ -68,9 +73,10 @@ const { DB } = require("./config");
         slug           varchar(255) NOT NULL,
         description    TEXT NOT NULL,
         SKU            varchar NOT NULL,
-        category_id    INTEGER REFERENCES product_category(id),
         price          Decimal,
+        category_id    INTEGER REFERENCES product_category(id),
         discount_id    INTEGER REFERENCES discounts(id),
+        brand_id       INTEGER REFERENCES brands(id),
         created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
         modified_at    DATE NOT NULL DEFAULT CURRENT_DATE
     );`,
