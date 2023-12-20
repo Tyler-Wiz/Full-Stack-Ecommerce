@@ -23,6 +23,19 @@ const productRules = () => {
   ];
 };
 
+const productAttrRules = () => {
+  return [
+    body("product_id")
+      .notEmpty()
+      .isInt({ min: 1, max: 6 })
+      .withMessage("Product must be a Add"),
+    body("att_options_id")
+      .notEmpty()
+      .isInt({ min: 1, max: 6 })
+      .withMessage("Attribute Option must be a number"),
+  ];
+};
+
 // allowedFields
 const productFields = [
   "name",
@@ -31,6 +44,8 @@ const productFields = [
   "category_id",
   "discount_id",
   "brand_id",
+  "product_id",
+  "att_options_id",
 ];
 
-module.exports = { productFields, productRules };
+module.exports = { productFields, productRules, productAttrRules };

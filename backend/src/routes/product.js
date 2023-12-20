@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   productFields,
   productRules,
+  productAttrRules,
 } = require("../validators/product/product");
 const validateFields = require("../validators/ValidateFields");
 const {
@@ -12,6 +13,9 @@ const {
   findProduct,
   updateProduct,
   deleteProduct,
+  createProductAttr,
+  getProductAttributes,
+  deleteProductAttribute,
 } = require("../controllers/product/productController");
 
 // PROTECTED ----------------------------
@@ -27,8 +31,22 @@ router.put(
 );
 router.delete("/:id", findProduct, deleteProduct);
 
+// Product Attributes
+router.post(
+  "/attributes",
+  productAttrRules(),
+  validateFields(productFields),
+  createProductAttr
+);
+router.delete("/attributes/:id", deleteProductAttribute);
+
+// OPEN -----------------------------------
+
 // Product
 router.get("", getAllProducts);
 router.get("/:id", findProduct, getSingleProduct);
+
+// Product Attributes
+router.get("/attributes/:id", getProductAttributes);
 
 module.exports = router;

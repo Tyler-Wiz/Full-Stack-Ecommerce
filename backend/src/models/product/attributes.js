@@ -46,7 +46,7 @@ class AttributeModel {
   // UPDATE
   static async update(name, id) {
     try {
-      const statement = `UPDATE attributes SET name = $1, WHERE id = $2`;
+      const statement = `UPDATE attributes SET name = $1 WHERE id = $2`;
       const values = [name, id];
       await db.query(statement, values);
     } catch (error) {
@@ -55,7 +55,7 @@ class AttributeModel {
   }
 
   // DELETE
-  static async update(id) {
+  static async deleteAttr(id) {
     try {
       const statement = `DELETE FROM attributes WHERE id = $1`;
       const values = [id];
@@ -71,7 +71,7 @@ class AttributeOptionModel {
   static async create(attribute_id, value) {
     try {
       const statement = `INSERT INTO attributes_options (attribute_id, value) 
-                         VALUES($1, $2) RETURNING*`;
+                         VALUES($1, $2) RETURNING *`;
       const values = [attribute_id, value];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
@@ -113,11 +113,11 @@ class AttributeOptionModel {
   }
 
   // UPDATE
-  static async update(value, attribute_id, id) {
+  static async update(data) {
     try {
       const statement = `UPDATE attributes_options SET value = $1, 
                         attribute_id = $2 WHERE id = $3`;
-      const values = [value, attribute_id, id];
+      const values = [data.value, data.attribute_id, data.id];
       await db.query(statement, values);
     } catch (error) {
       throw new Error(error);
@@ -125,7 +125,7 @@ class AttributeOptionModel {
   }
 
   // DELETE
-  static async update(id) {
+  static async deletedAttrOption(id) {
     try {
       const statement = `DELETE FROM attributes_options WHERE id = $1`;
       const values = [id];
@@ -154,10 +154,14 @@ class ProductAttributes {
   }
 
   // READ
-  static async readAll() {
+  static async readProductAttributes(product_id) {
     try {
-      const statement = `SELECT id FROM product_attributes`;
-      const values = [];
+      const statement = `SELECT ao.value, a.name, pa.id
+                         FROM product_attributes pa
+                         INNER JOIN attributes_options ao ON pa.att_options_id = ao.id
+                         INNER JOIN attributes a ON a.id = ao.attribute_id
+                         WHERE pa.product_id= $1`;
+      const values = [product_id];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
         return result.rows;
@@ -167,34 +171,9 @@ class ProductAttributes {
       throw new Error(error);
     }
   }
-  static async readUnique(id) {
-    try {
-      const statement = `SELECT * FROM product_attributes WHERE id = $1`;
-      const values = [id];
-      const result = await db.query(statement, values);
-      if (result.rows?.length) {
-        return result.rows[0];
-      }
-      return null;
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
-
-  // UPDATE
-  static async update(product_id, att_options_id, id) {
-    try {
-      const statement = `UPDATE product_attributes SET product_id = $1, 
-                        att_options_id = $2 WHERE id = $3`;
-      const values = [product_id, att_options_id, id];
-      await db.query(statement, values);
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
 
   // DELETE
-  static async update(id) {
+  static async deleteUnique(id) {
     try {
       const statement = `DELETE FROM product_attributes WHERE id = $1`;
       const values = [id];
