@@ -14,7 +14,9 @@ const {
   deleteProduct,
 } = require("../controllers/product/productController");
 
-// PROTECTED
+// PROTECTED ----------------------------
+
+// Product
 router.post("", productRules(), validateFields(productFields), createProduct);
 router.put(
   "/:id",
@@ -25,7 +27,7 @@ router.put(
 );
 router.delete("/:id", findProduct, deleteProduct);
 
-// OPEN
+// Product
 router.get("", getAllProducts);
 router.get("/:id", findProduct, getSingleProduct);
 

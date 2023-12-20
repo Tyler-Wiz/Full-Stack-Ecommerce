@@ -1,7 +1,9 @@
 const ProductModel = require("../../models/product/product");
+const { AttributeModel } = require("../../models/product/attributes");
 const CreateError = require("http-errors");
 const { generateSKU, generateSlug } = require("../../utils/generateSlugSku");
 
+// Product
 exports.createProduct = async (req, res, next) => {
   const { name } = req.body;
   try {
