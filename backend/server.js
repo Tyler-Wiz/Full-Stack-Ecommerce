@@ -9,6 +9,7 @@ const discountRouter = require("./src/routes/discount");
 const productRoute = require("./src/routes/product");
 const attributeRoute = require("./src/routes/attributes");
 const imageRoute = require("./src/routes/images");
+const cartRoute = require("./src/routes/cart");
 
 // Apply express configurations
 expressConfig(app);
@@ -22,6 +23,7 @@ app.use("/api/discount", discountRouter);
 app.use("/api/product", productRoute);
 app.use("/api/attributes", attributeRoute);
 app.use("/api/images", imageRoute);
+app.use("/api/cart/", cartRoute);
 
 // Listen on port 4000
 const PORT = 4002 || process.env.PORT;
@@ -30,6 +32,7 @@ app.listen(PORT, () => {
 });
 app.get("/", (req, res) => {
   res.send("Welcome to the api");
+  console.log(req.user);
 });
 
 // Error Handler -----------

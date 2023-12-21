@@ -1,6 +1,5 @@
 const ProductModel = require("../../models/product/product");
 const {
-  AttributeModel,
   AttributeOptionModel,
   ProductAttributes,
 } = require("../../models/product/attributes");
