@@ -1,12 +1,17 @@
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const passport = require("passport");
-const sessionStore = require("./storeCookies");
 const cors = require("cors");
 const { SESSION_KEY } = require("./config");
-require("../src/strategies/facebook");
-require("../src/strategies/google");
 require("../src/strategies/local");
+// require("../src/strategies/facebook");
+require("../src/strategies/google");
+
+const genFunc = require("connect-pg-simple");
+const PostgresqlStore = genFunc(session);
+const sessionStore = new PostgresqlStore({
+  conString: process.env.DB_CONNECT,
+});
 
 module.exports = (app) => {
   app.use(

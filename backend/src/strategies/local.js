@@ -6,17 +6,14 @@ const { comparePasswords } = require("../utils/bcrypt");
 
 // Set method to serialize data to store in cookie
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user.username);
 });
 
 // Set method to deserialize data stored in cookie and attach to req.user
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (username, done) => {
   try {
-    let user = await UserModel.readById(id);
-    if (!user) {
-      user = await OAuthClass.readById(id);
-    }
-    if (!user) throw new Error("User not found");
+    const user = await UserModel.readByUsername(username);
+    if (!user) done(null, false);
     done(null, user);
   } catch (error) {
     done(error, null);

@@ -3,7 +3,9 @@ const passport = require("passport");
 const OAuthClass = require("../models/OAuth");
 const convertToInteger = require("../utils/convertToInteger");
 
-passport.serializeUser((user, done) => done(null, user.id));
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await OAuthClass.readById(id);
