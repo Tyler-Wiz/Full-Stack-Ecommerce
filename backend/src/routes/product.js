@@ -16,6 +16,8 @@ const {
   createProductAttr,
   getProductAttributes,
   deleteProductAttribute,
+  createProductRating,
+  getProductRating,
 } = require("../controllers/product/productController");
 
 // PROTECTED ----------------------------
@@ -48,5 +50,9 @@ router.get("/:id", findProduct, getSingleProduct);
 
 // Product Attributes
 router.get("/attributes/:id", getProductAttributes);
+
+// Product Rating
+router.post("/:id/rating", findProduct, createProductRating);
+router.get("/:id/rating", findProduct, getProductRating);
 
 module.exports = router;

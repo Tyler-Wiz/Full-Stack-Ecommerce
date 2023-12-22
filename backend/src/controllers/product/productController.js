@@ -5,6 +5,7 @@ const {
 } = require("../../models/product/attributes");
 const CreateError = require("http-errors");
 const { generateSKU, generateSlug } = require("../../utils/generateSlugSku");
+const ProductRating = require("../../models/product/rating");
 
 // Product
 exports.createProduct = async (req, res, next) => {
@@ -108,6 +109,32 @@ exports.deleteProductAttribute = async (req, res, next) => {
     const product = await ProductAttributes.deleteUnique(id);
     if (!product) throw CreateError(404, "Product not found");
     res.status(200).send("Product Attributes deleted");
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Product Ratings
+
+exports.createProductRating = async (req, res, next) => {
+  try {
+    const product_id = req.params.id;
+    const { rating } = req.body;
+    if (isNaN(rating) || rating < 1 || rating > 5) {
+      throw CreateError(400, "Invalid rating value");
+    }
+    const newRating = await ProductRating.createRating(product_id, rating);
+    res.status(200).send(newRating);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getProductRating = async (req, res, next) => {
+  try {
+    const product_id = req.params.id;
+    const averageRating = await ProductRating.productRating(product_id);
+    res.status(200).send(averageRating);
   } catch (error) {
     next(error);
   }

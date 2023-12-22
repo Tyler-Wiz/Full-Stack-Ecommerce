@@ -21,7 +21,7 @@ app.use("/api/user", userRoute);
 app.use("/api/category", categoryRoute);
 app.use("/api/brand", brandRoute);
 app.use("/api/discount", discountRouter);
-app.use("/api/product", productRoute);
+app.use("/api/products", productRoute);
 app.use("/api/attributes", attributeRoute);
 app.use("/api/images", imageRoute);
 app.use("/api/cart/", cartRoute);

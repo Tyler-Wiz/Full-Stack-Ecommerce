@@ -85,6 +85,12 @@ const { DB } = require("./config");
         product_id      INTEGER REFERENCES products(id),
         att_options_id  INTEGER REFERENCES attributes_options(id)
     );`,
+    `CREATE TABLE IF NOT EXISTS product_ratings(
+        id              SERIAL PRIMARY KEY,
+        product_id      INTEGER REFERENCES products(id),
+        rating           INTEGER NOT NULL,
+        created_at      DATE NOT NULL DEFAULT CURRENT_DATE
+    );`,
     `CREATE TABLE IF NOT EXISTS images(
         id              SERIAL PRIMARY KEY,
         product_id      INTEGER REFERENCES products(id),
@@ -109,11 +115,6 @@ const { DB } = require("./config");
        status         VARCHAR(50)  NOT NULL,
        created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
        modified_at    DATE NOT NULL DEFAULT CURRENT_DATE
-    );`,
-    `CREATE TABLE IF NOT EXISTS deleted_orders (
-       id             SERIAL PRIMARY KEY,
-       order_id       INTEGER REFERENCES orders(id),
-       deleted_at     DATE NOT NULL DEFAULT CURRENT_DATE
     );`,
     `CREATE TABLE IF NOT EXISTS session (
        sid             VARCHAR(255) PRIMARY KEY,
