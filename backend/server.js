@@ -10,6 +10,7 @@ const productRoute = require("./src/routes/product");
 const attributeRoute = require("./src/routes/attributes");
 const imageRoute = require("./src/routes/images");
 const cartRoute = require("./src/routes/cart");
+const orderRoute = require("./src/routes/order");
 
 // Apply express configurations
 expressConfig(app);
@@ -24,6 +25,7 @@ app.use("/api/product", productRoute);
 app.use("/api/attributes", attributeRoute);
 app.use("/api/images", imageRoute);
 app.use("/api/cart/", cartRoute);
+app.use("/api/order", orderRoute);
 
 // Listen on port 4000
 const PORT = 4002 || process.env.PORT;

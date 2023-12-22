@@ -106,8 +106,14 @@ const { DB } = require("./config");
     `CREATE TABLE IF NOT EXISTS orders (
        id             SERIAL PRIMARY KEY,
        cart_id        INTEGER REFERENCES cart(id),
+       status         VARCHAR(50)  NOT NULL,
        created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
        modified_at    DATE NOT NULL DEFAULT CURRENT_DATE
+    );`,
+    `CREATE TABLE IF NOT EXISTS deleted_orders (
+       id             SERIAL PRIMARY KEY,
+       order_id       INTEGER REFERENCES orders(id),
+       deleted_at     DATE NOT NULL DEFAULT CURRENT_DATE
     );`,
     `CREATE TABLE IF NOT EXISTS session (
        sid             VARCHAR(255) PRIMARY KEY,
