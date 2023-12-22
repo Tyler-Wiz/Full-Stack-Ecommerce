@@ -1,9 +1,7 @@
 const orderModel = require("../models/order");
 const { CartItemModel, CartModel } = require("../models/cart");
 const CreateError = require("http-errors");
-const stripe = require("stripe")(
-  "sk_test_51MPlQNGtt0b9wFoNU1qzOizgWuwd6KWnU6ODfvH3RD4nhOWGXGYlqEn5BDCan1syCF1WbBrJkUYs7Sxu3aICswd400vie7qo7p"
-);
+const stripe = require("stripe")(process.env.STRIPE_CLIENT_SECRET);
 
 exports.createOrder = async (req, res, next) => {
   try {
@@ -67,17 +65,21 @@ exports.deleteOrderByUser = async (req, res, next) => {
 };
 
 exports.checkoutOrder = async (req, res, next) => {
-  const amount = Math.ceil(req.totalPrice);
-  // Create a PaymentIntent with the order amount and currency
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount,
-    currency: "gbp",
-    automatic_payment_methods: {
-      enabled: true,
-    },
-  });
+  try {
+    const amount = Math.ceil(req.totalPrice);
+    // Create a PaymentIntent with the order amount and currency
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: "gbp",
+      automatic_payment_methods: {
+        enabled: true,
+      },
+    });
 
-  res.send({
-    clientSecret: paymentIntent.client_secret,
-  });
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
