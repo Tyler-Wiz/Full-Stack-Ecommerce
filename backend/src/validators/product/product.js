@@ -8,6 +8,10 @@ const productRules = () => {
       .notEmpty()
       .isFloat("5.99", { min: 3 })
       .withMessage("price must be a number"),
+    body("stock")
+      .notEmpty()
+      .isInt({ min: 1 })
+      .withMessage("stock count must be a number"),
     body("category_id")
       .optional({ checkFalsy: true, nullable: true })
       .isInt({ min: 1, max: 6 })
@@ -46,6 +50,7 @@ const productFields = [
   "brand_id",
   "product_id",
   "att_options_id",
+  "stock",
 ];
 
 module.exports = { productFields, productRules, productAttrRules };

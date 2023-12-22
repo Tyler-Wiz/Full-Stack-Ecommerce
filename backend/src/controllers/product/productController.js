@@ -52,9 +52,8 @@ exports.getSingleProduct = async (req, res, next) => {
 exports.updateProduct = async (req, res, next) => {
   try {
     const id = req.product.id;
-    console.log({ ...req.body, id });
-    await ProductModel.update({ ...req.body, id });
-    res.status(200).send("Product updated");
+    const product = await ProductModel.update({ ...req.body, id });
+    res.status(200).send(product);
   } catch (error) {
     next(error);
   }

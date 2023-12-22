@@ -4,8 +4,8 @@ class ProductModel {
   static async create(data) {
     try {
       const statement = `INSERT INTO products(name,slug,description,sku,price,
-                         category_id,discount_id,brand_id) 
-                         VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING*`;
+                         category_id,discount_id,brand_id,stock) 
+                         VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING*`;
       const values = [
         data.name,
         data.slug,
@@ -15,6 +15,7 @@ class ProductModel {
         data.category_id,
         data.discount_id,
         data.brand_id,
+        data.stock,
       ];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
@@ -65,18 +66,37 @@ class ProductModel {
   static async update(data) {
     try {
       const statement = `UPDATE products SET name = $1, description = $2,
-                         price = $3, category_id = $4, discount_id = $5, 
-                         brand_id = $6  WHERE id = $7`;
+                         price = $3, stock = $4, category_id = $5,
+                         discount_id = $6, brand_id = $7  WHERE id = $8 RETURNING *`;
       const values = [
         data.name,
         data.description,
         data.price,
+        data.stock,
         data.category_id,
         data.discount_id,
         data.brand_id,
         data.id,
       ];
-      await db.query(statement, values);
+      const result = await db.query(statement, values);
+      if (result.rows?.length) {
+        return result.rows[0];
+      }
+      return null;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  static async updateStock(id) {
+    try {
+      const statement = `UPDATE products SET stock = stock - 1 WHERE id = $1 RETURNING *`;
+      const values = [id];
+      const result = await db.query(statement, values);
+      if (result.rows?.length) {
+        return result.rows[0];
+      }
+      return null;
     } catch (error) {
       throw new Error(error);
     }

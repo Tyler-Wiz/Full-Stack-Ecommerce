@@ -74,6 +74,7 @@ const { DB } = require("./config");
         description    TEXT NOT NULL,
         SKU            varchar NOT NULL,
         price          Decimal,
+        stock          Decimal,
         category_id    INTEGER REFERENCES product_category(id),
         discount_id    INTEGER REFERENCES discounts(id),
         brand_id       INTEGER REFERENCES brands(id),
