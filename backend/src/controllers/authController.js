@@ -107,14 +107,10 @@ exports.forgot = async (req, res, next) => {
     };
 
     // Send email to admin user
-    const mailResponse = await transporter.sendMail(message);
+    await transporter.sendMail(message);
 
     // if email was sent successfully send response to UI
-    if (mailResponse.accepted) {
-      res.send(
-        `An e-mail has been sent to ${user.email} with further instructions.`
-      );
-    }
+    res.status(200).send(token.token_value);
   } catch (error) {
     next(error);
   }
