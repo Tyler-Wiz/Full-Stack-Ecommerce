@@ -1,8 +1,8 @@
-import Auth from "@/components/dashboard/auth/Auth";
+import RegisterForm from "@/components/dashboard/auth/RegisterForm";
 import React from "react";
 
 const page = () => {
-  return <Auth formType="register" />;
+  return <RegisterForm />;
 };
 
 export default page;
