@@ -20,7 +20,7 @@ const userRegisterRules = () => {
       .withMessage("Your password must be at least 8 characters"),
     body("is_admin")
       .optional({ checkFalsy: false, nullable: true })
-      .isLength({ min: 10 })
+      .isLength({ min: 1 })
       .withMessage("Please enter minimum 10 characters")
       .withMessage("isAdmin must to be a number between 0 and 1"),
   ];

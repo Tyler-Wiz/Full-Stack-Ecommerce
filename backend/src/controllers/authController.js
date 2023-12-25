@@ -91,7 +91,7 @@ exports.forgot = async (req, res, next) => {
           button: {
             color: "#22BC66",
             text: "CLICK TO RESET PASSWORD",
-            link: `http://${req.headers.host}/auth/reset/${token.token_value}`,
+            link: `http://localhost:3000/dashboard/reset/${token.token_value}`,
           },
         },
       },

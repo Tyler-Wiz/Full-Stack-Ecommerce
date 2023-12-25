@@ -21,7 +21,7 @@ router.post(
   login
 );
 router.post("/forgot", forgot);
-router.post("/reset/:token", loginResetRules(), validate, reset);
+router.post("/reset/:token", reset);
 
 // Facebook Login
 router.get("/facebook", passport.authenticate("facebook"));

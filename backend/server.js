@@ -38,9 +38,9 @@ app.get("/", (req, res) => {
 });
 
 // Error Handler -----------
-// app.use((error, req, res, next) => {
-//   res.status(error.status).json({
-//     errorMessage: error.message,
-//     status: error.status,
-//   });
-// });
+app.use((error, req, res, next) => {
+  res.status(error.status).json({
+    errorMessage: error.message,
+    status: error.status,
+  });
+});
