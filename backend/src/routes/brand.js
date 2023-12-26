@@ -10,12 +10,14 @@ const {
 const router = express.Router();
 const { brandRules, brandFields } = require("../validators/product/shared");
 const validateFields = require("../validators/ValidateFields");
+const protected = require("../../config/protected");
 
 // OPEN
 router.get("/", getAll);
 router.get("/:id", findBrand, getSingleBrand);
 
 // PROTECTED
+router.use(protected);
 router.post("/", brandRules(), validateFields(brandFields), createBrand);
 router.put(
   "/:id",

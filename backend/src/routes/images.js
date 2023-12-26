@@ -4,8 +4,11 @@ const {
   getAllProductImgs,
 } = require("../controllers/imageController");
 const router = express.Router();
+const protected = require("../../config/protected");
 
-router.post("", uploadImage);
 router.get("/:id", getAllProductImgs);
+
+router.use(protected);
+router.post("", uploadImage);
 
 module.exports = router;

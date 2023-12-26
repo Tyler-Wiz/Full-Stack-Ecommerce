@@ -7,10 +7,16 @@ const {
   deleteSingleCartItem,
 } = require("../controllers/cartController");
 const router = express.Router();
+const protected = require("../../config/protected");
 
-router.post("", findProduct, createCartItems);
+// OPEN ROUTES
+
 router.get("/items", getCartItems);
 router.get("/items/:id", getSingleCartItem);
+
+// PROTECTED ROUTES
+router.use(protected);
+router.post("", findProduct, createCartItems);
 router.delete("/items/:id", deleteSingleCartItem);
 
 module.exports = router;

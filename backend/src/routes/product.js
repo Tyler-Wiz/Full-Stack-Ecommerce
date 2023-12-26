@@ -19,9 +19,23 @@ const {
   createProductRating,
   getProductRating,
 } = require("../controllers/product/productController");
+const protected = require("../../config/protected");
+
+// OPEN -----------------------------------
+
+// Product
+router.get("", getAllProducts);
+router.get("/:id", findProduct, getSingleProduct);
+
+// Product Attributes
+router.get("/attributes/:id", getProductAttributes);
+
+// Product Rating
+
+router.get("/:id/rating", findProduct, getProductRating);
 
 // PROTECTED ----------------------------
-
+router.use(protected);
 // Product
 router.post("", productRules(), validateFields(productFields), createProduct);
 router.put(
@@ -41,18 +55,6 @@ router.post(
   createProductAttr
 );
 router.delete("/attributes/:id", deleteProductAttribute);
-
-// OPEN -----------------------------------
-
-// Product
-router.get("", getAllProducts);
-router.get("/:id", findProduct, getSingleProduct);
-
-// Product Attributes
-router.get("/attributes/:id", getProductAttributes);
-
-// Product Rating
 router.post("/:id/rating", findProduct, createProductRating);
-router.get("/:id/rating", findProduct, getProductRating);
 
 module.exports = router;

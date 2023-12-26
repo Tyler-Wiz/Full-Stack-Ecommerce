@@ -15,12 +15,14 @@ const {
   updateDiscountRules,
   updateDiscountFields,
 } = require("../validators/product/shared");
+const protected = require("../../config/protected");
 
 // OPEN
 router.get("", getAllDiscount);
 router.get("/:id", findDiscount, getSingleDiscount);
 
 // PROTECTED
+router.use(protected);
 router.post(
   "",
   discountRules(),

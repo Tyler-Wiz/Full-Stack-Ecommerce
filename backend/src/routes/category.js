@@ -13,12 +13,14 @@ const {
   updateCat,
   deleteCat,
 } = require("../controllers/product/categoryController");
+const protected = require("../../config/protected");
 
 // OPEN
 router.get("/", getAllCat);
 router.get("/:id", findCategory, getSingleCat);
 
 // PROTECTED
+router.use(protected);
 router.post("/", categoryRules(), validateFields(categoryFields), createCat);
 router.put(
   "/:id",

@@ -13,7 +13,6 @@ const {
   getSingleOption,
   deleteSingleOption,
   updateSingleOption,
-  createProductAttr,
 } = require("../controllers/product/attributeController");
 const {
   attributeRules,
@@ -21,8 +20,18 @@ const {
   attributeOptionsRules,
 } = require("../validators/product/attributes");
 const validateFields = require("../validators/ValidateFields");
+const protected = require("../../config/protected");
+
+// OPEN  -----------------------------------------
+router.get("", getAllAttr);
+router.get("/:id", findAttribute, getSingleAttr);
+
+// Attribute Option
+router.get("/option/all", getAllOptions);
+router.get("/option/:id", findSingleOptions, getSingleOption);
 
 // PROTECTED -------------
+router.use(protected);
 router.post("", attributeRules(), validateFields(attributesFields), createAttr);
 router.put(
   "/:id",
@@ -48,13 +57,5 @@ router.put(
   updateSingleOption
 );
 router.delete("/option/:id", findSingleOptions, deleteSingleOption);
-
-// OPEN  -----------------------------------------
-router.get("", getAllAttr);
-router.get("/:id", findAttribute, getSingleAttr);
-
-// Attribute Option
-router.get("/option/all", getAllOptions);
-router.get("/option/:id", findSingleOptions, getSingleOption);
 
 module.exports = router;

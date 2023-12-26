@@ -7,9 +7,14 @@ const {
   getOrder,
 } = require("../controllers/orderController");
 const router = express.Router();
+const protected = require("../../config/protected");
 
-router.post("", createOrder);
+// OPEN
 router.get("", getOrder, getOrderByUser);
+
+// PROTECTED
+router.use(protected);
+router.post("", createOrder);
 router.delete("/:id", deleteOrderByUser);
 router.post("/checkout", getOrder, checkoutOrder);
 
