@@ -1,7 +1,8 @@
+import AdminLayout from "@/components/dashboard/Layout";
 import React from "react";
 
 const page = () => {
-  return <div>page</div>;
+  return <AdminLayout></AdminLayout>;
 };
 
 export default page;

@@ -21,6 +21,8 @@ module.exports = {
         silver: "#ecebff",
         "bubble-gum": "#ff77e9",
         bermuda: "#78dcca",
+        secondary: "#3A4658",
+        background: "#EEF2F8",
       },
     },
   },

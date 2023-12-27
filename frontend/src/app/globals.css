@@ -12,3 +12,73 @@ h2 {
   font-size: 13px;
   color: gray;
 }
+
+.tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%; /* To the left of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+
+/* Tooltip text */
+.tooltiptext {
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+@layer base {
+  h1 {
+    @apply text-2xl;
+  }
+  h2 {
+    @apply text-xl;
+  }
+  .error-message {
+    @apply text-xs capitalize text-red-600 flex justify-center items-center;
+  }
+  .footer {
+    @apply flex justify-between items-center text-xs text-gray-500 capitalize;
+  }
+  .sidebar {
+    @apply flex flex-col w-[18%] shadow-2xl bg-white py-3 px-2;
+  }
+  .main {
+    @apply flex flex-col justify-between w-[82%] px-10 py-6;
+  }
+
+  /* flex-center */
+
+  .flex-center {
+    @apply flex justify-between items-center;
+  }
+
+  /* Navbar */
+
+  .navContainer {
+    @apply flex justify-between items-center;
+  }
+  .nav-search {
+    @apply block outline-none border-[1px] border-gray-400 rounded-lg px-3 py-1 w-[600px] mb-1 placeholder:text-xs;
+  }
+  .nav-icons-container {
+    @apply flex items-center justify-between gap-5;
+  }
+
+  /* Sidebar */
+
+  .logo {
+    @apply flex justify-between items-center px-2;
+  }
+}

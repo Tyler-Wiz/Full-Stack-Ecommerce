@@ -12,7 +12,7 @@ const Input = ({ register, name, error, label, ...rest }) => {
         {...rest}
       />
       {error && (
-        <span role="alert" className="text-xs capitalize text-red-600">
+        <span role="alert" className="error-message">
           {error}
         </span>
       )}

@@ -12,7 +12,7 @@ import { registerUser } from "@/store/features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const RegisterForm = () => {
-  const { loginError, loginStatus, token } = useSelector((state) => state.auth);
+  const { registerStatus, registerError } = useSelector((state) => state.auth);
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -20,24 +20,14 @@ const RegisterForm = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      is_admin: 1, // Set default value for the checkbox
-    },
     resolver: yupResolver(registerSchema),
   });
-  const watchedCheckboxValue = watch("is_admin");
 
   const dispatch = useDispatch();
   const onSubmit = (data) => {
-    let is_admin = 0;
-    if (data.is_admin) {
-      is_admin = 1;
-    }
-    const formData = { ...data, is_admin };
-    dispatch(registerUser(formData));
+    dispatch(registerUser(data));
   };
 
   return (
@@ -75,28 +65,9 @@ const RegisterForm = () => {
               error={errors.password?.message}
             />
           </div>
-          <label className="inline-flex items-center mt-4">
-            <input
-              className="hidden"
-              type="checkbox"
-              {...register("is_admin")}
-            />
-            <span className="relative inline-block w-6 h-6 border-2 border-gray-400 rounded-md transition duration-300">
-              <span
-                className={`${
-                  watchedCheckboxValue ? "opacity-100" : "opacity-0"
-                } absolute inset-0 flex items-center justify-center transition duration-300`}>
-                <svg
-                  className="w-4 h-4 text-green-500 fill-current"
-                  viewBox="0 0 24 24">
-                  <path d="M20 6L9 17l-5-5" />
-                </svg>
-              </span>
-            </span>
-            <span className="ml-2 text-gray-700">Admin</span>
-          </label>
+          {registerError && <p>{registerError}</p>}
           <PrimaryButton
-            name="Register"
+            name={registerStatus == "pending" ? "Loading..." : "Register"}
             background="bg-tahiti"
             color="text-white"
           />

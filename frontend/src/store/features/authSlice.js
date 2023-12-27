@@ -74,6 +74,22 @@ const authSlice = createSlice({
         };
       }
     },
+    logOut(state) {
+      cookie.remove("session");
+      return {
+        ...state,
+        token: "",
+        id: "",
+        email: "",
+        password: "",
+        created_at: "",
+        is_admin: false,
+        registerStatus: "",
+        registerError: "",
+        loginStatus: "",
+        loginError: "",
+      };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(registerUser.pending, (state) => {
@@ -120,5 +136,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { getUser } = authSlice.actions;
+export const { getUser, logOut } = authSlice.actions;
 export default authSlice.reducer;
