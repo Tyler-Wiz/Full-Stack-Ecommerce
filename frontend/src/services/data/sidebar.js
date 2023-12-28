@@ -21,27 +21,27 @@ export const sidebarData = [
       {
         id: 21,
         title: "Top Products",
-        path: "/dashboard/Products",
+        path: "/dashboard/products",
       },
       {
         id: 22,
         title: "Product Grid",
-        path: "/dashboard/Products",
+        path: "/dashboard/products",
       },
       {
         id: 23,
         title: "Product Management",
-        path: "/dashboard/Products",
+        path: "/dashboard/products",
       },
       {
         id: 24,
         title: "Product Categories",
-        path: "/dashboard/Products",
+        path: "/dashboard/products",
       },
       {
         id: 25,
         title: "Add New Product +",
-        path: "/dashboard/Products",
+        path: "/dashboard/products/add",
       },
     ],
   },
@@ -74,6 +74,12 @@ export const sidebarData = [
   {
     id: 6,
     title: "Customers",
+    icon: <FaUsersBetweenLines size={25} />,
+    path: "/customers",
+  },
+  {
+    id: 6,
+    title: "Brands",
     icon: <FaUsersBetweenLines size={25} />,
     path: "/customers",
   },

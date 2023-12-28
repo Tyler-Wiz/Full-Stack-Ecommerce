@@ -7,7 +7,7 @@ const Input = ({ register, name, error, label, ...rest }) => {
         </label>
       )}
       <input
-        className={`block outline-none border-[1px] border-gray-400 rounded-lg px-3 py-3 w-[400px] mb-1 `}
+        className={`block outline-none border-[1px] border-gray-400 rounded-lg px-3 py-3 w-full mb-1 `}
         {...register(name)}
         {...rest}
       />

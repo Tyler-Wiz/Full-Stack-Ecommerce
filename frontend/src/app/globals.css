@@ -55,7 +55,7 @@ h2 {
     @apply flex flex-col w-[18%] shadow-2xl bg-white py-3 px-2;
   }
   .main {
-    @apply flex flex-col justify-between w-[82%] px-10 py-6;
+    @apply flex flex-col justify-between w-[82%] px-10 py-6 h-screen;
   }
 
   /* flex-center */
