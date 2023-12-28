@@ -45,16 +45,19 @@ class ProductModel {
     try {
       const statement = `SELECT p.id, p.name, p.slug, p.price, p.description, 
                         p.sku, pc.name as cat_name, br.name as br_name,
-                        d.active as active_discount, d.discount_percent as percentage
+                        d.active as active_discount, d.discount_percent as percentage, ARRAY_AGG(ARRAY[i.url]) as images_array
                         FROM products p
                         INNER JOIN product_category pc ON p.category_id = pc.id
                         INNER JOIN brands br ON p.brand_id = br.id
                         INNER JOIN discounts d ON p.discount_id = d.id
-                        WHERE p.id = $1`;
+                        INNER JOIN images i ON p.id = i.product_id
+                        WHERE p.id = $1
+                        GROUP BY p.id,p.name,pc.name, br.name,d.active,d.discount_percent;`;
+
       const values = [id];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
-        return result.rows[0];
+        return result.rows;
       }
       return null;
     } catch (error) {

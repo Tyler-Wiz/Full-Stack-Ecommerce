@@ -86,7 +86,9 @@ class AttributeOptionModel {
   // READ
   static async readAll() {
     try {
-      const statement = `SELECT id, attribute_id, value FROM attributes_options`;
+      const statement = `SELECT ao.id, ao.attribute_id, ao.value, a.name
+                         FROM attributes_options ao
+                         INNER JOIN attributes a ON a.id = ao.attribute_id`;
       const values = [];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
