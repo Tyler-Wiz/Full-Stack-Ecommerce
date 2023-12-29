@@ -13,9 +13,6 @@ const {
   findProduct,
   updateProduct,
   deleteProduct,
-  createProductAttr,
-  getProductAttributes,
-  deleteProductAttribute,
   createProductRating,
   getProductRating,
 } = require("../controllers/product/productController");
@@ -27,15 +24,11 @@ const protected = require("../../config/protected");
 router.get("", getAllProducts);
 router.get("/:id", findProduct, getSingleProduct);
 
-// Product Attributes
-router.get("/attributes/:id", getProductAttributes);
-
 // Product Rating
-
 router.get("/:id/rating", findProduct, getProductRating);
 
 // PROTECTED ----------------------------
-router.use(protected);
+// router.use(protected);
 // Product
 router.post("", productRules(), validateFields(productFields), createProduct);
 router.put(
@@ -47,14 +40,7 @@ router.put(
 );
 router.delete("/:id", findProduct, deleteProduct);
 
-// Product Attributes
-router.post(
-  "/attributes",
-  productAttrRules(),
-  validateFields(productFields),
-  createProductAttr
-);
-router.delete("/attributes/:id", deleteProductAttribute);
+// Product Rating
 router.post("/:id/rating", findProduct, createProductRating);
 
 module.exports = router;
