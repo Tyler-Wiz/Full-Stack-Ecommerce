@@ -22,7 +22,7 @@ const AdminLayout = ({ children, title, currentDate }) => {
   };
 
   return (
-    <div className="flex h-screen bg-background w-full">
+    <div className="flex  bg-background w-full">
       <Sidebar expanded={expanded} toggleSidebar={toggleSidebar} />
       <div className={expanded ? "main" : "main w-[96%]"}>
         <Nav />

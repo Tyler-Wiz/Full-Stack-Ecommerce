@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useRef } from "react";
-import { useForm, Controller } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "@/components/shared/TextInput";
 import { productSchema } from "@/validators/ProductValidator";
@@ -19,8 +19,12 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
     resolver: yupResolver(productSchema),
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "sizes",
+  });
+
   const [images, setImages] = useState([]);
-  const attributeRef = useRef();
 
   const handleImageChange = (e) => {
     const files = e.target.files;
@@ -51,11 +55,16 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
   };
 
   const onSubmit = async (data, e) => {
-    console.log(data);
+    const sizesArray = data.sizes.map((size) => size.name);
+    const formData = { ...data, sizes: sizesArray };
     try {
-      const res = await axios.post(`http://localhost:4002/api/products`, data, {
-        withCredentials: true,
-      });
+      const res = await axios.post(
+        `http://localhost:4002/api/products`,
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
       const product = res.data;
       if (product) {
         const data = {
@@ -144,51 +153,35 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
             className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
           />
         </div>
-        <div className="flex gap-3">
-          <div className="w-1/2">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="color">
-              Color
-            </label>
-            <select
-              className={`w-full p-2 border rounded-md outline-none focus:border-blue-500`}
-              ref={attributeRef}>
-              {attributes.map((attribute) => {
-                if (attribute.name === "Color") {
-                  return (
-                    <option key={attribute.id} value={attribute.id}>
-                      {attribute.value}
-                    </option>
-                  );
-                }
-              })}
-            </select>
-          </div>
-          <div className="w-1/2">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="color">
-              Size
-            </label>
-            <select
-              className={`w-full p-2 border rounded-md outline-none focus:border-blue-500`}>
-              {attributes.map((attribute) => {
-                if (attribute.name === "Size") {
-                  return (
-                    <option key={attribute.id} value={attribute.id}>
-                      {attribute.value}
-                    </option>
-                  );
-                }
-              })}
-            </select>
-          </div>
+        <div className="flex items-center">
+          <label className="text-sm">Sizes:</label>
+          {fields.map((size, index) => (
+            <div key={size.id} className="flex items-center">
+              <input
+                {...register(`sizes.${index}.name`)}
+                type="text"
+                placeholder="Size"
+                className="outline-none w-10 block border-[1px] text-center "
+              />
+              <button
+                type="button"
+                className=" bg-tahiti mx-2 px-2"
+                onClick={() => remove(index)}>
+                X
+              </button>
+            </div>
+          ))}
         </div>
+        <button
+          type="button"
+          className=" bg-tahiti p-2 block my-5 text-sm"
+          onClick={() => append({ name: "" })}>
+          Add Size
+        </button>
         <label htmlFor="description" className="ml-3 text-sm">
           Description
           <textarea
-            className="outline-none w-full h-20 block rounded-lg border-[1px] p-6"
+            className="outline-none w-full h-32 block rounded-lg border-[1px] px-6"
             {...register("description")}></textarea>
         </label>
       </div>
@@ -309,6 +302,12 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
             <p className="text-red-500 text-xs mt-1">{errors.gender.message}</p>
           )}
         </div>
+        <Input
+          register={register}
+          name="colors"
+          label="Colors"
+          error={errors.colors?.message}
+        />
         <PrimaryButton name="Publish product" color="bg-tahiti" />
       </div>
     </form>

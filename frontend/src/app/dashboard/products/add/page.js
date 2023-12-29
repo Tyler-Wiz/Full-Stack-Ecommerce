@@ -6,7 +6,6 @@ import {
   getCategories,
   getBrands,
   getProducts,
-  getAttributes,
   getDiscounts,
 } from "@/services/api/fetch/fetchAll";
 
@@ -15,7 +14,6 @@ const page = async () => {
   const categories = await getCategories();
   const brands = await getBrands();
   const products = await getProducts();
-  const attributes = await getAttributes();
   const discounts = await getDiscounts();
 
   return (
@@ -31,7 +29,6 @@ const page = async () => {
       <AddProductForm
         categories={categories}
         brands={brands}
-        attributes={attributes}
         discounts={discounts}
       />
     </AdminLayout>

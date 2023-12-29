@@ -5,4 +5,5 @@ export const productSchema = yup.object({
   description: yup.string().min(8).required(),
   price: yup.string().required(),
   stock: yup.number().required(),
+  colors: yup.string().required(),
 });
