@@ -47,25 +47,12 @@ const { DB } = require("./config");
     `CREATE TABLE IF NOT EXISTS discounts (
         id             SERIAL PRIMARY KEY,
         name           varchar(255) NOT NULL,
-        description         TEXT,
+        description       TEXT,
         discount_percent  decimal,
         active         boolean,
         created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
         modified_at    DATE NOT NULL DEFAULT CURRENT_DATE,
         deleted_at     DATE NOT NULL DEFAULT CURRENT_DATE
-    );`,
-    `CREATE TABLE IF NOT EXISTS attributes (
-        id             SERIAL PRIMARY KEY,
-        name           varchar(255) NOT NULL,
-        created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
-        modified_at    DATE NOT NULL DEFAULT CURRENT_DATE
-    );`,
-    `CREATE TABLE IF NOT EXISTS attributes_options (
-        id             SERIAL PRIMARY KEY,
-        attribute_id   INTEGER REFERENCES attributes(id),
-        value          varchar(255) NOT NULL,
-        created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
-        modified_at    DATE NOT NULL DEFAULT CURRENT_DATE
     );`,
     `CREATE TABLE IF NOT EXISTS products (
         id             SERIAL PRIMARY KEY,
@@ -75,16 +62,13 @@ const { DB } = require("./config");
         SKU            varchar NOT NULL,
         price          Decimal,
         stock          Decimal,
+        sizes          VARCHAR(255)[],
+        colors         Varchar,
         category_id    INTEGER REFERENCES product_category(id),
         discount_id    INTEGER REFERENCES discounts(id),
         brand_id       INTEGER REFERENCES brands(id),
         created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
         modified_at    DATE NOT NULL DEFAULT CURRENT_DATE
-    );`,
-    `CREATE TABLE IF NOT EXISTS product_attributes(
-        id              SERIAL PRIMARY KEY,
-        product_id      INTEGER REFERENCES products(id),
-        att_options_id  INTEGER REFERENCES attributes_options(id)
     );`,
     `CREATE TABLE IF NOT EXISTS product_ratings(
         id              SERIAL PRIMARY KEY,

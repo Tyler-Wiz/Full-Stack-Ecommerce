@@ -24,6 +24,8 @@ const productRules = () => {
       .optional({ checkFalsy: true, nullable: true })
       .isInt({ min: 1, max: 6 })
       .withMessage("price must be a number"),
+    body("colors").optional({ checkFalsy: true, nullable: true }).isString(),
+    body("sizes").optional({ checkFalsy: true, nullable: true }).isArray(),
   ];
 };
 
@@ -51,6 +53,8 @@ const productFields = [
   "product_id",
   "att_options_id",
   "stock",
+  "colors",
+  "sizes",
 ];
 
 module.exports = { productFields, productRules, productAttrRules };

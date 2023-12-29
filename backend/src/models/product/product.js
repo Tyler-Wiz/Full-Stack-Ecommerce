@@ -4,8 +4,8 @@ class ProductModel {
   static async create(data) {
     try {
       const statement = `INSERT INTO products(name,slug,description,sku,price,
-                         category_id,discount_id,brand_id,stock) 
-                         VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING*`;
+                         category_id,discount_id,brand_id,stock,colors,sizes) 
+                         VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING*`;
       const values = [
         data.name,
         data.slug,
@@ -16,6 +16,8 @@ class ProductModel {
         data.discount_id,
         data.brand_id,
         data.stock,
+        data.colors,
+        data.sizes,
       ];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
@@ -43,7 +45,7 @@ class ProductModel {
   }
   static async readUnique(id) {
     try {
-      const statement = `SELECT p.id, p.name, p.slug, p.price, p.description, 
+      const statement = `SELECT p.id, p.name, p.slug, p.price, p.description, p.colors, p.sizes,
                         p.sku, pc.name as cat_name, br.name as br_name,
                         d.active as active_discount, d.discount_percent as percentage, ARRAY_AGG(ARRAY[i.url]) as images_array
                         FROM products p
