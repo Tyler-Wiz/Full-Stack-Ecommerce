@@ -7,7 +7,6 @@ const categoryRoute = require("./src/routes/category");
 const brandRoute = require("./src/routes/brand");
 const discountRouter = require("./src/routes/discount");
 const productRoute = require("./src/routes/product");
-const imageRoute = require("./src/routes/images");
 const cartRoute = require("./src/routes/cart");
 const orderRoute = require("./src/routes/order");
 
@@ -21,7 +20,6 @@ app.use("/api/category", categoryRoute);
 app.use("/api/brand", brandRoute);
 app.use("/api/discount", discountRouter);
 app.use("/api/products", productRoute);
-app.use("/api/images", imageRoute);
 app.use("/api/cart/", cartRoute);
 app.use("/api/order", orderRoute);
 

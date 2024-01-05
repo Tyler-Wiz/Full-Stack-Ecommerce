@@ -20,13 +20,13 @@ const Sidebar = ({ expanded, toggleSidebar }) => {
       </div>
       <div className="mt-10">
         {sidebarData.map((item, idx) => (
-          <>
+          <div key={idx}>
             {expanded ? (
               <MenuItem key={idx} item={item} />
             ) : (
               <IconItem key={idx} item={item} />
             )}
-          </>
+          </div>
         ))}
       </div>
 

@@ -6,26 +6,27 @@ const productRules = () => {
     body("description").notEmpty().withMessage("description must be specified"),
     body("price")
       .notEmpty()
-      .isFloat("5.99", { min: 3 })
+      .isFloat("5.990", { min: 3 })
       .withMessage("price must be a number"),
     body("stock")
       .notEmpty()
       .isInt({ min: 1 })
       .withMessage("stock count must be a number"),
-    body("category_id")
-      .optional({ checkFalsy: true, nullable: true })
-      .isInt({ min: 1, max: 6 })
-      .withMessage("price must be a number"),
+    // body("category_id")
+    //   .optional({ checkFalsy: true, nullable: true })
+    //   .isInt({ min: 1, max: 6 })
+    //   .withMessage("category must be a number"),
     body("discount_id")
       .optional({ checkFalsy: true, nullable: true })
       .isInt({ min: 1, max: 6 })
-      .withMessage("price must be a number"),
-    body("brand_id")
-      .optional({ checkFalsy: true, nullable: true })
-      .isInt({ min: 1, max: 6 })
-      .withMessage("price must be a number"),
+      .withMessage("discount must be a number"),
+    // body("brand_id")
+    //   .optional({ checkFalsy: true, nullable: true })
+    //   .isInt({ min: 1, max: 6 })
+    //   .withMessage("brand must be a number"),
     body("colors").optional({ checkFalsy: true, nullable: true }).isString(),
     body("sizes").optional({ checkFalsy: true, nullable: true }).isArray(),
+    body("images").optional({ checkFalsy: true, nullable: true }).isArray(),
   ];
 };
 
@@ -55,6 +56,7 @@ const productFields = [
   "stock",
   "colors",
   "sizes",
+  "images",
 ];
 
 module.exports = { productFields, productRules, productAttrRules };

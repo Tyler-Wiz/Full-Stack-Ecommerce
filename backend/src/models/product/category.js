@@ -33,11 +33,13 @@ class ProductCategoryModel {
   }
   static async readUnique(id) {
     try {
-      const statement = `SELECT * FROM product_category WHERE id = $1`;
+      const statement = `SELECT * FROM product_category c
+                         JOIN products p ON p.category_id = c.id
+                         WHERE c.id = $1`;
       const values = [id];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
-        return result.rows[0];
+        return result.rows;
       }
       return null;
     } catch (error) {

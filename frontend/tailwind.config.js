@@ -8,7 +8,11 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        hero: "url('/sales.jpg')",
+        hero: "url('/img/client/sliderOne.png')",
+        men: "url('/img/client/men.jpg')",
+        children: "url('/img/client/children.jpg')",
+        women: "url('/img/client/women.png')",
+        mountain: "url('/img/client/mountain.png')",
       },
       colors: {
         transparent: "transparent",
@@ -23,6 +27,8 @@ module.exports = {
         bermuda: "#78dcca",
         secondary: "#3A4658",
         background: "#EEF2F8",
+        button: "#00ba9d",
+        primary: "#C1032F",
       },
     },
   },

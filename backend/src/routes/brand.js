@@ -17,7 +17,7 @@ router.get("/", getAll);
 router.get("/:id", findBrand, getSingleBrand);
 
 // PROTECTED
-router.use(protected);
+// router.use(protected);
 router.post("/", brandRules(), validateFields(brandFields), createBrand);
 router.put(
   "/:id",

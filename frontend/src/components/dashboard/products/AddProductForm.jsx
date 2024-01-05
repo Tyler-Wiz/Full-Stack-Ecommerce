@@ -56,7 +56,7 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
 
   const onSubmit = async (data, e) => {
     const sizesArray = data.sizes.map((size) => size.name);
-    const formData = { ...data, sizes: sizesArray };
+    const formData = { ...data, sizes: sizesArray, images };
     try {
       const res = await axios.post(
         `http://localhost:4002/api/products`,
@@ -65,23 +65,9 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
           withCredentials: true,
         }
       );
-      const product = res.data;
-      if (product) {
-        const data = {
-          product_id: product.id,
-          images,
-        };
-        const res = await axios.post(
-          "http://localhost:4002/api/images/",
-          data,
-          {
-            withCredentials: true,
-          }
-        );
-        if (res.data) {
-          setImages([]);
-          e.target.reset();
-        }
+      if (res.data) {
+        setImages([]);
+        e.target.reset();
       }
     } catch (error) {
       console.log(error);
@@ -91,7 +77,7 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex justify-between gap-10 bg-white px-5 py-6 rounded-lg shadow-xl">
+      className="flex justify-between gap-10 bg-white px-5 py-6 rounded-lg shadow-xl mt-6">
       <div className="w-3/5">
         <div className="mb-3">
           <p className="mb-2 text-sm">Product Images</p>
@@ -153,7 +139,7 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
             className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
           />
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center mt-10">
           <label className="text-sm">Sizes:</label>
           {fields.map((size, index) => (
             <div key={size.id} className="flex items-center">

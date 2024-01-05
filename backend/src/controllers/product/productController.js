@@ -2,14 +2,48 @@ const ProductModel = require("../../models/product/product");
 const CreateError = require("http-errors");
 const { generateSKU, generateSlug } = require("../../utils/generateSlugSku");
 const ProductRating = require("../../models/product/rating");
+const AWS = require("aws-sdk");
+require("aws-sdk/lib/maintenance_mode_message").suppress = true;
+
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
+const s3 = new AWS.S3();
+const bucketName = "tooxclusive-artist-profile";
 
 // Product
 exports.createProduct = async (req, res, next) => {
-  const { name } = req.body;
   try {
+    const { name, images } = req.body;
+
+    const base64Images = images;
+    const insertPromises = base64Images.map(async (image) => {
+      const buf = Buffer.from(
+        image.image.replace(/^data:image\/\w+;base64,/, ""),
+        "base64"
+      );
+      const s3Params = {
+        Bucket: bucketName,
+        Key: `images/${image.name}`,
+        Body: buf,
+        ContentEncoding: "base64",
+        ContentType: "image/jpeg",
+        ACL: "public-read",
+      };
+      const s3UploadResult = await s3.upload(s3Params).promise();
+      return s3UploadResult.Location;
+    });
+    const allImages = await Promise.all(insertPromises);
     const sku = generateSKU();
     const slug = generateSlug(name);
-    const product = await ProductModel.create({ ...req.body, sku, slug });
+    const product = await ProductModel.create({
+      ...req.body,
+      sku,
+      slug,
+      image_urls: allImages,
+    });
     res.status(201).send(product);
   } catch (error) {
     next(error);

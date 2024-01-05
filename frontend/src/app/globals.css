@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.jost {
+  font-family: var(--font-jost);
+}
+
+.montserrat {
+  font-family: var(--font-montserrat);
+}
+
 h2 {
   font-size: 30px;
   font-weight: 600;
@@ -52,10 +60,10 @@ h2 {
     @apply flex justify-between items-center text-xs text-gray-500 capitalize;
   }
   .sidebar {
-    @apply flex flex-col w-[18%] shadow-2xl bg-white py-3 px-2;
+    @apply flex flex-col w-[18%] shadow-2xl bg-white py-3 px-2 h-screen fixed;
   }
   .main {
-    @apply flex flex-col justify-between w-[82%] px-10 py-6 h-screen;
+    @apply flex flex-col gap-6   w-[82%] px-10 py-6;
   }
 
   /* flex-center */
@@ -79,6 +87,37 @@ h2 {
   /* Sidebar */
 
   .logo {
-    @apply flex justify-between items-center px-2;
+    @apply flex justify-between items-center px-3;
+  }
+
+  /* Header */
+  .header-container {
+    @apply flex justify-between items-center max-w-screen-xl mx-auto capitalize text-lg;
+  }
+
+  .flex-item {
+    @apply flex items-center;
+  }
+
+  .header-container nav {
+    @apply flex items-center ml-16 gap-10;
+  }
+
+  .header-container p {
+    @apply text-lg underline;
+  }
+
+  /* Footer */
+
+  .footer-container {
+    @apply flex justify-between items-center max-w-screen-xl mx-auto capitalize text-sm text-secondary;
+  }
+
+  .footer-container input {
+    @apply placeholder:text-xs border border-gray-300 px-2 py-2 w-full outline-none;
+  }
+
+  .container {
+    @apply flex justify-between max-w-screen-lg mx-auto capitalize text-sm text-secondary;
   }
 }

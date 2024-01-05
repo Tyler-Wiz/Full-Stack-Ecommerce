@@ -63,6 +63,7 @@ const { DB } = require("./config");
         price          Decimal,
         stock          Decimal,
         sizes          VARCHAR(255)[],
+        image_urls     varchar(255)[],
         colors         Varchar,
         category_id    INTEGER REFERENCES product_category(id),
         discount_id    INTEGER REFERENCES discounts(id),
@@ -75,12 +76,6 @@ const { DB } = require("./config");
         product_id      INTEGER REFERENCES products(id),
         rating           INTEGER NOT NULL,
         created_at      DATE NOT NULL DEFAULT CURRENT_DATE
-    );`,
-    `CREATE TABLE IF NOT EXISTS images(
-        id              SERIAL PRIMARY KEY,
-        product_id      INTEGER REFERENCES products(id),
-        title           varchar,
-        url             text
     );`,
     `CREATE TABLE IF NOT EXISTS cart (
        id              SERIAL PRIMARY KEY,

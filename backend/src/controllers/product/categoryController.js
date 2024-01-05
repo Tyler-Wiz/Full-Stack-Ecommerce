@@ -13,7 +13,8 @@ exports.createCat = async (req, res, next) => {
 
 exports.getAllCat = async (req, res, next) => {
   try {
-    const allCategory = await ProductCategoryModel.readAll();
+    const id = req.params.id;
+    const allCategory = await ProductCategoryModel.readAll(id);
     res.status(200).send(allCategory);
   } catch (error) {
     next(error);

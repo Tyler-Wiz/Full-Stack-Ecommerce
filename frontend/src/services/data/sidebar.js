@@ -25,18 +25,8 @@ export const sidebarData = [
       },
       {
         id: 22,
-        title: "Product Grid",
-        path: "/dashboard/products",
-      },
-      {
-        id: 23,
         title: "Product Management",
-        path: "/dashboard/products",
-      },
-      {
-        id: 24,
-        title: "Product Categories",
-        path: "/dashboard/products",
+        path: "/dashboard/products/manage",
       },
       {
         id: 25,

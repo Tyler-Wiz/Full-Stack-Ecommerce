@@ -1,5 +1,7 @@
 export const getCategories = async () => {
-  const response = await fetch(`http://localhost:4002/api/category/`);
+  const response = await fetch(`http://localhost:4002/api/category/`, {
+    next: { revalidate: 0 },
+  });
   const data = await response.json();
   return data;
 };
@@ -11,7 +13,17 @@ export const getBrands = async () => {
 };
 
 export const getProducts = async () => {
-  const response = await fetch(`http://localhost:4002/api/products/`);
+  const response = await fetch(`http://localhost:4002/api/products/`, {
+    next: { revalidate: 0 },
+  });
+  const data = await response.json();
+  return data;
+};
+
+export const getSingleProduct = async (id) => {
+  const response = await fetch(`http://localhost:4002/api/products/${id}`, {
+    next: { revalidate: 0 },
+  });
   const data = await response.json();
   return data;
 };
