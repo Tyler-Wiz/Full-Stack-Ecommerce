@@ -1,8 +1,9 @@
 import { Inter, Montserrat, Jost } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/store/ReduxProvider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const inter = Inter({ subsets: ["latin"] });
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body className={`${montserrat.variable} ${jost.variable}`}>
           {children}
+          <ToastContainer autoClose={1000} />
         </body>
       </html>
     </ReduxProvider>

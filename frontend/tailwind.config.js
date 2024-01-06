@@ -30,6 +30,15 @@ module.exports = {
         button: "#00ba9d",
         primary: "#C1032F",
       },
+      keyframes: {
+        slideIn: {
+          "0%": { transform: "translateX(500px)", opacity: "0" },
+          "100% ": { transform: "translateX(0)", opacity: "1" },
+        },
+      },
+      animation: {
+        slide: "slideIn 500ms ease-in-out",
+      },
     },
   },
   plugins: [],
