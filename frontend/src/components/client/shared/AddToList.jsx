@@ -3,7 +3,8 @@
 import { FaRegHeart } from "react-icons/fa6";
 import { IoCartOutline, IoShare } from "react-icons/io5";
 import { addToWishList } from "@/store/features/wishSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/store/features/cartSlice";
 
 const AddToList = ({ product }) => {
   const dispatch = useDispatch();
@@ -11,6 +12,11 @@ const AddToList = ({ product }) => {
   const handleAddToWishList = (item) => {
     dispatch(addToWishList(item));
   };
+
+  const handleAddToCart = (item) => {
+    dispatch(addToCart(item));
+  };
+
   return (
     <section className="">
       <button
@@ -20,7 +26,7 @@ const AddToList = ({ product }) => {
       </button>
       <button
         className="bg-white text-2xl p-3 hover:bg-black hover:text-white"
-        onClick={() => console.log(id)}>
+        onClick={() => handleAddToCart(product)}>
         <IoCartOutline />
       </button>
       <button

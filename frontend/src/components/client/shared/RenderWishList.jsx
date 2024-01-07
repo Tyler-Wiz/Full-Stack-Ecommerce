@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { removeWish, clearWishList } from "@/store/features/wishSlice";
 import Button from "./Button";
+import { addToCart } from "@/store/features/cartSlice";
 
 const RenderWishList = ({ openWishList, setOpenWishList }) => {
   const { wishList } = useSelector((state) => state.wish);
@@ -60,6 +61,7 @@ const RenderWishList = ({ openWishList, setOpenWishList }) => {
                             name="add to cart"
                             color="text-white"
                             backgroundColor="bg-primary"
+                            onClick={() => dispatch(addToCart(item))}
                           />
                         </div>
                       </div>
