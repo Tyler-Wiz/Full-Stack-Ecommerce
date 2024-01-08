@@ -14,6 +14,7 @@ module.exports = {
         women: "url('/img/client/women.png')",
         mountain: "url('/img/client/mountain.png')",
         cart: "url('/img/client/cart.png')",
+        login: "url('/img/client/login-promo.png')",
       },
       colors: {
         transparent: "transparent",

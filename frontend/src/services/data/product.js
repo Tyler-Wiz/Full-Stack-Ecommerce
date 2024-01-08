@@ -27,7 +27,11 @@ export const productData = [
     category: ["equipment", "women", "men"],
     description:
       "The Power 12 Casual Dumbbell is a dumbbell with a rubber-coated weight plate and a knurled handle. The dumbbell is available in weights from 2.5 kg to 50 kg. The weight is indicated on the end of the dumbbell. The dumbbell is sold individually.",
-    images: ["/img/products/big-dumbbells-white.jpg"],
+    images: [
+      "/img/products/big-dumbbells-white.jpg",
+      "/img/products/big-dumbbells-white1.jpg",
+      "/img/products/big-dumbbells-white3.jpeg",
+    ],
     sizes: [
       "2.5kg",
       "5kg",
@@ -299,13 +303,5 @@ export const productData = [
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["red", "blue", "green", "black", "white"],
     rating: 2,
-  },
-];
-
-const productGuide = [
-  {
-    name: "return policy",
-    description:
-      "From Wednesday 1st November 2023 to Monday 22nd January 2024 our refund and exchange policy will be relaxed so that refunds and exchanges will be given at anytime* during this period as long as the goods are accompanied with a valid receipt. All other terms and conditions apply. *Please note that the interest of customer service, we are unable to process refunds and exchanges between Tuesday 26th December and Thursday 28th December 2023. THE REFUNDS & EXCHANGE POLICY WILL RESUME AS NORMAL ON FRIDAY 29TH DECEMBER. This does not affect your statutory rights. Please allow up to 14 days for your return to be processed once we receive it back in our warehouse. Once refunded it will show in your account within 3-5 days. Internet orders cannot be exchanged Instore and must only be returned. Remember to take proof of purchase such as your receipt or dispatch note and also the item(s) you wish to return. Our Instore team will be happy to assist you. All payment methods refunded in store! Personalised items will not be accepted unless the personalisation is incorrect or if the item is faulty. Underwear is non-returnable for hygiene reasons. Swimwear returns will only be accepted if the hygiene seal is still intact. You can also send your return by post. Just visit our returns portal here and choose your preferred carrier. Printerless options available!",
   },
 ];

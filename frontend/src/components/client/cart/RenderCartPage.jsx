@@ -18,6 +18,7 @@ import Link from "next/link";
 
 const RenderCartPage = () => {
   const { cartItem, cartTotalAmount } = useSelector((state) => state.cart);
+  const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const [isClient, setIsClient] = useState(false);
@@ -53,7 +54,7 @@ const RenderCartPage = () => {
                 <tbody className="min-w-full bg-white divide-y divide-gray-200 capitalize jost">
                   {cartItem?.map((product, index) => (
                     <tr key={product.id}>
-                      <td className="p-4 whitespace-nowrap flex items-center gap-6 font-bold text-[1rem]">
+                      <td className="p-4 whitespace-nowrap flex items-center gap-6 ">
                         <div className="relative w-20 h-20">
                           <Link
                             href={`/products/${product.category[0]}/${product.slug}`}>
@@ -65,7 +66,12 @@ const RenderCartPage = () => {
                             />
                           </Link>
                         </div>
-                        {product.name}
+                        <div className=" text-[1rem]">
+                          <p className="font-bold mb-2"> {product.name}</p>
+                          {product.selectedSize && (
+                            <p>Size: {product.selectedSize}</p>
+                          )}
+                        </div>
                       </td>
                       <td className="p-4 whitespace-nowrap text-[1rem] font-medium text-gray-400">
                         {product.discount ? (
@@ -157,11 +163,25 @@ const RenderCartPage = () => {
                     <p>Total Amount</p>
                     <p>{cartTotalAmount.toFixed(2)}</p>
                   </div>
-                  <Button
-                    name="Place Order"
-                    backgroundColor="bg-primary"
-                    color="text-white"
-                  />
+                  {token ? (
+                    <Link href={`/`} className="my-4">
+                      <Button
+                        name="Place Order"
+                        backgroundColor="bg-primary"
+                        color="text-white"
+                        width="w-full"
+                      />
+                    </Link>
+                  ) : (
+                    <Link href={`/login`} className="my-4">
+                      <Button
+                        name="login to Place order"
+                        backgroundColor="bg-primary"
+                        color="text-white"
+                        width="w-full"
+                      />
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>

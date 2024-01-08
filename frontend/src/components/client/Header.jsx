@@ -12,7 +12,6 @@ import Link from "next/link";
 
 const Header = ({ setOpenWishList, setOpenCartList }) => {
   const dispatch = useDispatch();
-
   const { itemsTotal, wishList } = useSelector((state) => state.wish);
   const { cartItem, cartTotalQuantity } = useSelector((state) => state.cart);
 
@@ -36,7 +35,9 @@ const Header = ({ setOpenWishList, setOpenCartList }) => {
           <Nav />
         </div>
         <div className="flex-item gap-7">
-          <p className="mr-6">Login/Register</p>
+          <Link href="/login">
+            <p className="mr-6 text-[2px]">Login/Register</p>
+          </Link>
           <button className="relative" onClick={() => setOpenWishList(true)}>
             <FaRegHeart size={20} />
             <span className="absolute -top-4 -right-5">

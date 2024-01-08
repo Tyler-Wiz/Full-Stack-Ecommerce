@@ -1,13 +1,13 @@
-const Input = ({ register, name, error, label, ...rest }) => {
+const Input = ({ register, name, error, label, width, ...rest }) => {
   return (
-    <div className="mb-4">
+    <div className="mb-4 relative">
       {label && (
         <label htmlFor={name} className="text-xs ml-2">
           {label}
         </label>
       )}
       <input
-        className={`block outline-none border-[1px] border-gray-400 rounded-lg px-3 py-3 w-full mb-1 `}
+        className={`block outline-none border-[1px] border-gray-400 ${width} rounded-lg px-3 py-3 w-full mb-1 `}
         {...register(name)}
         {...rest}
       />
