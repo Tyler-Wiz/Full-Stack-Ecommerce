@@ -4,6 +4,7 @@ import Image from "next/image";
 import { productData } from "@/services/data/product";
 import AddToList from "../shared/AddToList";
 import { useEffect, useState } from "react";
+import RenderProductList from "../product/RenderProductList";
 
 const Trending = () => {
   const [data, setData] = useState(productData);
@@ -50,27 +51,7 @@ const Trending = () => {
         <div className="flex flex-wrap gap-4 w-[80%]">
           {data?.slice(0, 6).map((item, index) => (
             <div key={index} className="w-[32%]">
-              <div className="h-[360px] relative group">
-                <span className="bg-white px-3 py-2 absolute left-0 top-0 z-50 group-hover:bg-black group-hover:text-white">
-                  {index + 1}
-                </span>
-                {item.images && (
-                  <Image
-                    src={item.images[0]}
-                    fill={true}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    alt="product image"
-                  />
-                )}
-                <div className="hidden group-hover:block absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                  <AddToList product={item} />
-                </div>
-              </div>
-              <p className="text-primary uppercase font-bold text-sm tracking-widest my-2">
-                {item.category[0]}
-              </p>
-              <p className="font-bold my-2">{item.name}</p>
-              <p>{item.price}</p>
+              <RenderProductList product={item} />
             </div>
           ))}
         </div>

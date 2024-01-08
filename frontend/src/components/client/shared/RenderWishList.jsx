@@ -34,8 +34,8 @@ const RenderWishList = ({ openWishList, setOpenWishList }) => {
                   <>
                     <div className="flex my-6 border-b-[1px] pb-4" key={index}>
                       <Link
-                        href={`/product/${item.slug}`}
-                        className="w-32 h-28 relative"
+                        href={`/products/${item.category[0]}/${item.slug}`}
+                        className="w-32 h-24 relative"
                         onClick={() => {
                           setOpenWishList(false);
                         }}>
@@ -56,7 +56,7 @@ const RenderWishList = ({ openWishList, setOpenWishList }) => {
                           <p className="mr-1">{item.itemsQuantity} x</p>
                           <p>£{item.price}</p>
                         </div>
-                        <div className="mt-2">
+                        <div className="mt-2 ">
                           <Button
                             name="add to cart"
                             color="text-white"

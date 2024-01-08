@@ -13,21 +13,12 @@ const AddToList = ({ product }) => {
     dispatch(addToWishList(item));
   };
 
-  const handleAddToCart = (item) => {
-    dispatch(addToCart(item));
-  };
-
   return (
     <section className="">
       <button
         className="bg-white text-2xl p-3 hover:bg-black hover:text-white"
         onClick={() => handleAddToWishList(product)}>
         <FaRegHeart />
-      </button>
-      <button
-        className="bg-white text-2xl p-3 hover:bg-black hover:text-white"
-        onClick={() => handleAddToCart(product)}>
-        <IoCartOutline />
       </button>
       <button
         className="bg-white text-2xl p-3 hover:bg-black hover:text-white"

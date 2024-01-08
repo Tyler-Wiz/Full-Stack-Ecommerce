@@ -26,7 +26,7 @@ const ClientLayout = ({ children }) => {
           setOpenWishList={setOpenWishList}
           setOpenCartList={setOpenCartList}
         />
-        <div className="container">
+        <div className=" bg-gray-50 px-20">
           <Breadcrumb />
         </div>
 

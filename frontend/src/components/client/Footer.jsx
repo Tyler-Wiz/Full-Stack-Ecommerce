@@ -6,7 +6,7 @@ import { MdEmail } from "react-icons/md";
 const Footer = () => {
   return (
     <footer className="montserrat py-10 mt-10 border-t-[1px]">
-      <div className="footer-container">
+      <div className="container">
         <div className="w-1/5 flex flex-col gap-2">
           <Image
             src="/img/client/logo.png"

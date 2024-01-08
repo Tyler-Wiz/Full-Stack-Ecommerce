@@ -8,6 +8,7 @@ import { IoCartOutline, IoSearch } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { getTotal } from "@/store/features/wishSlice";
 import { getCartTotal } from "@/store/features/cartSlice";
+import Link from "next/link";
 
 const Header = ({ setOpenWishList, setOpenCartList }) => {
   const dispatch = useDispatch();
@@ -24,14 +25,14 @@ const Header = ({ setOpenWishList, setOpenCartList }) => {
     <header className="jost border-b-[1px] py-5">
       <div className="header-container container">
         <div className="flex-item">
-          <div className="relative w-32 h-7">
+          <Link href="/" className="relative w-32 h-7">
             <Image
               src="/img/client/logo.png"
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               alt="Website logo"
             />
-          </div>
+          </Link>
           <Nav />
         </div>
         <div className="flex-item gap-7">

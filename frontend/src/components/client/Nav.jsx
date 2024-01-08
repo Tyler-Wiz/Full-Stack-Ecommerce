@@ -3,9 +3,8 @@ import React from "react";
 
 const NavData = [
   { name: "Home", link: "/" },
-  { name: "shop", link: "/shop" },
   { name: "products", link: "/products" },
-  { name: "blog", link: "/blog" },
+  { name: "contact", link: "/contact" },
 ];
 
 const Nav = () => {

@@ -14,6 +14,7 @@ import {
   removeFromCart,
 } from "@/store/features/cartSlice";
 import Button from "../shared/Button";
+import Link from "next/link";
 
 const RenderCartPage = () => {
   const { cartItem, cartTotalAmount } = useSelector((state) => state.cart);
@@ -24,6 +25,10 @@ const RenderCartPage = () => {
   useLayoutEffect(() => {
     setIsClient(true);
   }, []);
+
+  const handleDiscount = (product) => {
+    return parseFloat(product.price - product.price * (product.discount / 100));
+  };
 
   return (
     <ClientLayout>
@@ -50,17 +55,27 @@ const RenderCartPage = () => {
                     <tr key={product.id}>
                       <td className="p-4 whitespace-nowrap flex items-center gap-6 font-bold text-[1rem]">
                         <div className="relative w-20 h-20">
-                          <Image
-                            src={product.images[0]}
-                            alt={product.name}
-                            fill
-                            className="rounded-full"
-                          />
+                          <Link
+                            href={`/products/${product.category[0]}/${product.slug}`}>
+                            <Image
+                              src={product.images[0]}
+                              alt={product.name}
+                              fill
+                              className="rounded-full"
+                            />
+                          </Link>
                         </div>
                         {product.name}
                       </td>
                       <td className="p-4 whitespace-nowrap text-[1rem] font-medium text-gray-400">
-                        <p>{product.price}</p>
+                        {product.discount ? (
+                          <div className="flex gap-4">
+                            <p>£{handleDiscount(product).toFixed(2)}</p>
+                            <p className="line-through">£{product.price}</p>
+                          </div>
+                        ) : (
+                          <p>£{product.price}</p>
+                        )}
                       </td>
                       <td className="p-4 whitespace-nowrap text-xs font-medium items-center">
                         <button
@@ -80,9 +95,25 @@ const RenderCartPage = () => {
                         </button>
                       </td>
                       <td className="p-4 whitespace-nowrap text-[1rem] font-medium text-gray-400">
-                        <p>
-                          {(product.price * product.cartQuantity).toFixed(2)}
-                        </p>
+                        <div>
+                          {product.discount ? (
+                            <div className="flex gap-4">
+                              <p>
+                                £
+                                {(
+                                  handleDiscount(product) * product.cartQuantity
+                                ).toFixed(2)}
+                              </p>
+                            </div>
+                          ) : (
+                            <p>
+                              £
+                              {(product.price * product.cartQuantity).toFixed(
+                                2
+                              )}
+                            </p>
+                          )}
+                        </div>
                       </td>
                       <td className="p-4 whitespace-nowrap text-4xl text-black">
                         <button
@@ -124,7 +155,7 @@ const RenderCartPage = () => {
                   </p>
                   <div className="flex-item justify-between text-lg font-bold">
                     <p>Total Amount</p>
-                    <p>{cartTotalAmount}</p>
+                    <p>{cartTotalAmount.toFixed(2)}</p>
                   </div>
                   <Button
                     name="Place Order"

@@ -14,7 +14,7 @@ const StarRating = ({ initialRating = 0, onRatingChange }) => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex">
       {[1, 2, 3, 4, 5].map((star) => (
         <span
           key={star}
