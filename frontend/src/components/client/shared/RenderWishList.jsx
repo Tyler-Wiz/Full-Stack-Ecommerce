@@ -1,5 +1,6 @@
-/* eslint-disable no-unused-vars */
-import React, { FC } from "react";
+"use client";
+
+import React, { useState } from "react";
 import { MdClose, MdDelete } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
@@ -7,10 +8,41 @@ import Link from "next/link";
 import { removeWish, clearWishList } from "@/store/features/wishSlice";
 import Button from "./Button";
 import { addToCart } from "@/store/features/cartSlice";
+import RenderSizeColor from "../product/RenderSizeColor";
 
 const RenderWishList = ({ openWishList, setOpenWishList }) => {
   const { wishList } = useSelector((state) => state.wish);
   const dispatch = useDispatch();
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedItem, setSelectedItem] = useState("");
+  const [selectedError, setSelectedError] = useState("");
+
+  const product = wishList.find((item) => item.id === selectedItem);
+  const RenderProductOptions = () => {
+    return (
+      <RenderSizeColor
+        product={product}
+        setSelectedSize={setSelectedSize}
+        selectedSize={selectedSize}
+        selectedColor={selectedColor}
+        setSelectedColor={setSelectedColor}
+      />
+    );
+  };
+
+  const handleAddToCart = () => {
+    if (!selectedSize && !selectedColor) {
+      setSelectedError("Please select size and color");
+      return;
+    } else {
+      setSelectedError("");
+      setSelectedColor("");
+      setSelectedSize("");
+      dispatch(addToCart({ ...product, selectedSize, selectedColor }));
+    }
+  };
+
   return (
     <>
       {openWishList ? (
@@ -23,6 +55,7 @@ const RenderWishList = ({ openWishList, setOpenWishList }) => {
                 className="text-black cursor-pointer"
                 onClick={() => {
                   setOpenWishList(false);
+                  setSelectedItem("");
                 }}
               />
             </div>
@@ -61,7 +94,9 @@ const RenderWishList = ({ openWishList, setOpenWishList }) => {
                             name="add to cart"
                             color="text-white"
                             backgroundColor="bg-primary"
-                            onClick={() => dispatch(addToCart(item))}
+                            onClick={() => {
+                              setSelectedItem(item.id);
+                            }}
                           />
                         </div>
                       </div>
@@ -81,6 +116,20 @@ const RenderWishList = ({ openWishList, setOpenWishList }) => {
               </div>
             )}
           </div>
+          {selectedItem && (
+            <div className="flex gap-9 flex-col min-w-96 max-h-96 justify-center items-center mx-auto mt-32 border-2 bg-white w-1/2 h-screen">
+              <h3 className="font-bold">Pick a Size and Color</h3>
+              {RenderProductOptions()}
+              <Button
+                name="add to cart"
+                color="text-white"
+                backgroundColor="bg-primary"
+                width="w-1/2"
+                onClick={() => handleAddToCart()}
+              />
+              {selectedError && <p className="text-primary">{selectedError}</p>}
+            </div>
+          )}
         </div>
       ) : null}
     </>
