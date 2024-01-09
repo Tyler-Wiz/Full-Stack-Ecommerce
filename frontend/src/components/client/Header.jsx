@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import React, { useEffect, useState, useRef } from "react";
 import Nav from "./Nav";
@@ -17,6 +16,7 @@ const Header = ({ setOpenWishList, setOpenCartList }) => {
   const { cartItem, cartTotalQuantity } = useSelector((state) => state.cart);
   const [isSearch, setIsSearch] = useState(false);
   const searchQueryRef = useRef(null);
+
   useEffect(() => {
     dispatch(getTotal());
     dispatch(getCartTotal());
