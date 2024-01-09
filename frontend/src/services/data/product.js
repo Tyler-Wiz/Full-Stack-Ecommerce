@@ -4,7 +4,7 @@ export const productData = [
     name: "Nike Repel Miler Jacket",
     slug: "nike-repel-miler-jacket",
     price: "159.70",
-    category: ["Apparel", "Women"],
+    category: ["Apparel", "men"],
     description:
       "The Rough Tracking Jacket is a lightweight, water-resistant jacket with a hood and full-length zip. It has a mesh lining and a drawstring at the waist and hem. The jacket has two side pockets and a chest pocket, all with zips. The jacket has a reflective logo on the chest and a reflective print on the back. The model is 175 cm tall and is wearing sizes S.",
     images: [
@@ -89,7 +89,7 @@ export const productData = [
     name: "Nike Brasilia Large Training Duffle Bag",
     slug: "nike-brasilia-large-training-duffle-bag",
     price: "32.60",
-    category: ["equipment", "women", "men"],
+    category: ["equipment", "men"],
     description:
       "The Swedish Duffel Bag is a spacious duffel bag with a large main compartment and a separate shoe compartment. The bag has a removable shoulder strap and two handles. The bag has a reflective logo on the side and a reflective print on the end. The bag is made of a durable material that is water-resistant. The bag is sold individually.",
     images: [

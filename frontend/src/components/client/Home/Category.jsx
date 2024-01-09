@@ -1,12 +1,14 @@
-import Image from "next/image";
+import Link from "next/link";
 
 const Category = () => {
   return (
     <section className="my-20 container jost gap-10 h-[400px]">
       <div className="bg-women bg-cover h-full w-[45%] flex items-end">
-        <p className="bg-white px-2 py-3 ml-10 my-6 text-lg rounded-xl">
-          Women's Collection
-        </p>
+        <Link href={`/products/women`}>
+          <p className="bg-white px-2 py-3 ml-10 my-6 text-lg rounded-xl">
+            Women's Collection
+          </p>
+        </Link>
       </div>
       <div className="flex flex-col gap-6 w-[55%]">
         <div className="">
@@ -25,9 +27,11 @@ const Category = () => {
             </p>
           </div>
           <div className="bg-men bg-cover w-full rounded-3xl flex items-end">
-            <p className="bg-white px-2 py-3 ml-6 my-6 text-lg rounded-xl">
-              Men's Collection
-            </p>
+            <Link href={`/products/men`}>
+              <p className="bg-white px-2 py-3 ml-6 my-6 text-lg rounded-xl">
+                Men's Collection
+              </p>
+            </Link>
           </div>
         </div>
       </div>

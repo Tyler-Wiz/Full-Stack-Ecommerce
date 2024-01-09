@@ -5,9 +5,16 @@ import { productData } from "@/services/data/product";
 
 const page = ({ params }) => {
   const { category } = params;
-  const productsInCategory = productData.filter(
-    (product) => product.category[0].toLowerCase() === category.toLowerCase()
-  );
+  let productsInCategory;
+  if (category === "women" || category === "men") {
+    productsInCategory = productData.filter(
+      (product) => product.category[1].toLowerCase() === category.toLowerCase()
+    );
+  } else {
+    productsInCategory = productData.filter(
+      (product) => product.category[0].toLowerCase() === category.toLowerCase()
+    );
+  }
 
   return (
     <ClientLayout>
