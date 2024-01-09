@@ -76,7 +76,7 @@ const Header = ({ setOpenWishList, setOpenCartList }) => {
               {isSearch && (
                 <form onSubmit={HandleSearch}>
                   <input
-                    className="absolute top-9 w-52 border-[1px] right-0 outline-none px-3 py-1 "
+                    className="absolute top-9 w-52 border-[2px] right-0 outline-none px-3 py-1 "
                     ref={searchQueryRef}
                   />
                 </form>
