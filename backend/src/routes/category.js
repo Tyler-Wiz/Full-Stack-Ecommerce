@@ -13,7 +13,7 @@ const {
   updateCat,
   deleteCat,
 } = require("../controllers/product/categoryController");
-const protected = require("../../config/protected");
+const { protected } = require("../../config/protected");
 // OPEN
 router.get("/", getAllCat);
 router.get("/:id", findCategory, getSingleCat);

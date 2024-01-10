@@ -14,4 +14,16 @@ const protected = (req, res, next) => {
   }
 };
 
-module.exports = protected;
+const protectedUser = (req, res, next) => {
+  try {
+    if (!req.user) {
+      throw createError(401, "You are not logged in");
+    } else {
+      next();
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { protected, protectedUser };

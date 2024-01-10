@@ -6,18 +6,27 @@ const {
   readInfo,
   createUserInfo,
   updateUserInfo,
+  updateUser,
 } = require("../controllers/userController");
 const validate = require("../validators/validate");
 const { userInfoRules } = require("../validators/user/userInfo");
-const protected = require("../../config/protected");
+const validateFields = require("../validators/ValidateFields");
+const { protectedUser } = require("../../config/protected");
+const { userRules, userFields } = require("../validators/user/user");
 
 // OPEN
 router.get("/", read);
 router.get("/:id", readInfo);
 
 // PROTECTED
-router.use(protected);
+router.use(protectedUser);
 router.post("/:id", userInfoRules(), validate, createUserInfo);
+router.put(
+  "/personal/:id",
+  userRules(),
+  validateFields(userFields),
+  updateUser
+);
 router.delete("/:id", deleteUser);
 router.put("/:id", userInfoRules(), validate, updateUserInfo);
 

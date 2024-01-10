@@ -16,7 +16,7 @@ const {
   createProductRating,
   getProductRating,
 } = require("../controllers/product/productController");
-const protected = require("../../config/protected");
+const { protected } = require("../../config/protected");
 
 // OPEN -----------------------------------
 
@@ -28,7 +28,7 @@ router.get("/:id", findProduct, getSingleProduct);
 router.get("/:id/rating", findProduct, getProductRating);
 
 // PROTECTED ----------------------------
-// router.use(protected);
+router.use(protected);
 // Product
 router.post("", productRules(), validateFields(productFields), createProduct);
 router.put(

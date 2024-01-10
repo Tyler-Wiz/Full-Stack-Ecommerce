@@ -4,7 +4,7 @@ const userInfoRules = () => {
   return [
     body("address_line1")
       .optional({ checkFalsy: true, nullable: true })
-      .isLength({ min: 10 })
+      .isLength({ min: 1 })
       .withMessage("Please enter minimum 10 characters"),
     body("address_line2")
       .optional({ checkFalsy: true, nullable: true })
@@ -24,7 +24,7 @@ const userInfoRules = () => {
       .withMessage("Please enter minimum 10 characters"),
     body("telephone")
       .optional({ checkFalsy: true, nullable: true })
-      .isLength({ min: 10, max: 10 })
+      .isLength({ min: 10, max: 12 })
       .withMessage("Mobile number should contains 10 digits"),
   ];
 };

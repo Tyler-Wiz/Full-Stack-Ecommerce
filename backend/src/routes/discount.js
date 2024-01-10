@@ -15,7 +15,7 @@ const {
   updateDiscountRules,
   updateDiscountFields,
 } = require("../validators/product/shared");
-const protected = require("../../config/protected");
+const { protected } = require("../../config/protected");
 
 // OPEN
 router.get("", getAllDiscount);

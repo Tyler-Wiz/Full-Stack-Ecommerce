@@ -6,14 +6,11 @@ exports.createUserInfo = async (req, res, next) => {
   try {
     // find user by Id
     const user = await UserModel.readById(user_id);
-
     // if User is not found Throw an error
     if (!user) throw CreateError(400, `User doesn't exists`);
-
     // Send User info to the database
-    const userInfo = await UserModel.createUserInfo({ ...req.body, user_id });
-
-    res.send(userInfo);
+    await UserModel.createUserInfo({ ...req.body, user_id });
+    res.status(201).send("User info created");
   } catch (error) {
     next(error);
   }
@@ -60,5 +57,22 @@ exports.updateUserInfo = async (req, res, next) => {
     await UserModel.updateUserInfo({ ...req.body, user_id });
 
     res.status(201).send("User info updated");
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.updateUser = async (req, res, next) => {
+  const user_id = req.params.id;
+  try {
+    // find user by Id
+    const user = await UserModel.readById(user_id);
+    // if User is not found Throw an error
+    if (!user) throw CreateError(400, `User doesn't exists`);
+    // Update User info to the database
+    await UserModel.update({ ...req.body, user_id });
+    res.status(201).send("User info updated");
+  } catch (error) {
+    next(error);
+  }
 };

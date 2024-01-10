@@ -46,10 +46,24 @@ router.get(
     const authToken = getOAuthToken(user);
     res.cookie("authToken", authToken, {
       httpOnly: false,
-      expires: new Date(Date.now() + 7 * 24 * 3600 * 1000),
+      expires: new Date(Date.now() + 1 * 2 * 3600 * 1000),
     });
     res.redirect(`${process.env.CLIENT_URL}`);
   }
 );
+
+router.get("/logout", function (req, res, next) {
+  // Destroy the session to log the user out
+  req.session.destroy((error) => {
+    if (error) {
+      next(error);
+      res.status(500).send("Error logging out");
+    } else {
+      // Clear the user cookie
+      res.clearCookie("authToken");
+      res.redirect(`${process.env.CLIENT_URL}`);
+    }
+  });
+});
 
 module.exports = router;

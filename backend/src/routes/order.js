@@ -7,7 +7,7 @@ const {
   getOrder,
 } = require("../controllers/orderController");
 const router = express.Router();
-const protected = require("../../config/protected");
+const { protected } = require("../../config/protected");
 
 // OPEN
 router.get("", getOrder, getOrderByUser);

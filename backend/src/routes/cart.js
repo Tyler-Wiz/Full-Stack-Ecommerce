@@ -7,7 +7,7 @@ const {
   deleteSingleCartItem,
 } = require("../controllers/cartController");
 const router = express.Router();
-const protected = require("../../config/protected");
+const { protected } = require("../../config/protected");
 
 // OPEN ROUTES
 

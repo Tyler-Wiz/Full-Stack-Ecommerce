@@ -86,8 +86,8 @@ class UserModel {
 
   static async readInfoById(user_id) {
     try {
-      const statement = `SELECT ua.address_line1, ua.address_line2, ua.city, ua.country,
-                         ua.postal_code, ua.telephone, u.username
+      const statement = `SELECT u.username, u.first_name, u.last_name, ua.address_line1, ua.address_line2, ua.city, ua.country,
+                         ua.postal_code, ua.telephone
                          FROM user_address as ua
                          JOIN users as u ON u.id = ua.user_id
                          WHERE user_id = $1`;
@@ -107,8 +107,8 @@ class UserModel {
   static async update(data) {
     try {
       const statement = `UPDATE users SET first_name = $1, last_name = $2 
-                           WHERE id = $3`;
-      const values = [data.id, data.first_name, data.last_name];
+                        WHERE id = $3 RETURNING *`;
+      const values = [data.first_name, data.last_name, data.user_id];
       await db.query(statement, values);
     } catch (error) {
       throw new Error(error);
