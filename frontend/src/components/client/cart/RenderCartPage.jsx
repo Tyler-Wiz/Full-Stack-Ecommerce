@@ -17,16 +17,17 @@ import Button from "../shared/Button";
 import Link from "next/link";
 
 const RenderCartPage = () => {
-  const { cartItem, cartTotalAmount } = useSelector((state) => state.cart);
-  const { token } = useSelector((state) => state.auth);
+  // Instance of Dispatch
   const dispatch = useDispatch();
-
+  // States from Redux
+  const { cartItem, cartTotalAmount } = useSelector((state) => state.cart);
+  const { user_id, googleUser } = useSelector((state) => state.auth);
+  // Client State for rendering
   const [isClient, setIsClient] = useState(false);
-
   useLayoutEffect(() => {
     setIsClient(true);
   }, []);
-
+  // Handle Discount
   const handleDiscount = (product) => {
     return parseFloat(product.price - product.price * (product.discount / 100));
   };
@@ -163,7 +164,7 @@ const RenderCartPage = () => {
                     <p>Total Amount</p>
                     <p>{cartTotalAmount.toFixed(2)}</p>
                   </div>
-                  {token ? (
+                  {user_id || googleUser ? (
                     <Link href={`/`} className="my-4">
                       <Button
                         name="Place Order"

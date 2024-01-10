@@ -3,14 +3,14 @@
 import Input from "@/components/shared/TextInput";
 import Link from "next/link";
 import React, { useState } from "react";
-import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/validators/AuthValidator";
 import { loginUser } from "@/store/features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../shared/Button";
-import axios from "axios";
 import config from "@/services/config/index";
 
 const LoginForm = () => {
@@ -83,7 +83,7 @@ const LoginForm = () => {
               ""
             )}
             <Button
-              name={loginStatus === "pending" ? "Loading" : "Login"}
+              name={loginStatus === "pending" ? "Loading" : "Sign In"}
               width="w-full"
               backgroundColor="bg-primary"
               color="text-white"
@@ -93,8 +93,8 @@ const LoginForm = () => {
             <button
               className={` w-full text-primary bg-white border-[1px] border-black px-4 py-3 text-xs montserrat capitalize flex items-center justify-center gap-2`}
               onClick={googleAuth}>
-              <FaGoogle size={20} />
-              <p className="text-gray-500">Continue with Google</p>
+              <FcGoogle size={20} />
+              <p className="text-gray-500">Sign In with Google</p>
             </button>
           </div>
           <Link href="/forgot">

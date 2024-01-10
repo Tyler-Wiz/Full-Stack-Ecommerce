@@ -1,35 +1,56 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useLayoutEffect, useState, useRef } from "react";
 import Nav from "./Nav";
 import { FaRegHeart } from "react-icons/fa6";
+import { FaUserCircle } from "react-icons/fa";
 import { IoCartOutline, IoSearch } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { getTotal } from "@/store/features/wishSlice";
 import { getCartTotal } from "@/store/features/cartSlice";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { getUser, getGoogleUser } from "@/store/features/authSlice";
 
 const Header = ({ setOpenWishList, setOpenCartList }) => {
+  // Instance of Dispatch
   const dispatch = useDispatch();
+  // States from Redux
   const { itemsTotal, wishList } = useSelector((state) => state.wish);
   const { cartItem, cartTotalQuantity } = useSelector((state) => state.cart);
+  const { user_id, googleUser } = useSelector((state) => state.auth);
+
+  // Search Loading State and Ref
   const [isSearch, setIsSearch] = useState(false);
   const searchQueryRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    // Get Cart Total
     dispatch(getTotal());
+    // Get Cart Quantity Total
     dispatch(getCartTotal());
+    // Get Local User
+    dispatch(getUser());
+    // Get Google User
+    dispatch(getGoogleUser());
   }, [wishList, cartItem]);
 
+  // instance of next router
   const router = useRouter();
 
+  // Handle Search
   const HandleSearch = (e) => {
     e.preventDefault();
+    // Get Search Query
     const query = searchQueryRef.current.value;
+    // Redirect to search page
     if (query.length > 0) {
       router.push(`/search/${query}`);
     }
+  };
+
+  const handleGoogleUserSignOut = () => {
+    window.open(`http://localhost:4002/auth/logout`, "_self");
   };
 
   return (
@@ -47,9 +68,6 @@ const Header = ({ setOpenWishList, setOpenCartList }) => {
           <Nav />
         </div>
         <div className="flex-item gap-7">
-          <Link href="/login">
-            <p className="mr-6 text-[2px]">Login/Register</p>
-          </Link>
           <button className="relative" onClick={() => setOpenWishList(true)}>
             <FaRegHeart size={20} />
             <span className="absolute -top-4 -right-5">
@@ -70,7 +88,7 @@ const Header = ({ setOpenWishList, setOpenCartList }) => {
               )}
             </span>
           </button>
-          <div>
+          <div className="flex items-center gap-6">
             <button className="relative">
               <IoSearch size={20} onClick={() => setIsSearch(!isSearch)} />
               {isSearch && (
@@ -82,6 +100,24 @@ const Header = ({ setOpenWishList, setOpenCartList }) => {
                 </form>
               )}
             </button>
+            {user_id ? (
+              <Link href="/account">
+                <FaUserCircle size={35} />
+              </Link>
+            ) : googleUser ? (
+              <p className="text-[2px]">Hello, {googleUser.name}</p>
+            ) : (
+              <Link href="/login">
+                <p className="text-[2px]">Login/Register</p>
+              </Link>
+            )}
+            {googleUser && (
+              <button
+                className="text-primary text-xs"
+                onClick={handleGoogleUserSignOut}>
+                Sign Out
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -5,10 +5,13 @@ import { jwtDecode } from "jwt-decode";
 import config from "@/services/config/index";
 
 const cookie = new Cookies();
+const cookies = new Cookies();
+const authToken = cookies.get("authToken");
 
 const initialState = {
   token: cookie.get("session") || "",
-  id: "",
+  googleUser: "",
+  user_id: "",
   email: "",
   password: "",
   created_at: "",
@@ -65,7 +68,7 @@ const authSlice = createSlice({
         const user = jwtDecode(token);
         return {
           ...state,
-          id: user.id,
+          user_id: user.id,
           email: user.email,
           password: user.password,
           created_at: user.created_at,
@@ -74,12 +77,21 @@ const authSlice = createSlice({
         };
       }
     },
+    getGoogleUser(state) {
+      if (authToken) {
+        const decoded = jwtDecode(authToken);
+        return {
+          ...state,
+          googleUser: decoded,
+        };
+      }
+    },
     logOut(state) {
       cookie.remove("session");
       return {
         ...state,
         token: "",
-        id: "",
+        user_id: "",
         email: "",
         password: "",
         created_at: "",
@@ -136,5 +148,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { getUser, logOut } = authSlice.actions;
+export const { getUser, logOut, getGoogleUser } = authSlice.actions;
 export default authSlice.reducer;

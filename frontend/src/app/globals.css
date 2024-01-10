@@ -104,7 +104,7 @@ h2 {
   }
 
   .header-container p {
-    @apply text-sm underline;
+    @apply text-sm;
   }
 
   /* Footer */
