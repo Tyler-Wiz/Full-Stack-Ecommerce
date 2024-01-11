@@ -1,22 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import { productData } from "@/services/data/product";
-import AddToList from "../shared/AddToList";
+
 import { useEffect, useState } from "react";
 import RenderProductList from "../product/RenderProductList";
 
-const Trending = () => {
-  const [data, setData] = useState(productData);
+const Trending = ({ products }) => {
+  const [data, setData] = useState(products);
   const [selected, setSelected] = useState("");
+
 
   useEffect(() => {
     if (selected === "") {
-      setData(productData);
+      setData(products);
       return;
     } else {
-      const filterData = productData.filter((item) => {
-        return item.category[0] === selected;
+      const filterData = products.filter((item) => {
+        return item.category[0].toLowerCase() === selected.toLowerCase();
       });
       setData(filterData);
     }

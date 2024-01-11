@@ -12,7 +12,7 @@ import Button from "../shared/Button";
 
 const ForgotPassword = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState(null);
+  const [submitError, setSubmitError] = useState("");
   const [loading, setLoading] = useState(false);
   const {
     register,
@@ -22,7 +22,7 @@ const ForgotPassword = () => {
     resolver: yupResolver(usernameSchema),
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data, e) => {
     setLoading(true);
     try {
       const token = await axios.post(`${config.FORGOT_PASSWORD_URL}`, data, {
@@ -34,7 +34,9 @@ const ForgotPassword = () => {
       }
     } catch (error) {
       setSubmitError(error.response.data);
+      setLoading(false);
     }
+    e.target.reset();
   };
   return (
     <ClientLayout>
@@ -68,7 +70,11 @@ const ForgotPassword = () => {
                 error={errors.username?.message}
                 width="w-full"
               />
-              {submitError && <p>{submitError.errorMessage}</p>}
+              {submitError && (
+                <p className="text-center text-red-900 my-3">
+                  {submitError.errorMessage}
+                </p>
+              )}
               <Button
                 name={loading ? "Loading..." : "Send instructions"}
                 width="w-full"

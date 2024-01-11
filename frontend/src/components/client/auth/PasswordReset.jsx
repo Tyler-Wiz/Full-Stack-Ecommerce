@@ -1,7 +1,6 @@
 "use client";
 
 import Input from "@/components/shared/TextInput";
-import PrimaryButton from "@/components/shared/PrimaryButton";
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from "react-hook-form";

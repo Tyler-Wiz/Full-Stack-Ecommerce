@@ -35,7 +35,19 @@ const PersonalDetails = ({ user }) => {
   }
 
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return (
+      <div>
+        <h1 className="mb-4">No Personal details</h1>
+        <Link href={`/account/edit-profile/${user.id}`}>
+          <Button
+            name="Edit info"
+            width="w-[30%]"
+            backgroundColor="bg-primary"
+            color="text-white"
+          />
+        </Link>
+      </div>
+    );
   }
 
   if (!data) {

@@ -3,12 +3,11 @@ import { MdClose, MdDelete } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
-import { removeFromCart } from "@/store/features/cartSlice";
 import Button from "./Button";
 
 const RenderCartList = ({ setOpenCartList, openCartList }) => {
   const { cartItem, cartTotalAmount } = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
+  const { user_id } = useSelector((state) => state.auth);
 
   return (
     <>
@@ -50,16 +49,9 @@ const RenderCartList = ({ setOpenCartList, openCartList }) => {
                         alt={item.name}
                       />
                     </Link>
-                    <div className="ml-2 flex flex-col text-[12px] gap-1 pt-2">
-                      <div className="flex justify-between w-56 gap-5">
+                    <div className="ml-2 flex flex-col text-[12px] gap-1 pt-2 ">
+                      <div className="flex justify-between gap-5 w-[80%]">
                         <p className="text-xs font-bold">{item.name}</p>
-                        <div
-                          className="text-lg text-primary cursor-pointer"
-                          onClick={() => {
-                            dispatch(removeFromCart(item.id));
-                          }}>
-                          <MdDelete />
-                        </div>
                       </div>
                       <div className="flex flex-row">
                         <p className="mr-1">{item.cartQuantity} x</p>
@@ -73,14 +65,13 @@ const RenderCartList = ({ setOpenCartList, openCartList }) => {
                   <p className="font-bold">£{cartTotalAmount}</p>
                 </div>
                 <div className="flex flex-col">
-                  <Link href="/cart">
+                  <Link href={`/cart/${user_id}`}>
                     <button
                       type="button"
                       className="bg-primary w-[100%] text-white text-sm my-4 py-2 font-display uppercase montserrat">
                       View Cart
                     </button>
                   </Link>
-                  {/* <PayButton cart={cartItems.cartItem} /> */}
                 </div>
               </div>
             )}

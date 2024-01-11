@@ -1,17 +1,18 @@
 import React from "react";
 import ClientLayout from "@/components/client/shared/ClientLayout";
 import RenderProductList from "@/components/client/product/RenderProductList";
-import { productData } from "@/services/data/product";
+import { getProducts } from "@/services/api/fetch/fetchAll";
 
-const page = ({ params }) => {
+const page = async ({ params }) => {
   const { category } = params;
+  const products = await getProducts();
   let productsInCategory;
   if (category === "women" || category === "men") {
-    productsInCategory = productData.filter(
+    productsInCategory = products.filter(
       (product) => product.category[1].toLowerCase() === category.toLowerCase()
     );
   } else {
-    productsInCategory = productData.filter(
+    productsInCategory = products.filter(
       (product) => product.category[0].toLowerCase() === category.toLowerCase()
     );
   }

@@ -10,10 +10,11 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/store/features/cartSlice";
 import StarRating from "@/components/shared/StarRating";
+import axios from "axios";
 
 const RenderSingleProduct = ({ product, productsInCategory }) => {
-  const [selectedSize, setSelectedSize] = useState("");
-  const [selectedColor, setSelectedColor] = useState("");
+  const [selected_size, setSelectedSize] = useState("");
+  const [selected_color, setSelectedColor] = useState("");
   const [selectedError, setSelectedError] = useState("");
 
   const handleDiscount = (product) => {
@@ -26,13 +27,27 @@ const RenderSingleProduct = ({ product, productsInCategory }) => {
 
   const dispatch = useDispatch();
 
-  const handleAddToCart = () => {
-    if (!selectedSize || !selectedColor) {
+  const handleAddToCart = async () => {
+    const product_id = product.id;
+    if (!selected_color || !selected_size) {
       setSelectedError("Please select size and color");
       return;
     } else {
-      setSelectedError("");
-      dispatch(addToCart({ ...product, selectedSize, selectedColor }));
+      const res = await axios.post(
+        `http://localhost:4002/api/cart`,
+        {
+          product_id,
+          selected_size,
+          selected_color,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      if (res.data) {
+        dispatch(addToCart({ ...product, selected_color, selected_color }));
+        setSelectedError("");
+      }
     }
   };
 
@@ -51,8 +66,8 @@ const RenderSingleProduct = ({ product, productsInCategory }) => {
           <RenderSizeColor
             product={product}
             setSelectedSize={setSelectedSize}
-            selectedSize={selectedSize}
-            selectedColor={selectedColor}
+            selectedSize={selected_size}
+            selectedColor={selected_color}
             setSelectedColor={setSelectedColor}
           />
           <div className="flex gap-10 items-center">

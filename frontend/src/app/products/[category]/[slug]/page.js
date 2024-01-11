@@ -1,13 +1,12 @@
 import RenderSingleProduct from "@/components/client/product/RenderSingleProduct";
 import ClientLayout from "@/components/client/shared/ClientLayout";
-import { productData } from "@/services/data/product";
+import { getSingleProduct, getProducts } from "@/services/api/fetch/fetchAll";
 
-const page = ({ params }) => {
+const page = async ({ params }) => {
   const { slug } = params;
-  const product = productData.find(
-    (product) => product.slug.toLowerCase() === slug.toLowerCase()
-  );
-  const productsInCategory = productData.filter(
+  const product = await getSingleProduct(slug);
+  const allProducts = await getProducts();
+  const productsInCategory = allProducts.filter(
     (products) =>
       products.category[0].toLowerCase() === product.category[0].toLowerCase()
   );

@@ -1,17 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import ClientLayout from "../shared/ClientLayout";
-import { productData } from "@/services/data/product";
-import Image from "next/image";
-import AddToList from "../shared/AddToList";
 import RenderProductList from "./RenderProductList";
 
-const RenderProductPage = () => {
-  const [data, setData] = useState(productData);
+const RenderProductPage = ({ products }) => {
+  const [data, setData] = useState(products);
   const [selected, setSelected] = useState({
     category: "",
-    brand: "",
-    size: "",
   });
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,12 +35,14 @@ const RenderProductPage = () => {
 
   useEffect(() => {
     if (selected.category !== "") {
-      const filterData = productData.filter((item) => {
-        return item.category[0] === selected.category;
+      const filterData = products.filter((item) => {
+        return (
+          item.category[0].toLowerCase() === selected.category.toLowerCase()
+        );
       });
       setData(filterData);
     } else {
-      setData(productData);
+      setData(products);
     }
   }, [selected]);
 

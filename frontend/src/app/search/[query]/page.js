@@ -1,12 +1,13 @@
 import React from "react";
 import ClientLayout from "@/components/client/shared/ClientLayout";
 import RenderProductList from "@/components/client/product/RenderProductList";
-import { productData } from "@/services/data/product";
 import Image from "next/image";
+import { getProducts } from "@/services/api/fetch/fetchAll";
 
-const page = ({ params }) => {
+const page = async ({ params }) => {
   const { query } = params;
-  const products = productData.filter((product) =>
+  const allProducts = await getProducts();
+  const products = allProducts.filter((product) =>
     product.name.toLowerCase().includes(query.toLowerCase())
   );
 

@@ -20,7 +20,7 @@ const cartSlice = createSlice({
       if (item) {
         item.cartQuantity += 1;
         toast.success(`${item.name} Added to Cart! `, {
-          position: toast.POSITION.BOTTOM_LEFT,
+          position: toast.POSITION.TOP_CENTER,
         });
       } else {
         const product = {
@@ -29,7 +29,7 @@ const cartSlice = createSlice({
         };
         state.cartItem.push(product);
         toast.success(`${product.name} Added to Cart! `, {
-          position: toast.POSITION.BOTTOM_LEFT,
+          position: toast.POSITION.TOP_CENTER,
         });
       }
       localStorage.setItem("cartItems", JSON.stringify(state.cartItem));
@@ -43,7 +43,7 @@ const cartSlice = createSlice({
         );
         localStorage.setItem("cartItems", JSON.stringify(state.cartItem));
         toast.success(`${product.name} Removed From Cart! `, {
-          position: toast.POSITION.BOTTOM_LEFT,
+          position: toast.POSITION.TOP_CENTER,
         });
       } else {
         product.cartQuantity -= 1;
@@ -58,7 +58,7 @@ const cartSlice = createSlice({
       );
       localStorage.setItem("cartItems", JSON.stringify(state.cartItem));
       toast.success(`${product.name} Removed From Cart! `, {
-        position: toast.POSITION.BOTTOM_LEFT,
+        position: toast.POSITION.TOP_CENTER,
       });
     },
     // Get Total Quantity and Total Price Of Items In Cart
