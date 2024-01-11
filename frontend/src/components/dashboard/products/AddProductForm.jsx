@@ -5,11 +5,11 @@ import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "@/components/shared/TextInput";
 import { productSchema } from "@/validators/ProductValidator";
-import PrimaryButton from "@/components/shared/PrimaryButton";
 import { FaImages } from "react-icons/fa";
 import axios from "axios";
+import PrimaryButton from "@/components/shared/PrimaryButton";
 
-const AddProductForm = ({ categories, brands, attributes, discounts }) => {
+const AddProductForm = () => {
   const {
     control,
     register,
@@ -19,9 +19,31 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
     resolver: yupResolver(productSchema),
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const {
+    fields: colorsFields,
+    append: appendColors,
+    remove: removeColors,
+  } = useFieldArray({
     control,
-    name: "sizes",
+    name: "colors", // The name of the third array in the form data
+  });
+
+  const {
+    fields: sizesFields,
+    append: appendSizes,
+    remove: removeSizes,
+  } = useFieldArray({
+    control,
+    name: "sizes", // The name of the first array in the form data
+  });
+
+  const {
+    fields: categoryFields,
+    append: appendCategory,
+    remove: removeCategory,
+  } = useFieldArray({
+    control,
+    name: "category", // The name of the second array in the form data
   });
 
   const [images, setImages] = useState([]);
@@ -55,8 +77,17 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
   };
 
   const onSubmit = async (data, e) => {
-    const sizesArray = data.sizes.map((size) => size.name);
-    const formData = { ...data, sizes: sizesArray, images };
+    const colorsArray = data.colors.map((color) => color.name);
+    const sizeArray = data.sizes.map((size) => size.name);
+    const categoryArray = data.category.map((cat) => cat.name);
+    const formData = {
+      ...data,
+      colors: colorsArray,
+      sizes: sizeArray,
+      category: categoryArray,
+      images,
+    };
+    console.log(formData);
     try {
       const res = await axios.post(
         `http://localhost:4002/api/products`,
@@ -90,7 +121,7 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
                   style={{ maxWidth: "200px", maxHeight: "200px" }}
                 />
               ) : (
-                <FaImages size={40} />
+                <FaImages color={40} />
               )}
             </div>
             <div className="flex justify-center items-center mb-10 w-64 h-64 border-[1px] p-3 rounded-lg">
@@ -101,7 +132,7 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
                   style={{ maxWidth: "200px", maxHeight: "200px" }}
                 />
               ) : (
-                <FaImages size={40} />
+                <FaImages color={40} />
               )}
             </div>
             <div className="flex flex-col gap-7">
@@ -113,7 +144,7 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
                     style={{ maxWidth: "100px", maxHeight: "100px" }}
                   />
                 ) : (
-                  <FaImages size={40} />
+                  <FaImages color={40} />
                 )}
               </div>
               <div className="flex justify-center items-center  w-32 h-28 border-[1px] p-3 rounded-lg">
@@ -124,7 +155,7 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
                     style={{ maxWidth: "100px", maxHeight: "100px" }}
                   />
                 ) : (
-                  <FaImages size={40} />
+                  <FaImages color={40} />
                 )}
               </div>
             </div>
@@ -136,38 +167,39 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
             accept="image/png, image/gif, image/jpeg, image/webp"
             onChange={handleImageChange}
             placeholder="image upload"
-            className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
+            className="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-black focus:text-neutral-700 focus:shadow-te-black focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-black"
           />
         </div>
-        <div className="flex items-center mt-10">
-          <label className="text-sm">Sizes:</label>
-          {fields.map((size, index) => (
-            <div key={size.id} className="flex items-center">
-              <input
-                {...register(`sizes.${index}.name`)}
-                type="text"
-                placeholder="Size"
-                className="outline-none w-10 block border-[1px] text-center "
-              />
-              <button
-                type="button"
-                className=" bg-tahiti mx-2 px-2"
-                onClick={() => remove(index)}>
-                X
-              </button>
-            </div>
-          ))}
+        <div className="border-[1px] p-4 text-white mb-5 rounded-lg">
+          <div className="flex items-center text-white">
+            <label className="text-sm text-black">Colors:</label>
+            {colorsFields.map((product, index) => (
+              <div key={product.id} className="flex items-center ">
+                <input
+                  {...register(`colors.${index}.name`)}
+                  placeholder="Color"
+                  className="outline-none w-16 block border-[1px] text-center ml-2 text-black"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeColors(index)}
+                  className=" bg-black px-2">
+                  X
+                </button>
+              </div>
+            ))}
+          </div>
+          <button
+            type="button"
+            className=" bg-black p-2 block text-sm mt-3"
+            onClick={() => appendColors({ colors: "" })}>
+            Add Color
+          </button>
         </div>
-        <button
-          type="button"
-          className=" bg-tahiti p-2 block my-5 text-sm"
-          onClick={() => append({ name: "" })}>
-          Add Size
-        </button>
         <label htmlFor="description" className="ml-3 text-sm">
           Description
           <textarea
-            className="outline-none w-full h-32 block rounded-lg border-[1px] px-6"
+            className="outline-none w-full h-44 block rounded-lg border-[1px] px-6 py-3 resize-none"
             {...register("description")}></textarea>
         </label>
       </div>
@@ -178,7 +210,7 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
           label="Product Name"
           error={errors.name?.message}
         />
-        <div className="flex justify-between">
+        <div className="flex justify-between gap-4">
           <Input
             register={register}
             name="price"
@@ -192,109 +224,78 @@ const AddProductForm = ({ categories, brands, attributes, discounts }) => {
             error={errors.stock?.message}
           />
         </div>
-        <div className="flex justify-between gap-3">
-          <div className="mb-4 w-full">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="gender">
-              Category
-            </label>
-            <Controller
-              name="category_id"
-              control={control}
-              rules={{ required: "Please select a category" }}
-              render={({ field }) => (
-                <select
-                  {...field}
-                  id="gender"
-                  className={`w-full p-2 border ${
-                    errors.gender ? "border-red-500" : "border-gray-300"
-                  } rounded-md outline-none focus:border-blue-500`}>
-                  <option value="">Select a category</option>
-                  {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-              )}
-            />
-            {errors.gender && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.gender.message}
-              </p>
-            )}
-          </div>
-          <div className="mb-4 w-full">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="gender">
-              Brand
-            </label>
-            <Controller
-              name="brand_id"
-              control={control}
-              rules={{ required: "Please select a brand" }}
-              render={({ field }) => (
-                <select
-                  {...field}
-                  id="brand"
-                  className={`w-full p-2 border ${
-                    errors.gender ? "border-red-500" : "border-gray-300"
-                  } rounded-md outline-none focus:border-blue-500`}>
-                  <option value="">Select a brand</option>
-                  {brands.map((brand) => (
-                    <option key={brand.id} value={brand.id}>
-                      {brand.name}
-                    </option>
-                  ))}
-                </select>
-              )}
-            />
-            {errors.gender && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.gender.message}
-              </p>
-            )}
-          </div>
-        </div>
-        <div className="mb-4 w-full">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="gender">
-            Discount
-          </label>
-          <Controller
-            name="discount_id"
-            control={control}
-            rules={{ required: "Please select a brand" }}
-            render={({ field }) => (
-              <select
-                {...field}
-                id="brand"
-                className={`w-full p-2 border ${
-                  errors.gender ? "border-red-500" : "border-gray-300"
-                } rounded-md outline-none focus:border-blue-500`}>
-                <option value="">Select a discount</option>
-                {discounts.map((discount) => (
-                  <option key={discount.id} value={discount.id}>
-                    {discount.name}
-                  </option>
-                ))}
-              </select>
-            )}
+        <div className="flex justify-between gap-4">
+          <Input
+            register={register}
+            name="discount_name"
+            label="Discount Name"
+            error={errors.discount_name?.message}
           />
-          {errors.gender && (
-            <p className="text-red-500 text-xs mt-1">{errors.gender.message}</p>
-          )}
+          <Input
+            register={register}
+            name="discount"
+            label="Discount"
+            error={errors.discount?.message}
+          />
         </div>
-        <Input
-          register={register}
-          name="colors"
-          label="Colors"
-          error={errors.colors?.message}
+        <div className="border-[1px] p-4 text-white mb-5 rounded-lg">
+          <div className="flex items-center flex-wrap gap-2">
+            <label className="text-sm text-black">Sizes:</label>
+            {sizesFields.map((product, index) => (
+              <div key={product.id} className="flex items-center">
+                <input
+                  {...register(`sizes.${index}.name`)}
+                  placeholder="Sizes"
+                  className="outline-none w-12 block border-[1px] text-center text-black"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeSizes(index)}
+                  className=" bg-black px-2">
+                  X
+                </button>
+              </div>
+            ))}
+          </div>
+          <button
+            type="button"
+            className=" bg-black p-2 block text-sm mt-3"
+            onClick={() => appendSizes({ sizes: "" })}>
+            Add Sizes
+          </button>
+        </div>
+        <div className="border-[1px] p-4 text-white mb-5 rounded-lg">
+          <div className="flex items-center flex-wrap gap-2">
+            <label className="text-sm text-black">Category:</label>
+            {categoryFields.map((product, index) => (
+              <div key={product.id} className="flex items-center ">
+                <input
+                  {...register(`category.${index}.name`)}
+                  placeholder="Category"
+                  className="outline-none w-20 block border-[1px] text-center ml-2 text-black"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeCategory(index)}
+                  className=" bg-black px-2">
+                  X
+                </button>
+              </div>
+            ))}
+          </div>
+          <button
+            type="button"
+            className=" bg-black p-2 block text-sm mt-3"
+            onClick={() => appendCategory({ category: "" })}>
+            Add Category
+          </button>
+        </div>
+
+        <PrimaryButton
+          name="Publish product"
+          color="text-white"
+          background="bg-primary"
         />
-        <PrimaryButton name="Publish product" color="bg-tahiti" />
       </div>
     </form>
   );
