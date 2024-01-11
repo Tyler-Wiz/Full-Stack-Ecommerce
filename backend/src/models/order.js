@@ -1,11 +1,11 @@
 const db = require("../../config/index");
 
 class orderModel {
-  static async create(cart_id) {
+  static async create(order_items) {
     const status = "pending";
     try {
-      const statement = `INSERT INTO orders(cart_id,status) VALUES($1, $2) RETURNING*`;
-      const values = [cart_id, status];
+      const statement = `INSERT INTO orders(order_items,status) VALUES($1, $2) RETURNING*`;
+      const values = [order_items, status];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
         return result.rows[0];

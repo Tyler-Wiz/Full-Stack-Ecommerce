@@ -10,10 +10,16 @@ const cartRules = () => {
       .notEmpty()
       .isInt({ max: 100 })
       .withMessage("attribute id must be specified"),
+    body("selected_color")
+      .optional({ checkFalsy: true, nullable: true })
+      .isString(),
+    body("selected_size")
+      .optional({ checkFalsy: true, nullable: true })
+      .isString(),
   ];
 };
 
 // allowedFields
-const cartFields = ["user_id", "product_id"];
+const cartFields = ["user_id", "product_id", "selected_size", "selected_color"];
 
 module.exports = { cartFields, cartRules };

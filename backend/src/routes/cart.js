@@ -3,20 +3,19 @@ const {
   findProduct,
   createCartItems,
   getCartItems,
-  getSingleCartItem,
+  deleteSingleCartQuantity,
   deleteSingleCartItem,
 } = require("../controllers/cartController");
 const router = express.Router();
-const { protected } = require("../../config/protected");
+const { protectedUser } = require("../../config/protected");
 
 // OPEN ROUTES
-
-router.get("/items", getCartItems);
-router.get("/items/:id", getSingleCartItem);
+router.post("/items", getCartItems);
 
 // PROTECTED ROUTES
-router.use(protected);
+router.use(protectedUser);
 router.post("", findProduct, createCartItems);
 router.delete("/items/:id", deleteSingleCartItem);
+router.delete("/items/quantity/:id", deleteSingleCartQuantity);
 
 module.exports = router;

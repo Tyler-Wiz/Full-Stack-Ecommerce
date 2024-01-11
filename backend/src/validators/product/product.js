@@ -12,21 +12,16 @@ const productRules = () => {
       .notEmpty()
       .isInt({ min: 1 })
       .withMessage("stock count must be a number"),
-    // body("category_id")
-    //   .optional({ checkFalsy: true, nullable: true })
-    //   .isInt({ min: 1, max: 6 })
-    //   .withMessage("category must be a number"),
-    body("discount_id")
+    body("discount")
       .optional({ checkFalsy: true, nullable: true })
-      .isInt({ min: 1, max: 6 })
-      .withMessage("discount must be a number"),
-    // body("brand_id")
-    //   .optional({ checkFalsy: true, nullable: true })
-    //   .isInt({ min: 1, max: 6 })
-    //   .withMessage("brand must be a number"),
-    body("colors").optional({ checkFalsy: true, nullable: true }).isString(),
+      .isInt({ min: 1 }),
+    body("discount_name")
+      .optional({ checkFalsy: true, nullable: true })
+      .isString(),
+    body("colors").optional({ checkFalsy: true, nullable: true }).isArray(),
     body("sizes").optional({ checkFalsy: true, nullable: true }).isArray(),
     body("images").optional({ checkFalsy: true, nullable: true }).isArray(),
+    body("category").optional({ checkFalsy: true, nullable: true }).isArray(),
   ];
 };
 
@@ -48,15 +43,14 @@ const productFields = [
   "name",
   "description",
   "price",
-  "category_id",
-  "discount_id",
-  "brand_id",
   "product_id",
-  "att_options_id",
   "stock",
   "colors",
   "sizes",
   "images",
+  "category",
+  "discount_name",
+  "discount",
 ];
 
 module.exports = { productFields, productRules, productAttrRules };

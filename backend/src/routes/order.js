@@ -3,19 +3,19 @@ const {
   createOrder,
   getOrderByUser,
   deleteOrderByUser,
-  checkoutOrder,
+  checkout,
   getOrder,
 } = require("../controllers/orderController");
 const router = express.Router();
-const { protected } = require("../../config/protected");
+const { protectedUser } = require("../../config/protected");
 
 // OPEN
 router.get("", getOrder, getOrderByUser);
 
 // PROTECTED
-router.use(protected);
+router.use(protectedUser);
 router.post("", createOrder);
 router.delete("/:id", deleteOrderByUser);
-router.post("/checkout", getOrder, checkoutOrder);
+router.post("/create-checkout-session", checkout);
 
 module.exports = router;

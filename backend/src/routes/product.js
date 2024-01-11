@@ -22,7 +22,7 @@ const { protected } = require("../../config/protected");
 
 // Product
 router.get("", getAllProducts);
-router.get("/:id", findProduct, getSingleProduct);
+router.get("/:id", getSingleProduct);
 
 // Product Rating
 router.get("/:id/rating", findProduct, getProductRating);

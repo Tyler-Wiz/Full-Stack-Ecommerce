@@ -1,7 +1,6 @@
 const passport = require("passport");
 const localStrategy = require("passport-local");
 const UserModel = require("../models/users");
-const OAuthClass = require("../models/OAuth");
 const { comparePasswords } = require("../utils/bcrypt");
 
 // Set method to serialize data to store in cookie

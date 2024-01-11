@@ -1,10 +1,10 @@
 const bodyParser = require("body-parser");
 const session = require("express-session");
+const cookieParser = require("cookie-parser");
 const passport = require("passport");
 const cors = require("cors");
 const { SESSION_KEY } = require("./config");
 require("../src/strategies/local");
-// require("../src/strategies/facebook");
 require("../src/strategies/google");
 
 const genFunc = require("connect-pg-simple");
@@ -24,7 +24,7 @@ module.exports = (app) => {
 
   app.use(bodyParser.json({ limit: "50mb" }));
   app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
-
+  app.use(cookieParser(SESSION_KEY));
   app.use(
     session({
       secret: SESSION_KEY,

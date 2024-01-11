@@ -26,14 +26,14 @@ const createCart = async (user) => {
       return cart;
     }
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 };
 
 exports.createCartItems = async (req, res, next) => {
   try {
     // get product ID
-    const { product_id } = req.body;
+    const { product_id, selected_size, selected_color } = req.body;
     if (!product_id) throw CreateError(400, "No Product Added");
     // Get user from session
     const user = req.user;
@@ -51,7 +51,9 @@ exports.createCartItems = async (req, res, next) => {
     } else {
       const addItemToCart = await CartItemModel.addItemToCart(
         cart.id,
-        product_id
+        product_id,
+        selected_size,
+        selected_color
       );
       res.send(addItemToCart);
     }
@@ -61,14 +63,15 @@ exports.createCartItems = async (req, res, next) => {
 };
 
 exports.getCartItems = async (req, res, next) => {
-  const user = req.user;
+  const id = req.body.id;
   try {
     // Get user cart by ID from session
-    const cart = await createCart(user);
-    //Retrieve all Items in User Cart
+    const cart = await CartModel.readUniqueCart(id);
+    if (!cart) throw CreateError(404, "Not Cart For User");
+    // Retrieve all Items in User Cart
     const cartItems = await CartItemModel.loadCartItems(cart.id);
     if (cartItems === null) {
-      res.send("no Items in cart");
+      res.send([]);
     } else {
       res.send(cartItems);
     }
@@ -77,13 +80,25 @@ exports.getCartItems = async (req, res, next) => {
   }
 };
 
-exports.getSingleCartItem = async (req, res, next) => {
+exports.deleteSingleCartQuantity = async (req, res, next) => {
   try {
     const cart_item_id = req.params.id;
-    //Retrieve all Single Item in User Cart
-    const cartItem = await CartItemModel.findUniqueItem(cart_item_id);
-    if (!cartItem) throw CreateError(400, "Cart item not found");
-    res.send(cartItem);
+    const product = await CartItemModel.findUniqueItem(cart_item_id);
+    const { product_id } = product;
+    // if (!product_id) throw CreateError(400, "No Product Added");
+    // Get user from session
+    const user = req.user;
+    // Create or Retrieve User Cart
+    const cart = await createCart(user);
+    // Check if Product Exist in User Cart
+    const cartQuantity = await CartItemModel.cartQuantity(product_id, cart.id);
+    if (cartQuantity.cartquantity > 1) {
+      await CartItemModel.decrementItemBy1(product_id, cart.id);
+      res.status(200).send("Product Removed");
+    } else {
+      await CartItemModel.deleteUniqueItem(cart_item_id);
+      res.status(200).send("Product Removed");
+    }
   } catch (error) {
     next(error);
   }

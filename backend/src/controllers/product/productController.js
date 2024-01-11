@@ -17,7 +17,6 @@ const bucketName = "tooxclusive-artist-profile";
 exports.createProduct = async (req, res, next) => {
   try {
     const { name, images } = req.body;
-
     const base64Images = images;
     const insertPromises = base64Images.map(async (image) => {
       const buf = Buffer.from(
@@ -42,7 +41,7 @@ exports.createProduct = async (req, res, next) => {
       ...req.body,
       sku,
       slug,
-      image_urls: allImages,
+      images: allImages,
     });
     res.status(201).send(product);
   } catch (error) {
@@ -73,7 +72,10 @@ exports.findProduct = async (req, res, next) => {
 
 exports.getSingleProduct = async (req, res, next) => {
   try {
-    res.status(200).send(req.product);
+    const slug = req.params.id;
+    const product = await ProductModel.readUniqueBySlug(slug);
+    if (!product) throw CreateError(404, "Product not found");
+    res.status(200).send(product);
   } catch (error) {
     next(error);
   }

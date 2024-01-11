@@ -28,10 +28,13 @@ exports.register = async (req, res, next) => {
     // destructure req body
     const { email, password, is_admin, username } = req.body;
     const trimmedUser = username.replace(/\s/g, "");
-
-    // Check if Admin user already exists
+    // Check if user already exists
     const user = await UserModel.readByUsername(trimmedUser);
     if (user) throw CreateError(400, `User With Username already exists`);
+
+    // Check if email already exists
+    const userEmail = await UserModel.readByEmail(email);
+    if (userEmail) throw CreateError(400, `User With Email already exists`);
 
     // Hash password with bcrypt password
     const hashedPassword = await passwordHash(password, 10);

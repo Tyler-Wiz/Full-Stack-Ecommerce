@@ -69,6 +69,20 @@ class UserModel {
       throw new Error(error);
     }
   }
+  static async readByEmail(email) {
+    try {
+      const statement = `SELECT * FROM users WHERE email = $1`;
+      const values = [email];
+      const result = await db.query(statement, values);
+      if (result.rows?.length) {
+        return result.rows[0];
+      } else {
+        return null;
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
   static async readById(id) {
     try {
       const statement = `SELECT * FROM users WHERE id = $1`;

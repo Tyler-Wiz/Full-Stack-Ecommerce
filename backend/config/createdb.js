@@ -31,29 +31,6 @@ const { DB } = require("./config");
         country        varchar(255),
         telephone      varchar
     );`,
-    `CREATE TABLE IF NOT EXISTS product_category (
-        id             SERIAL PRIMARY KEY,
-        name           varchar(255) NOT NULL,
-        description    TEXT,
-        created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
-        modified_at    DATE NOT NULL DEFAULT CURRENT_DATE
-    );`,
-    `CREATE TABLE IF NOT EXISTS brands (
-        id             SERIAL PRIMARY KEY,
-        name           varchar(255) NOT NULL,
-        created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
-        modified_at    DATE NOT NULL DEFAULT CURRENT_DATE
-    );`,
-    `CREATE TABLE IF NOT EXISTS discounts (
-        id             SERIAL PRIMARY KEY,
-        name           varchar(255) NOT NULL,
-        description       TEXT,
-        discount_percent  decimal,
-        active         boolean,
-        created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
-        modified_at    DATE NOT NULL DEFAULT CURRENT_DATE,
-        deleted_at     DATE NOT NULL DEFAULT CURRENT_DATE
-    );`,
     `CREATE TABLE IF NOT EXISTS products (
         id             SERIAL PRIMARY KEY,
         name           varchar(255) NOT NULL,
@@ -63,11 +40,11 @@ const { DB } = require("./config");
         price          Decimal,
         stock          Decimal,
         sizes          VARCHAR(255)[],
-        image_urls     varchar(255)[],
-        colors         Varchar,
-        category_id    INTEGER REFERENCES product_category(id),
-        discount_id    INTEGER REFERENCES discounts(id),
-        brand_id       INTEGER REFERENCES brands(id),
+        images         varchar(255)[],
+        colors         varchar(255)[],
+        category       varchar(255)[],
+        discount       Decimal,
+        discount_name  TEXT,
         created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
         modified_at    DATE NOT NULL DEFAULT CURRENT_DATE
     );`,
@@ -85,13 +62,15 @@ const { DB } = require("./config");
     );`,
     `CREATE TABLE IF NOT EXISTS cart_items (
        id              SERIAL PRIMARY KEY,
+       selected_size   VARCHAR(255),
+       selected_color  VARCHAR(255),
        cart_id         INTEGER REFERENCES cart(id),
        product_id      INTEGER REFERENCES products(id),
-       quantity        INTEGER DEFAULT 1
+       cartQuantity    INTEGER DEFAULT 1
     );`,
     `CREATE TABLE IF NOT EXISTS orders (
        id             SERIAL PRIMARY KEY,
-       cart_id        INTEGER REFERENCES cart(id),
+       order_items    TEXT [],
        status         VARCHAR(50)  NOT NULL,
        created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
        modified_at    DATE NOT NULL DEFAULT CURRENT_DATE

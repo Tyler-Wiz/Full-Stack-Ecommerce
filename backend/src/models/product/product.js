@@ -4,7 +4,7 @@ class ProductModel {
   static async create(data) {
     try {
       const statement = `INSERT INTO products(name,slug,description,sku,price,
-                         category_id,discount_id,brand_id,stock,colors,sizes,image_urls ) 
+                                     stock,colors,sizes,images,category,discount,discount_name) 
                          VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING*`;
       const values = [
         data.name,
@@ -12,13 +12,13 @@ class ProductModel {
         data.description,
         data.sku,
         data.price,
-        data.category_id,
-        data.discount_id,
-        data.brand_id,
         data.stock,
         data.colors,
         data.sizes,
-        data.image_urls,
+        data.images,
+        data.category,
+        data.discount,
+        data.discount_name,
       ];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
@@ -46,16 +46,24 @@ class ProductModel {
   }
   static async readUnique(id) {
     try {
-      const statement = `SELECT p.id, p.name, p.slug, p.price, p.description, p.colors, p.sizes,p.image_urls,p.stock,
-                        p.sku, pc.name as cat_name, br.name as br_name,
-                        d.active as active_discount, d.discount_percent as percentage
-                        FROM products p
-                        INNER JOIN product_category pc ON p.category_id = pc.id
-                        INNER JOIN brands br ON p.brand_id = br.id
-                        INNER JOIN discounts d ON p.discount_id = d.id
-                        WHERE p.id = $1`;
-
+      const statement = `SELECT * FROM products
+                         WHERE id = $1`;
       const values = [id];
+      const result = await db.query(statement, values);
+      if (result.rows?.length) {
+        return result.rows[0];
+      }
+      return null;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  static async readUniqueBySlug(slug) {
+    try {
+      const statement = `SELECT * FROM products
+                         WHERE slug = $1`;
+      const values = [slug];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
         return result.rows[0];
