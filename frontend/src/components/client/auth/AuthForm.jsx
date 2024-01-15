@@ -52,12 +52,16 @@ const AuthForm = ({ authType, dispatchAction, schema }) => {
                 : "Please register an account to continue"}
             </p>
           </div>
-          <form className="self-center" onSubmit={handleSubmit(onSubmit)}>
+          <form
+            className="self-center"
+            onSubmit={handleSubmit(onSubmit)}
+            aria-label="auth-form">
             <Input
               register={register}
               name="username"
               error={errors.username?.message}
               label="Username"
+              aria-label="username"
             />
             {authType === "register" && (
               <Input
@@ -65,6 +69,7 @@ const AuthForm = ({ authType, dispatchAction, schema }) => {
                 name="email"
                 error={errors.email?.message}
                 label="email"
+                aria-label="email"
               />
             )}
             <div className="relative">
@@ -74,6 +79,7 @@ const AuthForm = ({ authType, dispatchAction, schema }) => {
                 label="Password"
                 type={showPassword ? "text" : "password"}
                 error={errors.password?.message}
+                aria-label="password"
               />
               {errors.password?.message ? (
                 ""
@@ -96,6 +102,7 @@ const AuthForm = ({ authType, dispatchAction, schema }) => {
                 label="confirm Password"
                 name="confirmPassword"
                 error={errors.confirmPassword?.message}
+                aria-label="confirm-password"
               />
             )}
             {loginError === "Unauthorized" ? (
@@ -119,6 +126,7 @@ const AuthForm = ({ authType, dispatchAction, schema }) => {
               width="w-full"
               backgroundColor="bg-primary"
               color="text-white"
+              aria-label="submit-button"
             />
           </form>
           <div className="my-3">

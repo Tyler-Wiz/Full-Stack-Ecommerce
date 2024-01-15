@@ -22,7 +22,7 @@ const Input = ({
         {...rest}
       />
       {error && (
-        <span role="alert" className="error-message">
+        <span role="alert" className="error-message" aria-label="error-message">
           {error}
         </span>
       )}
