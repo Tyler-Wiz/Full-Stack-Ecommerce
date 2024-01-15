@@ -88,8 +88,8 @@ const RenderCartPage = ({ cartItem }) => {
             <h2>Cart is empty</h2>
           </div>
         ) : (
-          <div className="container items-start my-5 gap-6">
-            <table className="divide-y divide-gray-200 text-sm w-[70%]">
+          <div className="lg:container items-start my-5 gap-6">
+            <table className="divide-y divide-gray-200 text-sm w-[70%] hidden lg:block">
               <thead className="capitalize">
                 <tr>
                   <th className="text-left p-4 capitalize">Product</th>
@@ -184,7 +184,75 @@ const RenderCartPage = ({ cartItem }) => {
                 ))}
               </tbody>
             </table>
-            <div className="w-[30%] jost p-4">
+            <div className="lg:hidden px-6 ">
+              <div className=" my-16 flex flex-col gap-6">
+                {cartItem?.map((product, index) => (
+                  <div
+                    key={product.id}
+                    className="flex gap-4 items-center border-[1px] rounded-lg p-2">
+                    <div className="flex gap-2 items-center text-[13px]">
+                      <div className="relative w-28 h-28">
+                        <Link
+                          href={`/products/${product.category[0]}/${product.slug}`}>
+                          <Image
+                            src={product.images[0]}
+                            alt={product.name}
+                            fill
+                            className="rounded-full"
+                          />
+                        </Link>
+                      </div>
+                      <div>
+                        <p className="font-bold mb-2">{product.name}</p>
+                        <div>
+                          {product.discount !== "0" ? (
+                            <div className="flex gap-4">
+                              <p>£{handleDiscount(product).toFixed(2)}</p>
+                              <p className="line-through">£{product.price}</p>
+                            </div>
+                          ) : (
+                            <p>£{product.price}</p>
+                          )}
+                        </div>
+                        <div className="mt-2">
+                          <button
+                            className="bg-black p-2 rounded-full text-white"
+                            onClick={() =>
+                              handleDecreaseQuantity(
+                                product.id,
+                                product.cart_item_id
+                              )
+                            }>
+                            <FaMinus />
+                          </button>
+                          <span className="mx-3 text-lg py-2 rounded-full text-black">
+                            {product.cartquantity}
+                          </span>
+                          <button
+                            className="bg-black p-2 rounded-full text-white"
+                            onClick={() => handleAddToCart(product)}>
+                            <FaPlus />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="text-4xl text-black">
+                      <button
+                        onClick={() => {
+                          handleDeleteItemFromCart(
+                            product.id,
+                            product.cart_item_id
+                          );
+                        }}>
+                        <IoIosCloseCircle />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="lg:w-[30%] jost p-4">
               <h3 className="text-lg font-bold mb-2">Cart Total</h3>
               <div className="flex flex-col gap-3 px-4 py-6 border-[1px] rounded-xl">
                 <div className="border-[1px] p-3 text-center rounded-xl">

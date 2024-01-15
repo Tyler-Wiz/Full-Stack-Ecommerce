@@ -11,7 +11,7 @@ const Breadcrumb = () => {
   return (
     <div>
       {paths !== "/" && (
-        <ul className="flex jost text-sm py-5 bg-gradient-to-r from-purple-600 to-blue-600">
+        <ul className="lg:flex jost text-sm py-5 bg-gradient-to-r from-purple-600 to-blue-600 hidden">
           <li className="hover:underline mx-2 text-gray-500 ">
             <Link href={"/"} className="flex items-center gap-2">
               <FaHome size={20} />
