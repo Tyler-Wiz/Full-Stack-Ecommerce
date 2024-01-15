@@ -22,8 +22,14 @@ const createCart = async (user) => {
     if (!cart) {
       const userCart = await CartModel.create(id);
       return userCart;
-    } else {
-      return cart;
+    } else if (cart.length > 0) {
+      const pendingCart = cart.find((cart) => cart.status === "pending");
+      if (pendingCart) {
+        return pendingCart;
+      } else {
+        const userCart = await CartModel.create(id);
+        return userCart;
+      }
     }
   } catch (error) {
     console.log(error);
@@ -68,8 +74,9 @@ exports.getCartItems = async (req, res, next) => {
     // Get user cart by ID from session
     const cart = await CartModel.readUniqueCart(id);
     if (!cart) throw CreateError(404, "Not Cart For User");
+    const pendingCart = cart.find((cart) => cart.status === "pending");
     // Retrieve all Items in User Cart
-    const cartItems = await CartItemModel.loadCartItems(cart.id);
+    const cartItems = await CartItemModel.loadCartItems(pendingCart.id);
     if (cartItems === null) {
       res.send([]);
     } else {

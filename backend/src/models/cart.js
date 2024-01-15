@@ -2,9 +2,10 @@ const db = require("../../config/index");
 
 class CartModel {
   static async create(user_id) {
+    const status = "pending";
     try {
-      const statement = `INSERT INTO cart (user_id) VALUES ($1) RETURNING *`;
-      const values = [user_id];
+      const statement = `INSERT INTO cart (user_id, status) VALUES ($1, $2) RETURNING *`;
+      const values = [user_id, status];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
         return result.rows[0];
@@ -21,7 +22,7 @@ class CartModel {
       const values = [user_id];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
-        return result.rows[0];
+        return result.rows;
       }
       return null;
     } catch (err) {
@@ -31,6 +32,19 @@ class CartModel {
   static async deleteCartItems(id) {
     try {
       const statement = `DELETE FROM cart_items ci WHERE ci.cart_id = $1;`;
+      const values = [id];
+      const result = await db.query(statement, values);
+      if (result.rows?.length) {
+        return result.rows;
+      }
+      return null;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  static async updateCartStatus(id) {
+    try {
+      const statement = `UPDATE cart SET status = 'completed' WHERE id = $1 RETURNING *`;
       const values = [id];
       const result = await db.query(statement, values);
       if (result.rows?.length) {

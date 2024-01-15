@@ -1,11 +1,10 @@
 const db = require("../../config/index");
 
 class orderModel {
-  static async create(order_items) {
-    const status = "pending";
+  static async create(order_items, user_id) {
     try {
-      const statement = `INSERT INTO orders(order_items,status) VALUES($1, $2) RETURNING*`;
-      const values = [order_items, status];
+      const statement = `INSERT INTO orders(order_items, user_id) VALUES($1, $2) RETURNING*`;
+      const values = [order_items, user_id];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
         return result.rows[0];
@@ -15,10 +14,10 @@ class orderModel {
       throw new Error(error);
     }
   }
-  static async findOrderByUser(cart_id) {
+  static async findOrderByUser(user_id) {
     try {
-      const statement = `SELECT * FROM orders WHERE orders.cart_id =  $1`;
-      const values = [cart_id];
+      const statement = `SELECT * FROM orders WHERE orders.user_id =  $1`;
+      const values = [user_id];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
         return result.rows;

@@ -57,6 +57,7 @@ const { DB } = require("./config");
     `CREATE TABLE IF NOT EXISTS cart (
        id              SERIAL PRIMARY KEY,
        user_id         INTEGER REFERENCES users(id),
+       status          varchar(255),
        created_at      DATE NOT NULL DEFAULT CURRENT_DATE,
        modified_at     DATE NOT NULL DEFAULT CURRENT_DATE
     );`,
@@ -71,7 +72,7 @@ const { DB } = require("./config");
     `CREATE TABLE IF NOT EXISTS orders (
        id             SERIAL PRIMARY KEY,
        order_items    TEXT [],
-       status         VARCHAR(50)  NOT NULL,
+       user_id        INTEGER REFERENCES users(id),
        created_at     DATE NOT NULL DEFAULT CURRENT_DATE,
        modified_at    DATE NOT NULL DEFAULT CURRENT_DATE
     );`,
