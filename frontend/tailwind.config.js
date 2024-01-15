@@ -20,17 +20,12 @@ module.exports = {
         transparent: "transparent",
         current: "currentColor",
         white: "#ffffff",
-        purple: "#3f3cbb",
-        midnight: "#121063",
-        metal: "#565584",
-        tahiti: "#3ab7bf",
         silver: "#ecebff",
-        "bubble-gum": "#ff77e9",
-        bermuda: "#78dcca",
         secondary: "#3A4658",
         background: "#EEF2F8",
         button: "#00ba9d",
         primary: "#C1032F",
+        heroBg: "#F2F2F2",
       },
       keyframes: {
         slideIn: {

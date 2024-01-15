@@ -39,9 +39,9 @@ const AuthForm = ({ authType, dispatchAction, schema }) => {
   };
 
   return (
-    <section className="container">
-      <section className="mx-auto w-full flex flex-col justify-center items-center">
-        <div className="montserrat w-[40%] p-12 rounded-xl">
+    <section className="lg:container">
+      <section className="lg:mx-auto w-full flex flex-col justify-center lg:items-center">
+        <div className="montserrat lg:w-[45%] p-12 rounded-xl">
           <div className="">
             <h3 className="text-xl font-bold text-center">
               {authType === "login" ? "Welcome back!" : "Register"}

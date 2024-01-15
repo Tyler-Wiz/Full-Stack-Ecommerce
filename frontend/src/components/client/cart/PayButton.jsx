@@ -6,6 +6,10 @@ import axios from "axios";
 const PayButton = ({ cartItem, user_id, googleUser }) => {
   const [checkOutError, setCheckOutError] = useState(null);
 
+  const items = cartItem.map((item) => {
+    return item;
+  });
+  console.log(items);
   const handleCheckout = async () => {
     try {
       const res = await axios.post(
@@ -18,7 +22,7 @@ const PayButton = ({ cartItem, user_id, googleUser }) => {
       if (res.data.url) {
         const res = await axios.post(
           `http://localhost:4002/api/order/`,
-          { order_items: cartItem },
+          { order_items: items },
           {
             withCredentials: true,
           }

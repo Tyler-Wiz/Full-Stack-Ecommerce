@@ -17,8 +17,8 @@ const RenderAccountPage = ({ user }) => {
       <h3 className="text-xl font-bold my-8">Personal Details</h3>
       <div className="flex justify-between border-[1px] px-6 py-3 rounded-lg">
         <div className="flex-item w-[60%]">
-          <p className="w-[30%]">Name</p>
-          <p className="text-xl ">{user?.username}</p>
+          <p className="lg:w-[30%] w-[35%]">Name</p>
+          <p className="lg:text-xl">{user?.username}</p>
         </div>
         <Link href={`/account/edit-profile/${user.id}`}>
           <p className="flex-item gap-2 text-primary">
@@ -29,8 +29,8 @@ const RenderAccountPage = ({ user }) => {
       </div>
       <div className="flex justify-between border-[1px] px-6 py-3 my-6 rounded-lg">
         <div className="flex-item w-[60%]">
-          <p className="w-[30%]">Email Address</p>
-          <p className="lowercase text-xl">{user?.email}</p>
+          <p className="lg:w-[30%] w-[35%]">Email</p>
+          <p className="lowercase lg:text-xl">{user?.email}</p>
         </div>
         <Link href={`/account/edit-profile/${user.id}`}>
           <p className="flex-item gap-2 text-primary">

@@ -22,8 +22,8 @@ const RenderContactPage = () => {
   };
   return (
     <section className="relative">
-      <div className="max-w-screen-lg flex mx-auto gap-16 my-12 montserrat">
-        <div className="w-[50%]">
+      <div className="max-w-screen-lg px-6 mx-auto my-12 montserrat lg:flex lg:px-0 lg:gap-16">
+        <div className="lg:w-[50%]">
           <h3 className="text-2xl font-bold my-3">DISCOVER US</h3>
           <p className="my-6 text-xl">
             Untouch is here to help you; Our experts are available to answer any
@@ -35,7 +35,7 @@ const RenderContactPage = () => {
             <p>+44-123-456-7890</p>
           </div>
         </div>
-        <div className="w-[35%] bg-black p-6 rounded-xl">
+        <div className="bg-black p-6 rounded-xl mt-10 lg:mt-0 lg:w-[35%]">
           <form
             className="self-center w-full"
             onSubmit={handleSubmit(onSubmit)}>

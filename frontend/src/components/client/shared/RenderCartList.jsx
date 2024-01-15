@@ -13,7 +13,7 @@ const RenderCartList = ({ setOpenCartList, openCartList }) => {
     <>
       {openCartList ? (
         <div className="fixed z-[9998] top-0 right-0 w-[100%] h-[100%] ">
-          <div className=" fixed w-1/4 h-full bg-white top-0 right-0 z-[9999] p-5 animate-slide shadow-lg overflow-scroll ">
+          <div className="fixed lg:w-1/4 w-2/3 h-full bg-white top-0 right-0 z-[9999] p-5 animate-slide shadow-lg overflow-scroll ">
             <div className="flex justify-between mt-1 border-b-[1px] pb-4">
               <p className="text-md font-medium ">Cart</p>
               <MdClose
@@ -38,9 +38,9 @@ const RenderCartList = ({ setOpenCartList, openCartList }) => {
                 {cartItem?.map((item, index) => (
                   <div className="flex my-6 border-b-[1px] pb-4" key={index}>
                     <Link
-                      href={`/product/${item.slug}`}
+                      href={`/products/${item.category[0]}/${item.slug}`}
                       onClick={() => {
-                        setModalVisible(false);
+                        setOpenCartList(false);
                       }}>
                       <Image
                         src={item.images[0]}

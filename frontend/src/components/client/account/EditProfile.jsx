@@ -33,7 +33,7 @@ const EditProfile = ({ id }) => {
     };
     try {
       const res = await axios.put(
-        `http://localhost:4002/api/user/personal/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/user/personal/${id}`,
         userData,
         {
           withCredentials: true,
@@ -41,7 +41,7 @@ const EditProfile = ({ id }) => {
       );
       if (res.status === 201) {
         const res = await axios.post(
-          `http://localhost:4002/api/user/${id}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}api/user/${id}`,
           userInfo,
           {
             withCredentials: true,
@@ -56,23 +56,13 @@ const EditProfile = ({ id }) => {
       console.log(error);
     }
   };
-  const RenderUserInfoList = ({ data, name }) => {
-    return (
-      <div className="flex justify-between border-[1px] px-6 py-3 rounded-lg w-[90%] my-3">
-        <div className="flex-item w-[90%]">
-          <p className="w-[30%]">{name}</p>
-          <p className="text-sm font-bold">{data}</p>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <>
       <div>
         <h1>Edit Personal details</h1>
         <form
-          className="w-[60%] p-4 border-[1px]"
+          className="lg:w-[60%] p-4 border-[1px]"
           onSubmit={handleSubmit(onSubmit)}>
           <Input
             register={register}

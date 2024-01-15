@@ -23,12 +23,12 @@ const heroData = [
 
 const SecureShipping = () => {
   return (
-    <div className="flex flex-col gap-6 items-center lg:flex-row justify-center max-w-screen-xl mx-auto py-10">
+    <div className="flex flex-col gap-6 justify-center max-w-screen-xl mx-auto py-10 md:flex-row  ">
       {heroData.map((item, index) => (
         <div
           key={index}
           className={`px-6 capitalize jost  ${
-            index !== 2 ? "lg:border-r-[1px]" : ""
+            index !== 2 ? "md:border-r-[1px]" : ""
           }`}>
           <div className="flex-item gap-3 mb-2">
             {item.icon}

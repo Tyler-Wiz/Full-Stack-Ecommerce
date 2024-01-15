@@ -52,9 +52,14 @@ const RenderSingleProduct = ({ product, productsInCategory }) => {
   };
 
   return (
-    <section className="container flex-col">
+    <section className="lg:container lg:px-0 px-6 flex-col">
       <div className="flex gap-16 montserrat my-16 ">
-        <div className="w-[40%] flex flex-col gap-6">
+        <div className="lg:w-[40%] flex flex-col gap-6">
+          <div className="flex justify-center items-center lg:hidden">
+            <div className="relative w-[95%] h-[400px]">
+              <Image src={product.images[0]} alt={product.name} fill />
+            </div>
+          </div>
           <p className="text-sm uppercase text-primary font-bold tracking-widest">
             {product.category[0]}
           </p>
@@ -71,7 +76,7 @@ const RenderSingleProduct = ({ product, productsInCategory }) => {
             setSelectedColor={setSelectedColor}
           />
           <div className="flex gap-10 items-center">
-            {product.discount ? (
+            {product.discount !== "0" ? (
               <div className="flex gap-4  text-primary text-xl font-bold ">
                 <p>£{handleDiscount(product).toFixed(2)}</p>
                 <p className="line-through text-gray-400 text-xl font-bold">
@@ -79,7 +84,9 @@ const RenderSingleProduct = ({ product, productsInCategory }) => {
                 </p>
               </div>
             ) : (
-              <p className="text-primary text-xl font-bold">£{product.price}</p>
+              <p className="text-primary text-xl font-bold">
+                £{parseFloat(product.price).toFixed(2)}
+              </p>
             )}
             <Button
               backgroundColor="bg-black"
@@ -91,7 +98,8 @@ const RenderSingleProduct = ({ product, productsInCategory }) => {
           </div>
           {selectedError && <p className="text-primary">{selectedError}</p>}
         </div>
-        <div className="flex w-[60%] gap-5">
+
+        <div className="lg:flex w-[60%] gap-5 hidden">
           <div className="relative w-[60%] h-full">
             <Image src={product.images[0]} alt={product.name} fill />
           </div>

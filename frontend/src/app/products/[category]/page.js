@@ -7,7 +7,7 @@ const page = async ({ params }) => {
   const { category } = params;
   const products = await getProducts();
   let productsInCategory;
-  if (category === "women" || category === "men") {
+  if (category === "women" || category === "men" || category === "children") {
     productsInCategory = products.filter(
       (product) => product.category[1].toLowerCase() === category.toLowerCase()
     );
@@ -19,11 +19,13 @@ const page = async ({ params }) => {
 
   return (
     <ClientLayout>
-      <section className="container flex-col">
-        <h1 className="text-4xl font-bold montserrat my-6 ">{category}</h1>
-        <div className="flex flex-wrap gap-4 w-full my-10">
+      <section className="lg:container flex-col px-6 lg:px-0">
+        <h1 className="lg:text-4xl font-bold montserrat my-6 capitalize">
+          {category}
+        </h1>
+        <div className="flex flex-wrap lg:gap-4 gap-2 w-full my-10">
           {productsInCategory.map((item, index) => (
-            <div key={index} className="w-[24%]">
+            <div key={index} className="lg:w-[24%] w-[48%]">
               <RenderProductList product={item} />
             </div>
           ))}

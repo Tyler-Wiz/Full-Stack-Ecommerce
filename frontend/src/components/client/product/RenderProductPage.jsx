@@ -10,7 +10,7 @@ const RenderProductPage = ({ products }) => {
   });
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = 12;
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const paginateData = () => {
@@ -48,8 +48,8 @@ const RenderProductPage = ({ products }) => {
 
   return (
     <ClientLayout>
-      <section className="container flex-col">
-        <h1 className="text-4xl font-bold montserrat my-10 ">Products</h1>
+      <section className="lg:container px-6 lg:px-0 flex-col">
+        <h1 className="lg:text-4xl font-bold montserrat my-10">Products</h1>
         <div className="flex-item gap-4 text-sm text-gray-500 montserrat border-b-[1px] py-5">
           <p className="">Sort by</p>
           <span className="bg-primary w-1 ">|</span>
@@ -64,9 +64,9 @@ const RenderProductPage = ({ products }) => {
             <option value="shoes">Shoes</option>
           </select>
         </div>
-        <div className="flex flex-wrap gap-4 w-full my-10">
+        <div className="flex flex-wrap lg:gap-4 gap-2 w-full my-10">
           {paginateData().map((item, index) => (
-            <div key={index} className="w-[24%]">
+            <div key={index} className="lg:w-[24%] w-[48%] ">
               <RenderProductList product={item} />
             </div>
           ))}

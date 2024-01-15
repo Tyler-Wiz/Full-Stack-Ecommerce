@@ -5,9 +5,9 @@ import { MdEmail } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <footer className="montserrat py-10 mt-10 border-t-[1px]">
-      <div className="container">
-        <div className="w-1/5 flex flex-col gap-2">
+    <footer className="montserrat py-10 mt-10 px-6 border-t-[1px]">
+      <div className="lg:container">
+        <div className="lg:w-1/5 flex flex-col gap-2">
           <Image
             src="/img/client/logo.png"
             width={100}
@@ -27,7 +27,7 @@ const Footer = () => {
             <p>hello@sportzystore.com</p>
           </div>
         </div>
-        <div className="flex-item justify-between w-2/5">
+        <div className="lg:flex-item lg:justify-between lg:w-2/5 mt-8">
           {FooterData.map((item, index) => (
             <div key={index}>
               <h3 className="font-bold text-lg mb-4">{item.header}</h3>
@@ -39,7 +39,7 @@ const Footer = () => {
             </div>
           ))}
         </div>
-        <div className="w-1/5">
+        <div className="lg:w-1/5">
           <h3 className="font-bold text-lg">NewsLetter</h3>
           <form action="" className="flex-item my-6">
             <input placeholder="Enter your email address.." />

@@ -3,37 +3,34 @@
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "@/store/features/authSlice";
 
-const accountRoutes = [
-  {
-    path: "/account",
-    component: "My Account Homepage",
-  },
-  {
-    path: "/account/personal-details",
-    component: "Personal details",
-  },
-  {
-    path: "/account/orders",
-    component: "Your orders",
-  },
-  {
-    path: "/account/wishlist",
-    component: "Wishlist",
-  },
-  {
-    path: "/delivery",
-    component: "Delivery & collection",
-  },
-  {
-    path: "/contact",
-    component: "Contact Us",
-  },
-];
-
 const AccountLayout = ({ children }) => {
+  const { user_id } = useSelector((state) => state.auth);
+  const accountRoutes = [
+    {
+      path: "/account",
+      component: "My Account Homepage",
+    },
+    {
+      path: "/account/personal-details",
+      component: "Personal details",
+    },
+    {
+      path: `/account/my-orders/${user_id}`,
+      component: "Your orders",
+    },
+    {
+      path: "/delivery",
+      component: "Delivery & collection",
+    },
+    {
+      path: "/contact",
+      component: "Contact Us",
+    },
+  ];
+
   const pathname = usePathname();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -44,9 +41,9 @@ const AccountLayout = ({ children }) => {
   };
 
   return (
-    <section className="container montserrat my-12 gap-10">
-      <aside className="border-[1px] w-[25%] p-4 rounded-lg">
-        <div className="my-6 jost">
+    <section className="lg:container montserrat lg:my-12 gap-10 lg:px-0 px-6">
+      <aside className="lg:border-[1px] w-[25%] p-4 rounded-lg">
+        <div className="my-6 jost lg:flex lg:flex-col hidden">
           {accountRoutes.map((route) => (
             <div
               key={route.path}
@@ -60,12 +57,12 @@ const AccountLayout = ({ children }) => {
           ))}
         </div>
         <button
-          className="jost text-sm text-primary ml-2"
+          className="jost text-sm text-primary ml-2 hidden lg:block"
           onClick={handleLogOut}>
           Sign Out
         </button>
       </aside>
-      <main className="jost w-[75%]">{children}</main>
+      <main className="jost lg:w-[75%]">{children}</main>
     </section>
   );
 };

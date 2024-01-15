@@ -9,7 +9,6 @@ const Trending = ({ products }) => {
   const [data, setData] = useState(products);
   const [selected, setSelected] = useState("");
 
-
   useEffect(() => {
     if (selected === "") {
       setData(products);
@@ -23,11 +22,11 @@ const Trending = ({ products }) => {
   }, [selected]);
 
   return (
-    <section className="montserrat container flex-col">
+    <section className="montserrat lg:container flex-col px-6 lg:px-0">
       <div className="border-b-[1px] py-3 montserrat flex-item justify-between">
-        <h3 className="text-xl font-bold">Trending Products</h3>
+        <h3 className="lg:text-xl  font-bold">Trending Products</h3>
         <div className="flex-item gap-4">
-          <p className="border-r-2 pr-3 border-primary text-xs ">Sort by</p>
+          <p className="border-r-2 pr-3 border-primary text-xs">Sort by</p>
           <select
             className="px-4 font-bold outline-none"
             value={selected}
@@ -40,7 +39,7 @@ const Trending = ({ products }) => {
         </div>
       </div>
       <div className="mt-10 flex gap-6">
-        <div className="h-[920px] w-[20%] relative">
+        <div className="lg:w-[20%] relative hidden lg:block lg:h-[920px]">
           <Image
             src="/img/client/promo-banner.png"
             fill={true}
@@ -48,9 +47,9 @@ const Trending = ({ products }) => {
             alt="banner ad"
           />
         </div>
-        <div className="flex flex-wrap gap-4 w-[80%]">
+        <div className="flex flex-wrap md:gap-4 gap-2 w-full lg:w-[80%]">
           {data?.slice(0, 6).map((item, index) => (
-            <div key={index} className="w-[32%]">
+            <div key={index} className="lg:w-[32%] w-[48%]">
               <RenderProductList product={item} />
             </div>
           ))}

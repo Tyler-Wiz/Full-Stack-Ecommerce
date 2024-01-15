@@ -1,53 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
 import { MdClose, MdDelete } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
 import { removeWish, clearWishList } from "@/store/features/wishSlice";
 import Button from "./Button";
-import { addToCart } from "@/store/features/cartSlice";
-import RenderSizeColor from "../product/RenderSizeColor";
 
 const RenderWishList = ({ openWishList, setOpenWishList }) => {
   const { wishList } = useSelector((state) => state.wish);
   const dispatch = useDispatch();
-  const [selectedSize, setSelectedSize] = useState("");
-  const [selectedColor, setSelectedColor] = useState("");
-  const [selectedItem, setSelectedItem] = useState("");
-  const [selectedError, setSelectedError] = useState("");
-
-  const product = wishList.find((item) => item.id === selectedItem);
-  const RenderProductOptions = () => {
-    return (
-      <RenderSizeColor
-        product={product}
-        setSelectedSize={setSelectedSize}
-        selectedSize={selectedSize}
-        selectedColor={selectedColor}
-        setSelectedColor={setSelectedColor}
-      />
-    );
-  };
-
-  const handleAddToCart = () => {
-    if (!selectedSize && !selectedColor) {
-      setSelectedError("Please select size and color");
-      return;
-    } else {
-      setSelectedError("");
-      setSelectedColor("");
-      setSelectedSize("");
-      dispatch(addToCart({ ...product, selectedSize, selectedColor }));
-    }
-  };
 
   return (
     <>
       {openWishList ? (
         <div className="fixed z-[9998] top-0 right-0 w-[100%] h-[100%] montserrat">
-          <div className=" fixed w-1/4 h-full bg-white top-0 right-0 z-[9999] p-5 shadow-lg animate-slide">
+          <div className="fixed lg:w-1/4 w-2/3 h-full bg-white top-0 right-0 z-[9999] p-5 shadow-lg animate-slide overflow-y-auto">
             <div className="flex justify-between mt-1 border-b-[1px] pb-4">
               <p className="text-md font-medium ">WishList</p>
               <MdClose
@@ -55,7 +23,6 @@ const RenderWishList = ({ openWishList, setOpenWishList }) => {
                 className="text-black cursor-pointer"
                 onClick={() => {
                   setOpenWishList(false);
-                  setSelectedItem("");
                 }}
               />
             </div>
@@ -89,16 +56,6 @@ const RenderWishList = ({ openWishList, setOpenWishList }) => {
                           <p className="mr-1">{item.itemsQuantity} x</p>
                           <p>£{item.price}</p>
                         </div>
-                        <div className="mt-2 ">
-                          <Button
-                            name="add to cart"
-                            color="text-white"
-                            backgroundColor="bg-primary"
-                            onClick={() => {
-                              setSelectedItem(item.id);
-                            }}
-                          />
-                        </div>
                       </div>
                     </div>
                   </>
@@ -116,20 +73,6 @@ const RenderWishList = ({ openWishList, setOpenWishList }) => {
               </div>
             )}
           </div>
-          {selectedItem && (
-            <div className="flex gap-9 flex-col min-w-96 max-h-96 justify-center items-center mx-auto mt-32 border-2 bg-white w-1/2 h-screen">
-              <h3 className="font-bold">Pick a Size and Color</h3>
-              {RenderProductOptions()}
-              <Button
-                name="add to cart"
-                color="text-white"
-                backgroundColor="bg-primary"
-                width="w-1/2"
-                onClick={() => handleAddToCart()}
-              />
-              {selectedError && <p className="text-primary">{selectedError}</p>}
-            </div>
-          )}
         </div>
       ) : null}
     </>

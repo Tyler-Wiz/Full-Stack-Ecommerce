@@ -49,8 +49,8 @@ const QuestionsSection = () => {
   };
 
   return (
-    <section className="container my-20 gap-10">
-      <div className="bg-mountain bg-cover h-[500px] w-[45%]">
+    <section className="lg:container my-20 gap-10 px-6 lg:px-0">
+      <div className="bg-mountain bg-cover h-[350px] w-full lg:h-[500px] lg:w-[45%]">
         <div className=" w-[60%] px-6 pt-16">
           <h1 className="text-3xl text-black font-bold py-3">REACH THE PEAK</h1>
           <p className="montserrat pb-10">
@@ -64,7 +64,7 @@ const QuestionsSection = () => {
           />
         </div>
       </div>
-      <div className="w-[55%]">
+      <div className="lg:w-[55%] lg:mt-0 mt-10 ">
         <h1 className="text-3xl text-black font-bold py-3">FAQ</h1>
         {questions.map((item, index) => (
           <div

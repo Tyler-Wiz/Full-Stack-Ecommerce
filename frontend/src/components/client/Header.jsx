@@ -11,6 +11,7 @@ import { getCartTotal } from "@/store/features/cartSlice";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getUser, getGoogleUser } from "@/store/features/authSlice";
+import MobileNav from "./shared/MobileNav";
 
 const Header = ({ setOpenWishList, setOpenCartList }) => {
   // Instance of Dispatch
@@ -22,6 +23,7 @@ const Header = ({ setOpenWishList, setOpenCartList }) => {
 
   // Search Loading State and Ref
   const [isSearch, setIsSearch] = useState(false);
+  const [hamburger, setHamburger] = useState(false);
   const searchQueryRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -54,7 +56,7 @@ const Header = ({ setOpenWishList, setOpenCartList }) => {
   };
 
   return (
-    <header className="jost border-b-[1px] py-5">
+    <header className="jost border-b-[1px] py-5 px-6 lg:px-0">
       <div className="header-container container">
         <div className="flex-item">
           <Link href="/" className="relative w-32 h-7">
@@ -65,9 +67,11 @@ const Header = ({ setOpenWishList, setOpenCartList }) => {
               alt="Website logo"
             />
           </Link>
-          <Nav />
+          <div className="hidden lg:block">
+            <Nav />
+          </div>
         </div>
-        <div className="flex-item gap-7">
+        <div className="gap-7 flex-item ">
           <button className="relative" onClick={() => setOpenWishList(true)}>
             <FaRegHeart size={20} />
             <span className="absolute -top-4 -right-5">
@@ -100,24 +104,45 @@ const Header = ({ setOpenWishList, setOpenCartList }) => {
                 </form>
               )}
             </button>
-            {user_id ? (
-              <Link href="/account">
-                <FaUserCircle size={35} />
-              </Link>
-            ) : googleUser ? (
-              <p className="text-[2px]">Hello, {googleUser.name}</p>
-            ) : (
-              <Link href="/login">
-                <p className="text-[2px]">Login/Register</p>
-              </Link>
-            )}
-            {googleUser && (
-              <button
-                className="text-primary text-xs"
-                onClick={handleGoogleUserSignOut}>
-                Sign Out
-              </button>
-            )}
+            <div className="hidden lg:block">
+              {user_id ? (
+                <Link href="/account">
+                  <FaUserCircle size={35} />
+                </Link>
+              ) : googleUser ? (
+                <p className="text-[2px]">Hello, {googleUser.name}</p>
+              ) : (
+                <Link href="/login">
+                  <p className="text-[2px]">Login/Register</p>
+                </Link>
+              )}
+              {googleUser && (
+                <button
+                  className="text-primary text-xs"
+                  onClick={handleGoogleUserSignOut}>
+                  Sign Out
+                </button>
+              )}
+            </div>
+            <div
+              className="flex flex-col gap-1 cursor-pointer lg:hidden mt-1 relative z-[9999]"
+              onClick={() => setHamburger(!hamburger)}>
+              <div
+                className={`relative bg-primary w-8 h-1 ${
+                  hamburger ? "rotate-45 transition-all duration-500" : ""
+                }`}></div>
+              <div
+                className={`relative bg-primary w-8 h-1 ${
+                  hamburger ? "hidden" : ""
+                }`}></div>
+              <div
+                className={`relative bg-primary w-8 h-1 ${
+                  hamburger
+                    ? "-rotate-45 transition-all duration-500 relative bottom-2"
+                    : ""
+                }`}></div>
+            </div>
+            <MobileNav hamburger={hamburger} />
           </div>
         </div>
       </div>

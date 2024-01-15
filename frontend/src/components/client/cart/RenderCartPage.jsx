@@ -122,7 +122,7 @@ const RenderCartPage = ({ cartItem }) => {
                       </div>
                     </td>
                     <td className="p-4 whitespace-nowrap text-[1rem] font-medium text-gray-400">
-                      {product.discount ? (
+                      {product.discount !== "0" ? (
                         <div className="flex gap-4">
                           <p>£{handleDiscount(product).toFixed(2)}</p>
                           <p className="line-through">£{product.price}</p>

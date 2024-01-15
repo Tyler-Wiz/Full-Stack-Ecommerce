@@ -7,10 +7,9 @@ const RenderProductList = ({ product }) => {
   const handleDiscount = (product) => {
     return parseFloat(product.price - product.price * (product.discount / 100));
   };
-
   return (
     <>
-      <div className="h-[360px] relative group my-6">
+      <div className="lg:h-[360px] h-[250px] relative group my-6">
         {product.images && (
           <Link href={`/products/${product.category[0]}/${product.slug}`}>
             <Image
@@ -21,7 +20,7 @@ const RenderProductList = ({ product }) => {
             />
           </Link>
         )}
-        {product.discount && (
+        {product.discount !== "0" && (
           <p className="bg-primary font-bold p-2 text-xs text-white absolute right-3 top-3">
             - {product.discount}%
           </p>
@@ -33,14 +32,14 @@ const RenderProductList = ({ product }) => {
       <p className="text-primary uppercase font-bold text-sm tracking-widest my-2">
         {product.category[0]}
       </p>
-      <p className="font-bold my-2">{product.name}</p>
-      {product.discount ? (
-        <div className="flex gap-4">
+      <p className="font-bold my-2 text-sm ">{product.name}</p>
+      {product.discount !== "0" ? (
+        <div className="flex gap-4 text-sm ">
           <p>£{handleDiscount(product).toFixed(2)}</p>
           <p className="line-through">£{product.price}</p>
         </div>
       ) : (
-        <p>£{product.price}</p>
+        <p className="text-sm">£{parseFloat(product.price).toFixed(2)}</p>
       )}
     </>
   );

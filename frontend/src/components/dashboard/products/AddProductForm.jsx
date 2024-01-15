@@ -8,6 +8,7 @@ import { productSchema } from "@/validators/ProductValidator";
 import { FaImages } from "react-icons/fa";
 import axios from "axios";
 import PrimaryButton from "@/components/shared/PrimaryButton";
+import { toast } from "react-toastify";
 
 const AddProductForm = () => {
   const {
@@ -47,6 +48,7 @@ const AddProductForm = () => {
   });
 
   const [images, setImages] = useState([]);
+  const [submitError, setSubmitError] = useState(null);
 
   const handleImageChange = (e) => {
     const files = e.target.files;
@@ -89,6 +91,7 @@ const AddProductForm = () => {
     };
     console.log(formData);
     try {
+      if (images.length === 0) throw new Error("Please add images");
       const res = await axios.post(
         `http://localhost:4002/api/products`,
         formData,
@@ -99,9 +102,13 @@ const AddProductForm = () => {
       if (res.data) {
         setImages([]);
         e.target.reset();
+        setSubmitError(null);
+        toast.success(`Product Added Successfully`, {
+          position: toast.POSITION.TOP_CENTER,
+        });
       }
     } catch (error) {
-      console.log(error);
+      setSubmitError(error);
     }
   };
 
@@ -290,12 +297,16 @@ const AddProductForm = () => {
             Add Category
           </button>
         </div>
-
         <PrimaryButton
           name="Publish product"
           color="text-white"
           background="bg-primary"
         />
+        {submitError && (
+          <p className="text-red-500 text-sm text-center mt-3">
+            {submitError.message}
+          </p>
+        )}
       </div>
     </form>
   );

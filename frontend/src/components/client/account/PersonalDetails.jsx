@@ -13,7 +13,7 @@ const PersonalDetails = ({ user }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4002/api/user/${user.id}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}api/user/${user.id}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -68,9 +68,9 @@ const PersonalDetails = ({ user }) => {
 
   const RenderUserInfoList = ({ data, name }) => {
     return (
-      <div className="flex justify-between border-[1px] px-6 py-3 rounded-lg w-[90%] my-3">
+      <div className="flex justify-between border-[1px] px-6 py-3 rounded-lg lg:w-[90%] my-3">
         <div className="flex-item w-[90%]">
-          <p className="w-[30%]">{name}</p>
+          <p className="lg:w-[30%] w-[35%]">{name}</p>
           <p className="text-sm font-bold">{data}</p>
         </div>
       </div>

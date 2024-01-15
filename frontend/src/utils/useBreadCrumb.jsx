@@ -7,6 +7,7 @@ import { FaHome } from "react-icons/fa";
 const Breadcrumb = () => {
   const paths = usePathname();
   const pathNames = paths.split("/").filter((path) => path);
+
   return (
     <div>
       {paths !== "/" && (
@@ -19,6 +20,8 @@ const Breadcrumb = () => {
           </li>
           {pathNames.length > 0 && <span className=" text-gray-300"> | </span>}
           {pathNames.map((link, index) => {
+            const numberLink = parseFloat(link);
+            if (!isNaN(numberLink)) return null;
             let href = `/${pathNames.slice(0, index + 1).join("/")}`;
             let itemClasses =
               paths === href
