@@ -37,7 +37,8 @@ module.exports = (app) => {
         httpOnly: true,
         secure: true,
         sameSite: "none",
-        expires: 1 * 4 * 3600 * 1000,
+        maxAge: 1 * 4 * 3600 * 1000,
+        domain: "https://full-stack-ecommerce-sable.vercel.app",
       },
       store: sessionStore,
     })
