@@ -35,9 +35,9 @@ module.exports = (app) => {
       saveUninitialized: true,
       cookie: {
         httpOnly: true,
-        secure: false,
-        sameSite: "lax",
-        expires: 7 * 24 * 3600 * 1000,
+        secure: true,
+        sameSite: "none",
+        expires: 1 * 4 * 3600 * 1000,
       },
       store: sessionStore,
     })
