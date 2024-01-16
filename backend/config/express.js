@@ -16,7 +16,10 @@ const sessionStore = new PostgresqlStore({
 module.exports = (app) => {
   app.use(
     cors({
-      origin: "http://localhost:3000",
+      origin: [
+        "http://localhost:3000",
+        "https://full-stack-ecommerce-gol4ec30j-tyler-wiz.vercel.app/",
+      ],
       methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
       credentials: true,
     })
