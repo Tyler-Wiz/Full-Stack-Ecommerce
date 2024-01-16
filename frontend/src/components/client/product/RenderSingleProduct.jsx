@@ -36,7 +36,7 @@ const RenderSingleProduct = ({ product, productsInCategory }) => {
         return;
       } else {
         const res = await axios.post(
-          `http://localhost:4002/api/cart`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}api/cart`,
           {
             product_id,
             selected_size,
