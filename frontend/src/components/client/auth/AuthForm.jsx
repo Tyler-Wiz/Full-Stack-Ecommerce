@@ -4,13 +4,10 @@ import Input from "@/components/shared/TextInput";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "@/validators/AuthValidator";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../shared/Button";
-import config from "@/services/config/index";
 
 const AuthForm = ({ authType, dispatchAction, schema }) => {
   const { loginError, loginStatus, registerStatus, registerError } =
@@ -32,10 +29,6 @@ const AuthForm = ({ authType, dispatchAction, schema }) => {
   const onSubmit = (data) => {
     delete data.confirmPassword;
     dispatch(dispatchAction(data));
-  };
-
-  const googleAuth = () => {
-    window.open(`${config.GOOGLE_LOGIN_URL}`, "_self");
   };
 
   return (
@@ -129,18 +122,6 @@ const AuthForm = ({ authType, dispatchAction, schema }) => {
               aria-label="submit-button"
             />
           </form>
-          <div className="my-3">
-            <button
-              className={` w-full text-primary bg-white border-[1px] border-black px-4 py-3 text-xs montserrat capitalize flex items-center justify-center gap-2`}
-              onClick={googleAuth}>
-              <FcGoogle size={20} />
-              <p className="text-gray-500">
-                {authType === "login"
-                  ? "Sign In with Google"
-                  : "Continue with Google"}
-              </p>
-            </button>
-          </div>
           {/* If the authType is login, show the forgot password link */}
           {authType === "login" && (
             <Link href="/forgot">

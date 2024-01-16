@@ -13,30 +13,14 @@ export const sidebarData = [
     id: 2,
     title: "Products",
     icon: <BiSolidShoppingBags size={25} />,
-    path: "/dashboard/products",
+    path: "/dashboard/products/add",
     submenu: true,
     subMenuItems: [
-      {
-        id: 21,
-        title: "Top Products",
-        path: "/dashboard/products",
-      },
-      {
-        id: 22,
-        title: "Product Management",
-        path: "/dashboard/products/manage",
-      },
       {
         id: 25,
         title: "Add New Product +",
         path: "/dashboard/products/add",
       },
     ],
-  },
-  {
-    id: 3,
-    title: "Orders",
-    icon: <MdOutlineShoppingCart size={25} />,
-    path: "/dashboard/Products",
   },
 ];

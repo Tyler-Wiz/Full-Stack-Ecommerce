@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "@/store/features/cartSlice";
 import StarRating from "@/components/shared/StarRating";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const RenderSingleProduct = ({ product, productsInCategory }) => {
   const [selected_size, setSelectedSize] = useState("");
@@ -28,26 +29,32 @@ const RenderSingleProduct = ({ product, productsInCategory }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = async () => {
-    const product_id = product.id;
-    if (!selected_color || !selected_size) {
-      setSelectedError("Please select size and color");
-      return;
-    } else {
-      const res = await axios.post(
-        `http://localhost:4002/api/cart`,
-        {
-          product_id,
-          selected_size,
-          selected_color,
-        },
-        {
-          withCredentials: true,
+    try {
+      const product_id = product.id;
+      if (!selected_color || !selected_size) {
+        setSelectedError("Please select size and color");
+        return;
+      } else {
+        const res = await axios.post(
+          `http://localhost:4002/api/cart`,
+          {
+            product_id,
+            selected_size,
+            selected_color,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        if (res.data) {
+          dispatch(addToCart({ ...product, selected_color, selected_color }));
+          setSelectedError("");
         }
-      );
-      if (res.data) {
-        dispatch(addToCart({ ...product, selected_color, selected_color }));
-        setSelectedError("");
       }
+    } catch (error) {
+      toast.error(error.response.data.errorMessage, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 

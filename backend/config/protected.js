@@ -17,7 +17,10 @@ const protected = (req, res, next) => {
 const protectedUser = (req, res, next) => {
   try {
     if (!req.user) {
-      throw createError(401, "You are not logged in");
+      throw createError(
+        401,
+        "You are not logged in, create an account to continue"
+      );
     } else {
       next();
     }

@@ -82,14 +82,19 @@ const Header = ({ setOpenWishList, setOpenCartList }) => {
               )}
             </span>
           </button>
-          <button className="relative" onClick={() => setOpenCartList(true)}>
+          <button
+            className="relative"
+            onClick={() => setOpenCartList(true)}
+            disabled={!user_id}>
             <IoCartOutline size={20} />
             <span className="absolute -top-4 -right-5">
-              {cartTotalQuantity > 0 && (
-                <span className="bg-primary text-white text-xs px-1.5 py-.3 rounded-full">
-                  {cartTotalQuantity}
-                </span>
-              )}
+              {user_id
+                ? cartTotalQuantity > 0 && (
+                    <span className="bg-primary text-white text-xs px-1.5 py-.3 rounded-full">
+                      {cartTotalQuantity}
+                    </span>
+                  )
+                : ""}
             </span>
           </button>
           <div className="flex items-center gap-6">

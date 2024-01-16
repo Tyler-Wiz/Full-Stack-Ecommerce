@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body className={`${montserrat.variable} ${jost.variable}`}>
           {children}
-          <ToastContainer autoClose={1000} />
+          <ToastContainer autoClose={3000} />
         </body>
       </html>
     </ReduxProvider>
