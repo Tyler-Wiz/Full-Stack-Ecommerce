@@ -1,6 +1,7 @@
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { TbWorld } from "react-icons/tb";
 import { GrSecure } from "react-icons/gr";
+import styles from "@/components/client/styles/Home.module.css";
 
 const heroData = [
   {
@@ -23,20 +24,18 @@ const heroData = [
 
 const SecureShipping = () => {
   return (
-    <div className="flex flex-col gap-6 justify-center max-w-screen-xl mx-auto py-10 md:flex-row  ">
+    <div className={styles.shippingContainer}>
       {heroData.map((item, index) => (
         <div
           key={index}
           className={`px-6 capitalize jost  ${
-            index !== 2 ? "md:border-r-[1px]" : ""
+            index !== 2 ? "lg:border-r-[1px]" : ""
           }`}>
-          <div className="flex-item gap-3 mb-2">
+          <div className={styles.shippingIcon}>
             {item.icon}
-            <h1 className="font-bold text-lg">{item.name}</h1>
+            <h3>{item.name}</h3>
           </div>
-          <p className="montserrat text-sm text-secondary">
-            {item.description}
-          </p>
+          <p className="montserrat">{item.description}</p>
         </div>
       ))}
     </div>
