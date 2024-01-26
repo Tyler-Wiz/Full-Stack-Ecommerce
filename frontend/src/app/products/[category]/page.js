@@ -3,6 +3,17 @@ import ClientLayout from "@/components/client/shared/ClientLayout";
 import RenderProductList from "@/components/client/product/RenderProductList";
 import { getProducts } from "@/services/api/fetch/fetchAll";
 
+export async function generateMetadata({ params }) {
+  // read route params
+  const { category } = params;
+  return {
+    title: `${category} | Sportzy `,
+    openGraph: {
+      title: category,
+    },
+  };
+}
+
 const page = async ({ params }) => {
   const { category } = params;
   const products = await getProducts();
