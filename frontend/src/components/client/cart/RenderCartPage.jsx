@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useLayoutEffect, useEffect } from "react";
+import { useLayoutEffect } from "react";
 import ClientLayout from "../shared/ClientLayout";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
@@ -17,6 +17,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import PayButton from "./PayButton";
+import { toast } from "react-toastify";
 
 const RenderCartPage = ({ cartItem }) => {
   // Instance of Dispatch
@@ -36,47 +37,64 @@ const RenderCartPage = ({ cartItem }) => {
 
   // Handle Delete Item from In Local and Database
   const handleDeleteItemFromCart = async (id, cart_item_id) => {
-    const res = await axios.delete(
-      `http://localhost:4002/api/cart/items/${cart_item_id}`,
-      {
-        withCredentials: true,
+    try {
+      const res = await axios.delete(
+        `http://localhost:4002/api/cart/items/${cart_item_id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      if (res.data) {
+        dispatch(removeFromCart(id));
+        router.refresh();
       }
-    );
-    if (res.data) {
-      dispatch(removeFromCart(id));
-      router.refresh();
+    } catch (error) {
+      toast.error(error.response.data.errorMessage, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
   // Handle Add to Cart Local and Database
   const handleAddToCart = async (product) => {
-    const product_id = product.id;
-    const res = await axios.post(
-      `http://localhost:4002/api/cart`,
-      {
-        product_id,
-      },
-      {
-        withCredentials: true,
+    try {
+      const product_id = product.id;
+      const res = await axios.post(
+        `http://localhost:4002/api/cart`,
+        {
+          product_id,
+          user_id,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      if (res.data) {
+        dispatch(addToCart(product));
+        router.refresh();
       }
-    );
-    if (res.data) {
-      dispatch(addToCart(product));
-      router.refresh();
+    } catch (error) {
+      toast.error(error.response.data.errorMessage, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
   // handle Decrease Quantity
   const handleDecreaseQuantity = async (id, cart_item_id) => {
-    const res = await axios.delete(
-      `http://localhost:4002/api/cart/items/quantity/${cart_item_id}`,
-      {
-        withCredentials: true,
+    try {
+      const res = await axios.post(
+        `http://localhost:4002/api/cart/items/quantity/${cart_item_id}`,
+        { user_id: user_id }
+      );
+      if (res.data) {
+        dispatch(decreaseQuantity(id));
+        router.refresh();
       }
-    );
-    if (res.data) {
-      dispatch(decreaseQuantity(id));
-      router.refresh();
+    } catch (error) {
+      toast.error(error.response.data.errorMessage, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
@@ -169,7 +187,7 @@ const RenderCartPage = ({ cartItem }) => {
                         )}
                       </div>
                     </td>
-                    <td className="p-4 whitespace-nowrap text-4xl text-black">
+                    <td className="p-4 whitespace-nowrap text-4xl text-black ">
                       <button
                         onClick={() => {
                           handleDeleteItemFromCart(
@@ -177,7 +195,7 @@ const RenderCartPage = ({ cartItem }) => {
                             product.cart_item_id
                           );
                         }}>
-                        <IoIosCloseCircle />
+                        <IoIosCloseCircle size={30} />
                       </button>
                     </td>
                   </tr>
@@ -245,7 +263,7 @@ const RenderCartPage = ({ cartItem }) => {
                             product.cart_item_id
                           );
                         }}>
-                        <IoIosCloseCircle />
+                        <IoIosCloseCircle size={30} />
                       </button>
                     </div>
                   </div>

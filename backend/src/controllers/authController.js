@@ -64,7 +64,6 @@ exports.login = async (req, res) => {
     await UserModel.updateLastLogin(req.user.id);
     const token = genAuthToken(req.user);
     const cookie = { ...req.session.cookie, passport: { user: req.user.id } };
-    console.log(cookie);
     res.cookie("auth", cookie);
     res.status(200).send(token);
   }

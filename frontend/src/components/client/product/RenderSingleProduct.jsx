@@ -7,7 +7,7 @@ import SecureShipping from "../shared/SecureShipping";
 import { FaArrowRightLong } from "react-icons/fa6";
 import RenderProductList from "./RenderProductList";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/store/features/cartSlice";
 import StarRating from "@/components/shared/StarRating";
 import axios from "axios";
@@ -17,6 +17,7 @@ const RenderSingleProduct = ({ product, productsInCategory }) => {
   const [selected_size, setSelectedSize] = useState("");
   const [selected_color, setSelectedColor] = useState("");
   const [selectedError, setSelectedError] = useState("");
+  const { user_id } = useSelector((state) => state.auth);
 
   const handleDiscount = (product) => {
     return parseFloat(product.price - product.price * (product.discount / 100));
@@ -41,6 +42,7 @@ const RenderSingleProduct = ({ product, productsInCategory }) => {
             product_id,
             selected_size,
             selected_color,
+            user_id,
           },
           {
             withCredentials: true,

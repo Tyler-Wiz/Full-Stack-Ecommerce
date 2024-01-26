@@ -14,10 +14,9 @@ exports.findProduct = async (req, res, next) => {
   }
 };
 
-const createCart = async (user) => {
+const createCart = async (user_id) => {
+  const id = user_id;
   try {
-    if (!user) throw CreateError(404, "Not Authorized");
-    const { id } = user;
     const cart = await CartModel.readUniqueCart(id);
     if (!cart) {
       const userCart = await CartModel.create(id);
@@ -39,12 +38,11 @@ const createCart = async (user) => {
 exports.createCartItems = async (req, res, next) => {
   try {
     // get product ID
-    const { product_id, selected_size, selected_color } = req.body;
+    const { product_id, selected_size, selected_color, user_id } = req.body;
     if (!product_id) throw CreateError(400, "No Product Added");
-    // Get user from session
-    const user = req.user;
     // Create or Retrieve User Cart
-    const cart = await createCart(user);
+    if (!user_id) throw CreateError(400, "Must be logged in to add to cart");
+    const cart = await createCart(user_id);
     // Check if Product Exist in User CartItem
     const itemInCart = await CartItemModel.checkIfItemExist(
       product_id,
@@ -88,15 +86,13 @@ exports.getCartItems = async (req, res, next) => {
 };
 
 exports.deleteSingleCartQuantity = async (req, res, next) => {
+  const { user_id } = req.body;
   try {
     const cart_item_id = req.params.id;
     const product = await CartItemModel.findUniqueItem(cart_item_id);
     const { product_id } = product;
-    // if (!product_id) throw CreateError(400, "No Product Added");
-    // Get user from session
-    const user = req.user;
     // Create or Retrieve User Cart
-    const cart = await createCart(user);
+    const cart = await createCart(user_id);
     // Check if Product Exist in User Cart
     const cartQuantity = await CartItemModel.cartQuantity(product_id, cart.id);
     if (cartQuantity.cartquantity > 1) {
