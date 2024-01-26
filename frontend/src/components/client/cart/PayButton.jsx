@@ -13,7 +13,7 @@ const PayButton = ({ cartItem, user_id, googleUser }) => {
   const handleCheckout = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:4002/api/order/create-checkout-session`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/order/create-checkout-session`,
         { cart: cartItem, user_id },
         {
           withCredentials: true,
@@ -21,7 +21,7 @@ const PayButton = ({ cartItem, user_id, googleUser }) => {
       );
       if (res.data.url) {
         const res = await axios.post(
-          `http://localhost:4002/api/order/`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}api/order/`,
           { order_items: items },
           {
             withCredentials: true,

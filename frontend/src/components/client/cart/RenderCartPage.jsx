@@ -39,7 +39,7 @@ const RenderCartPage = ({ cartItem }) => {
   const handleDeleteItemFromCart = async (id, cart_item_id) => {
     try {
       const res = await axios.delete(
-        `http://localhost:4002/api/cart/items/${cart_item_id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/cart/items/${cart_item_id}`,
         {
           withCredentials: true,
         }
@@ -60,7 +60,7 @@ const RenderCartPage = ({ cartItem }) => {
     try {
       const product_id = product.id;
       const res = await axios.post(
-        `http://localhost:4002/api/cart`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/cart`,
         {
           product_id,
           user_id,
@@ -84,7 +84,7 @@ const RenderCartPage = ({ cartItem }) => {
   const handleDecreaseQuantity = async (id, cart_item_id) => {
     try {
       const res = await axios.post(
-        `http://localhost:4002/api/cart/items/quantity/${cart_item_id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/cart/items/quantity/${cart_item_id}`,
         { user_id: user_id }
       );
       if (res.data) {
