@@ -8,10 +8,11 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        hero: "url('/img/client/sliderOne.png')",
+        hero: "url('https://tooxclusive.com/wp-content/uploads/2024/01/SliderOne-1.jpg')",
         men: "url('/img/client/men.jpg')",
         children: "url('/img/client/children.jpg')",
-        women: "url('/img/client/women.png')",
+        women:
+          "url('https://tooxclusive.com/wp-content/uploads/2024/01/Women.png')",
         mountain: "url('/img/client/mountain.png')",
         cart: "url('/img/client/cart.png')",
         login: "url('/img/client/login-promo.png')",

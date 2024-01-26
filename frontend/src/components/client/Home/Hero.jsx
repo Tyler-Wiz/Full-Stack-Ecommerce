@@ -2,18 +2,19 @@ import React from "react";
 import Button from "../shared/Button";
 import SecureShipping from "../shared/SecureShipping";
 import Link from "next/link";
-import styles from "../styles/Home.module.css";
 
 const Hero = () => {
   return (
-    <section className="montserrat">
-      <div className={styles.hero}>
-        <div>
-          <h1>DISCOVER YOUR SPORTY EDGE</h1>
-          <h4 className="montserrat">
+    <section>
+      <div className="jost px-8 py-10 bg-heroBg md:bg-hero md:bg-cover md:h-[500px] md:px-44 md:py-0">
+        <div className="md:w-[50%] md:pt-16">
+          <h1 className="text-4xl text-black font-bold py-6 md:text-6xl">
+            DISCOVER YOUR SPORTY EDGE
+          </h1>
+          <p className="montserrat pb-6">
             Get the best sports apparel with the best offer that you can afford.
             Available for worldwide shipping and free delivery order.
-          </h4>
+          </p>
           <Link href="/products">
             <Button
               name="SHOP NOW"
