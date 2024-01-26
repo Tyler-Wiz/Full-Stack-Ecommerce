@@ -34,7 +34,7 @@ module.exports = (app) => {
       resave: true,
       saveUninitialized: true,
       cookie: {
-        httpOnly: true,
+        httpOnly: false,
         secure: true,
         sameSite: "none",
         maxAge: 1 * 4 * 3600 * 1000,
