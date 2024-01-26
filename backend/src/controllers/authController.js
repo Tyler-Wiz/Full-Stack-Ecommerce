@@ -63,6 +63,7 @@ exports.login = async (req, res) => {
   if (req.user) {
     await UserModel.updateLastLogin(req.user.id);
     const token = genAuthToken(req.user);
+    res.cookie("auth", req.session.cookie);
     res.status(200).send(token);
   }
 };
