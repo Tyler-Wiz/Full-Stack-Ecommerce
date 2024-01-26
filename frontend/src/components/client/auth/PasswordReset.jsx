@@ -46,7 +46,7 @@ const PasswordReset = ({ id }) => {
   };
 
   return (
-    <section className="flex justify-center items-center my-44 ">
+    <section className="lg:w-[70%] w-[80%] mx-auto my-44 jost text-center ">
       {submitSuccess ? (
         <div className="jost container flex-col w-[30%]">
           <h2 className="mb-3 capitalize"> Success!</h2>
@@ -66,7 +66,9 @@ const PasswordReset = ({ id }) => {
         <div className="jost container flex-col">
           <h2 className="mb-3 capitalize"> Create New Password</h2>
           <p className="text-center mb-6">Please enter new password</p>
-          <form onSubmit={handleSubmit(onSubmit)} className="w-[30%] mx-auto">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="max-w-lg mx-auto w-full">
             <div className="relative">
               <Input
                 register={register}

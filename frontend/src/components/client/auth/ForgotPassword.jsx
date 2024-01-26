@@ -40,9 +40,9 @@ const ForgotPassword = () => {
   };
   return (
     <ClientLayout>
-      <section className="container my-44 jost">
+      <section className="lg:w-[70%] w-[80%] mx-auto my-44 jost text-center ">
         {submitSuccess ? (
-          <div className="mx-auto w-[30%]">
+          <div>
             <h2 className="mb-3 text-5xl capitalize">Check your mail</h2>
             <p className=" text-secondary my-3">
               We have sent an email to your email address. Click the link in the
@@ -54,7 +54,7 @@ const ForgotPassword = () => {
             </p>
           </div>
         ) : (
-          <div className="mx-auto w-[30%]">
+          <div>
             <h2 className="mb-3 capitalize"> Set or reset your password</h2>
             <p className="text-description text-center mb-10">
               Enter username associated with your account. We’ll email you
