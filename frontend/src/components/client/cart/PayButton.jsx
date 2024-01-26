@@ -22,7 +22,7 @@ const PayButton = ({ cartItem, user_id, googleUser }) => {
       if (res.data.url) {
         const res = await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}api/order/`,
-          { order_items: items },
+          { user_id: user_id },
           {
             withCredentials: true,
           }

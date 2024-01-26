@@ -1,10 +1,10 @@
 const db = require("../../config/index");
 
 class orderModel {
-  static async create(order_items, user_id) {
+  static async create(user_id) {
     try {
-      const statement = `INSERT INTO orders(order_items, user_id) VALUES($1, $2) RETURNING*`;
-      const values = [order_items, user_id];
+      const statement = `INSERT INTO orders(user_id) VALUES($1) RETURNING*`;
+      const values = [user_id];
       const result = await db.query(statement, values);
       if (result.rows?.length) {
         return result.rows[0];

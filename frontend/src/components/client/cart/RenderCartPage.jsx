@@ -107,7 +107,7 @@ const RenderCartPage = ({ cartItem }) => {
           </div>
         ) : (
           <div className="lg:container items-start my-5 gap-6">
-            <table className="divide-y divide-gray-200 text-sm w-[70%] hidden lg:block">
+            <table className="divide-y divide-gray-200 text-sm w-[65%] hidden lg:block">
               <thead className="capitalize">
                 <tr>
                   <th className="text-left p-4 capitalize">Product</th>
@@ -202,7 +202,7 @@ const RenderCartPage = ({ cartItem }) => {
                 ))}
               </tbody>
             </table>
-            <div className="lg:hidden px-6 ">
+            <div className="lg:hidden px-6">
               <div className=" my-16 flex flex-col gap-6">
                 {cartItem?.map((product, index) => (
                   <div
@@ -270,7 +270,7 @@ const RenderCartPage = ({ cartItem }) => {
                 ))}
               </div>
             </div>
-            <div className="lg:w-[30%] jost p-4">
+            <div className="lg:w-[40%] jost w-[90%] mx-auto ">
               <h3 className="text-lg font-bold mb-2">Cart Total</h3>
               <div className="flex flex-col gap-3 px-4 py-6 border-[1px] rounded-xl">
                 <div className="border-[1px] p-3 text-center rounded-xl">

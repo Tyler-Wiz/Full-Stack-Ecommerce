@@ -5,13 +5,12 @@ const {
   checkout,
 } = require("../controllers/orderController");
 const router = express.Router();
-const { protectedUser } = require("../../config/protected");
+// const { protectedUser } = require("../../config/protected");
 
 // OPEN
 router.get("/:id", getOrderByUser);
 
 // PROTECTED
-router.use(protectedUser);
 router.post("", createOrder);
 router.post("/create-checkout-session", checkout);
 

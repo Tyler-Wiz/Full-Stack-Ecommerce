@@ -4,14 +4,19 @@ const CreateError = require("http-errors");
 const stripe = require("stripe")(process.env.STRIPE_CLIENT_SECRET);
 
 exports.createOrder = async (req, res, next) => {
-  const { order_items } = req.body;
+  const { user_id } = req.body;
   try {
-    const { id, username } = req.user;
-    const cart = await CartModel.readUniqueCart(id);
-    if (!cart) throw CreateError(404, `Cart for ${username} not found`);
+    const cart = await CartModel.readUniqueCart(user_id);
+    if (!cart) throw CreateError(404, `Cart not found`);
     // Create a new order
-    const order = await orderModel.create(id);
+    const order = await orderModel.findOrderByUser(user_id);
     if (order) {
+      // Find the pending cart
+      const pendingCart = cart.find((cart) => cart.status === "pending");
+      await CartModel.updateCartStatus(pendingCart.id);
+    } else {
+      // Create a new order
+      await orderModel.create(user_id);
       // Find the pending cart
       const pendingCart = cart.find((cart) => cart.status === "pending");
       await CartModel.updateCartStatus(pendingCart.id);
@@ -26,7 +31,7 @@ exports.getOrderByUser = async (req, res, next) => {
   const id = req.params.id;
   try {
     const cart = await CartModel.readUniqueCart(id);
-    if (!cart) throw CreateError(404, `Cart for ${username} not found`);
+    if (!cart) throw CreateError(404, `Cart not found`);
     const completedCart = cart
       .reverse()
       .filter((cart) => cart.status === "completed");
@@ -63,7 +68,6 @@ exports.checkout = async (req, res, next) => {
       quantity: item.cartquantity,
     };
   });
-
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     shipping_address_collection: { allowed_countries: ["US", "CA", "GB"] },
@@ -88,6 +92,5 @@ exports.checkout = async (req, res, next) => {
     success_url: `${process.env.CLIENT_URL}/successful`,
     cancel_url: `${process.env.CLIENT_URL}/cart/${user_id}`,
   });
-
   res.send({ url: session.url });
 };
