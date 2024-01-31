@@ -138,7 +138,7 @@ const RenderSingleProduct = ({ product, productsInCategory }) => {
       </div>
       <div className="flex flex-wrap gap-4 w-full my-10">
         {filterOutProduct.slice(0, 4).map((item, index) => (
-          <div key={index} className="w-[24%]">
+          <div key={index} className="lg:w-[24%] w-[48%]">
             <RenderProductList product={item} />
           </div>
         ))}
